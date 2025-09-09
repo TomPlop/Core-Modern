@@ -18,9 +18,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.items.ElectricExtendoGrip;
-import su.terrafirmagreg.core.common.data.items.PiglinDisguise;
-import su.terrafirmagreg.core.common.data.items.TrowelItem;
+import su.terrafirmagreg.core.common.data.items.*;
 
 import java.util.Locale;
 import java.util.function.Supplier;
@@ -42,12 +40,20 @@ public class TFGItems {
 	public static final RegistryObject<Item> TROWEL =
 			ITEMS.register("trowel", () -> new TrowelItem(new Item.Properties()));
 
-	public static final RegistryObject<Item> SNIFFER_EGG =
-			ITEMS.register("sniffer_egg", ()->new Item(new Item.Properties()));
+    public static final RegistryObject<Item> EMPTY_DNA_SYRINGE =
+            ITEMS.register("empty_dna_syringe", () -> new EmptyDnaSyringeItem(new Item.Properties()));
+    public static final RegistryObject<Item> CLEAN_DNA_SYRINGE =
+            ITEMS.register("clean_dna_syringe", () -> new EmptyDnaSyringeItem(new Item.Properties()));
+    public static final RegistryObject<Item> DIRTY_DNA_SYRINGE =
+            ITEMS.register("dirty_dna_syringe", () -> new DirtyDnaSyringeItem(new Item.Properties()));
+    public static final RegistryObject<Item> FILLED_DNA_SYRINGE =
+            ITEMS.register("filled_dna_syringe", () -> new FilledDnaSyringeItem(new Item.Properties()));
 
 	public static final RegistryObject<Item> MOON_RABBIT_EGG = registerSpawnEgg(TFGEntities.MOON_RABBIT, 15767516, 9756658);
 	public static final RegistryObject<Item> GLACIAN_RAM_EGG = registerSpawnEgg(TFGEntities.GLACIAN_RAM, 16772607, 3997758);
 	public static final RegistryObject<Item> SNIFFER_SPAWN_EGG = registerSpawnEgg(TFGEntities.SNIFFER, 11285007, 4829025);
+	public static final RegistryObject<Item> WRAPTOR_SPAWN_EGG = registerSpawnEgg(TFGEntities.WRAPTOR, 15767516, 4829025);
+
 
 
 	@SuppressWarnings("deprecation")
@@ -57,7 +63,9 @@ public class TFGItems {
 	public static final RegistryObject<Item> RAILGUN_AMMO_SHELL = ITEMS.register("railgun_ammo_shell", () -> new Item(new Item.Properties().stacksTo(16)));
 	public static final RegistryObject<Item> GLACIAN_WOOL = ITEMS.register("glacian_wool", () -> new Item(new Item.Properties().stacksTo(32)));
 	public static final RegistryObject<Item> SNIFFER_WOOL = ITEMS.register("sniffer_wool", () -> new Item(new Item.Properties().stacksTo(32)));
-
+	public static final RegistryObject<Item> SNIFFER_EGG = ITEMS.register("sniffer_egg", () -> new Item(new Item.Properties().stacksTo(32)));
+	public static final RegistryObject<Item> WRAPTOR_WOOL = ITEMS.register("wraptor_wool", () -> new Item(new Item.Properties().stacksTo(32)));
+	public static final RegistryObject<Item> WRAPTOR_EGG = ITEMS.register("wraptor_egg", () -> new Item(new Item.Properties().stacksTo(32)));
 
 	public static final RegistryObject<ComponentItem> ELECTRIC_EXTENDO_GRIP = ITEMS.register("electric_extendo_grip", () -> new ElectricExtendoGrip(new Item.Properties()));
 

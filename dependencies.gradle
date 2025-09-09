@@ -161,11 +161,18 @@ dependencies {
     // Simply Stacked Dimensions
     implementation fg.deobf("curse.maven:simply-stacked-dimensions-523416:5562948") { transitive = false }
 
+    // Grappling Hook -- needless dependencies are dumb
+    implementation fg.deobf("curse.maven:cloth-config-348521:5729105")
+    implementation fg.deobf("curse.maven:grappling-hook-mod-reforged-1166811:6028357") { transitive = false }
+
     // Hang Glider
     implementation fg.deobf("maven.modrinth:puzzles-lib:${puzzleslib_version}")
     implementation fg.deobf("maven.modrinth:hang-glider:${hangglider_version}")
 
     // Wan's ancient beasts
-    implementation fg.deobf("curse.maven:wans-ancient-beasts-1108604:6871096")
+    implementation fg.deobf("curse.maven:wans-ancient-beasts-1108604:6911060")
     implementation fg.deobf("curse.maven:geckolib-388172:6789487")
+
+    // Immersive Aircraft
+    implementation fg.deobf("curse.maven:immersive-aircraft-666014:6742170")
 }

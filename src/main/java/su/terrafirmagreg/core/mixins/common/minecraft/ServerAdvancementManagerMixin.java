@@ -17,6 +17,10 @@ public abstract class ServerAdvancementManagerMixin {
      * Препятствует добавлению достижений в игру.
      * Но не удаляет достижения ваниллы, так как из-за этого перестает работать книга Patchouli.
      * Стоит поискать решение.
+     * -
+     * Prevents achievements from other mods.
+     * However, it doesn't remove vanilla achievements, because otherwise Patchouli stops working.
+     * It's worth looking for a better solution to hide the vanilla advancements.
      * */
     @Redirect(
             method = "apply(Ljava/util/Map;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V",
