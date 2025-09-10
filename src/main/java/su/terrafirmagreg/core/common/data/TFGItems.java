@@ -13,10 +13,12 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.labellum.mc.waterflasks.item.FlaskItem;
 import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.data.items.*;
 
@@ -24,6 +26,7 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 import static com.gregtechceu.gtceu.common.data.GTItems.attach;
+import static org.labellum.mc.waterflasks.setup.Registration.UNFINISHED_RED_STEEL_FLASK;
 
 /**
  * Uncomment TFGCreativeTab in TFGCore if you register anything new here
@@ -69,7 +72,7 @@ public class TFGItems {
 
 	public static final RegistryObject<ComponentItem> ELECTRIC_EXTENDO_GRIP = ITEMS.register("electric_extendo_grip", () -> new ElectricExtendoGrip(new Item.Properties()));
 
-
+    public static final RegistryObject<Item> ULTIMET_STEEL_FLASK = register("ultimet_steel_flask", () -> new FlaskItem(new Item.Properties().durability(-1).rarity(Rarity.EPIC), () -> {return 10000;}, FlaskItem.DEFAULT_DRINK, UNFINISHED_RED_STEEL_FLASK));
 
 	private static RegistryObject<Item> register(String name)
 	{
