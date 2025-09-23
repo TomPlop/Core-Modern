@@ -13,7 +13,10 @@ import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.MultiblockShapeInfo;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.api.pattern.util.RelativeDirection;
+import com.gregtechceu.gtceu.common.block.CoilBlock;
 import com.gregtechceu.gtceu.common.data.*;
+import com.gregtechceu.gtceu.common.machine.multiblock.generator.LargeTurbineMachine;
+import com.sun.jna.platform.win32.Winevt;
 import net.dries007.tfc.common.TFCTags;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -31,6 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
+import static com.gregtechceu.gtceu.api.GTValues.tiersBetween;
 import static su.terrafirmagreg.core.TFGCore.REGISTRATE;
 
 public class TFGMultiMachines {
@@ -191,4 +195,33 @@ public class TFGMultiMachines {
 							.where("L", Predicates.controller(Predicates.blocks(definition.get())))
 							.build())
 					.register();
+
+    public static final MultiblockMachineDefinition NUCLEAR_TURBINE =
+            REGISTRATE.multiblock("nuclear_turbine", (holder) -> new LargeTurbineMachine(holder, GTValues.EV))
+                    .rotationState(RotationState.NON_Y_AXIS)
+                    .recipeType(TFGRecipeTypes.NUCLEAR_TURBINE)
+                    .recipeModifier(LargeTurbineMachine::recipeModifier, true)
+                    .appearanceBlock(GTBlocks.CASING_STEEL_TURBINE)
+                    .workableCasingModel(GTCEu.id("block/casings/mechanic/machine_casing_turbine_steel"), GTCEu.id("block/multiblock/generator/large_steam_turbine"))
+                    .pattern(definition -> FactoryBlockPattern.start()
+                            .aisle("A   A", "A   A", "BBBBB", "CCCCC", "CDCDC", "CDCDC", "CDCDC", "CCCCC", "BBBBB", "     ", "     ", "     ", "     ")
+                            .aisle("     ", "     ", "B   B", "CCCCC", "DEFED", "DEFED", "DEFED", "CAAAC", "BAAAB", " AAA ", "  A  ", "  A  ", "  A  ")
+                            .aisle("     ", "     ", "B   B", "CCGCC", "CFHFC", "CFHFC", "CFHFC", "CAFAC", "BAFAB", " A A ", " A A ", " A A ", " A A ")
+                            .aisle("     ", "     ", "B   B", "CCCCC", "DEFED", "DEFED", "DEFED", "CAAAC", "BAAAB", " AAA ", "  A  ", "  A  ", "  A  ")
+                            .aisle("A   A", "A   A", "BBBBB", "CCCCC", "CDYDC", "CDCDC", "CDCDC", "CCCCC", "BBBBB", "     ", "     ", "     ", "     ")
+                            .where(" ", Predicates.air())
+                            .where('Y', Predicates.controller(Predicates.blocks(definition.get())))
+                            .where("A", Predicates.blocks(TFGBlocks.MACHINE_CASING_ALUMINIUM_PLATED_STEEL.get()))
+                            .where("B", Predicates.frames(GTMaterials.StainlessSteel))
+                            .where("C", Predicates.blocks(GTBlocks.CASING_STEEL_TURBINE.get()).setMinGlobalLimited(58)
+                                    .or(Predicates.autoAbilities(definition.getRecipeTypes()))
+                                    .or(Predicates.autoAbilities(true, false, false))
+                                    .or(Predicates.abilities(PartAbility.OUTPUT_ENERGY).setExactLimit(1).setPreviewCount(1)))
+                            .where("D", Predicates.blocks(ForgeRegistries.BLOCKS.getValue(ResourceLocation.fromNamespaceAndPath("ad_astra", "vent"))))
+                            .where("E", Predicates.blocks(GTBlocks.COIL_CUPRONICKEL.get()))
+                            .where("F", Predicates.blocks(GTBlocks.CASING_TITANIUM_PIPE.get()))
+                            .where("G", Predicates.blocks(PartAbility.ROTOR_HOLDER.getBlockRange(GTValues.EV, GTValues.UHV).toArray(Block[]::new)))
+                            .where("H", Predicates.blocks(GTBlocks.CASING_TITANIUM_GEARBOX.get()))
+                            .build())
+                    .register();
 }
