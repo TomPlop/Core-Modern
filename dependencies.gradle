@@ -176,6 +176,9 @@ dependencies {
     // Immersive Aircraft
     implementation fg.deobf("curse.maven:immersive-aircraft-666014:6742170")
 
+    //Create Liquid Fuel
+    implementation fg.deobf("curse.maven:create-liquid-fuel-840734:5217310")
+
     // TFC WaterFlask
     implementation fg.deobf("curse.maven:water-flasks-354353:6877264")
 }
