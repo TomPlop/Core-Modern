@@ -150,4 +150,7 @@ dependencies {
 
     // Sacks and such
     modImplementation "curse.maven:sacks-n-such-695822:6965231"
+
+    // GT modern utils
+    modImplementation "curse.maven:gregtech-modern-utilities-1235020:7612516"
 }
