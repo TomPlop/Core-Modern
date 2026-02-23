@@ -140,7 +140,7 @@ public class CustomSpawnHelper {
             new float[] { -20f, 20f },
             new float[] { 0f, 400f },
             Level.NETHER,
-            SPAWN_DIFFICULTIES.get("normal"));
+            SPAWN_DIFFICULTIES.get("extreme"));
 
     public static final CustomSpawnCondition DEFAULT_SPAWN = new CustomSpawnCondition(
             "default",
@@ -161,11 +161,11 @@ public class CustomSpawnHelper {
     }
 
     static {
-        initNewType(DESERT_SPAWN);
-        initNewType(POLAR_SPAWN);
         initNewType(DEFAULT_SPAWN);
         initNewType(TEMPERATE_SPAWN);
         initNewType(TROPICAL_SPAWN);
+        initNewType(POLAR_SPAWN);
+        initNewType(DESERT_SPAWN);
         initNewType(BENEATH_SPAWN);
     }
 
