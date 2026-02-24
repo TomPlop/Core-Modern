@@ -685,6 +685,8 @@ public final class TFGBlocks {
             List.of(FLTags.Blocks.STAINLESS_STEEL_GREENHOUSE, TFGTags.Blocks.StainlessSteelGreenhouseCasings, BlockTags.MINEABLE_WITH_PICKAXE),
             List.of(TFGTags.Items.StainlessSteelGreenhouseCasings));
 
+    public static final BlockEntry<Block> STERLING_SILVER_CASING = createCasingBlock("casings/sterling_silver_casing", GTModels.cubeAllModel(TFGCore.id("block/casings/sterling_silver_casing")));
+
     public static BlockEntry<ActiveBlock> createActiveCasingBlock(String name, NonNullBiConsumer<DataGenContext<Block, ActiveBlock>, RegistrateBlockstateProvider> modelProvider,
             SoundType sound, float strength, float explosionResist, MapColor mapColor, boolean onlyDropWithTool) {
         return TFGCore.REGISTRATE.block(name, ActiveBlock::new)
