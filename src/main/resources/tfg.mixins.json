@@ -126,6 +126,7 @@
         "common.minecraft.HugeFungusFeatureMixin",
         "common.minecraft.IBlockLootSubProviderAccessor",
         "common.minecraft.MinecartFurnaceMixin",
+        "common.minecraft.ModelProviderMixin",
         "common.minecraft.MonsterMixin",
         "common.minecraft.MushroomBlockMixin",
         "common.minecraft.PiglinBruteMixin",
