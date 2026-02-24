@@ -1,3 +1,6 @@
 {
-  "parent": "tfg:block/dry_ice"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tfg:item/dry_ice"
+  }
 }
