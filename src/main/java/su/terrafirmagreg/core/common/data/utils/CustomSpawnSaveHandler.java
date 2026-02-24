@@ -2,6 +2,7 @@ package su.terrafirmagreg.core.common.data.utils;
 
 import com.teamresourceful.resourcefullib.common.utils.SaveHandler;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -10,7 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 /// Manages a single GlobalPos that represents the servers world spawn
 public class CustomSpawnSaveHandler extends SaveHandler {
 
-    private GlobalPos data = null;
+    private GlobalPos data = GlobalPos.of(ServerLevel.OVERWORLD, BlockPos.ZERO);
 
     @Override
     public void loadData(CompoundTag compoundTag) {

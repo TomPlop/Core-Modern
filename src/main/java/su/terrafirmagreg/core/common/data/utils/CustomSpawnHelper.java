@@ -2,6 +2,8 @@ package su.terrafirmagreg.core.common.data.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 
 import net.dries007.tfc.TerraFirmaCraft;
 import net.dries007.tfc.world.ChunkGeneratorExtension;
@@ -14,8 +16,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.ITeleporter;
 
 import earth.terrarium.adastra.api.planets.Planet;
 
@@ -25,6 +30,27 @@ public class CustomSpawnHelper {
 
     public static final GlobalPos BENEATH_PLACEHOLDER = GlobalPos.of(ServerLevel.NETHER, BlockPos.ZERO);
     public static final GlobalPos MARS_PLACEHOLDER = GlobalPos.of(Planet.MARS, BlockPos.ZERO);
+
+    public static void respawnTeleporter(ServerPlayer player, ServerLevel targetLevel, GlobalPos worldSpawn) {
+        System.out.println("attempting to spawn player at: " + worldSpawn);
+
+        player.changeDimension(targetLevel, new ITeleporter() {
+
+            @Override
+            public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                BlockPos spawnPos = worldSpawn.pos();
+
+                entity.teleportTo(destWorld, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), Set.of(), entity.getYRot(), entity.getXRot());
+
+                return entity;
+            }
+
+            @Override
+            public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld) {
+                return false;
+            }
+        });
+    }
 
     public static CustomSpawnCondition getFromConfig() {
         return CUSTOM_SPAWN_CONDITIONS.get(TFGConfig.COMMON.NEW_WORLD_SPAWN.get());

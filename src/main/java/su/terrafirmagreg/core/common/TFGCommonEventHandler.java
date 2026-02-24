@@ -41,6 +41,7 @@ import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.data.TFGItems;
 import su.terrafirmagreg.core.common.data.capabilities.LargeEggCapability;
 import su.terrafirmagreg.core.common.data.capabilities.LargeEggHandler;
+import su.terrafirmagreg.core.common.data.utils.CustomSpawnHelper;
 import su.terrafirmagreg.core.common.data.utils.CustomSpawnSaveHandler;
 import su.terrafirmagreg.core.compat.grappling_hook.GrapplehookCompat;
 import su.terrafirmagreg.core.compat.gtceu.materials.TFGMaterialHandler;
@@ -59,6 +60,7 @@ public final class TFGCommonEventHandler {
 
         otherBus.addGenericListener(ItemStack.class, TFGCommonEventHandler::attachItemCapabilities);
         otherBus.addListener(TFGCommonEventHandler::onPlayerLogin);
+        otherBus.addListener(TFGCommonEventHandler::onPlayerRespawn);
         otherBus.addListener(TFGCommonEventHandler::onLevelLoad);
 
         bus.addListener(TFGConfig::onLoad);
@@ -115,6 +117,17 @@ public final class TFGCommonEventHandler {
         }
     }
 
+    private static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            MinecraftServer server = player.getServer();
+            GlobalPos worldSpawn = CustomSpawnSaveHandler.getSpawnPos(Objects.requireNonNull(server).overworld());
+
+            if ((worldSpawn.dimension().equals(ServerLevel.OVERWORLD) || player.getRespawnPosition() != null))
+                return;
+            CustomSpawnHelper.respawnTeleporter(player, server.getLevel(worldSpawn.dimension()), worldSpawn);
+        }
+    }
+
     private static void onLevelLoad(LevelEvent.Load event) {
         LevelAccessor level = event.getLevel();
         if (level instanceof ClientLevel)
@@ -159,7 +172,7 @@ public final class TFGCommonEventHandler {
                         System.out.print(!blockB.isCollisionShapeFullBlock(targetLevel, mutableTestPos.immutable()));
                         System.out.println(blockC);
                         System.out.print(blockC.isCollisionShapeFullBlock(targetLevel, mutableTestPos.immutable()));
-
+                        
                          */
 
                         if (blockA.isAir() && !blockB.isCollisionShapeFullBlock(targetLevel, mutableTestPos.immutable())) {
@@ -185,8 +198,8 @@ public final class TFGCommonEventHandler {
                     count++;
                 }
 
-                System.out.println("found valid spawn point: " + validSpawn);
-                CustomSpawnSaveHandler.setSpawnPos(server.overworld(), GlobalPos.of(ServerLevel.OVERWORLD, validSpawn));
+                System.out.println("Found valid spawn point: " + validSpawn);
+                CustomSpawnSaveHandler.setSpawnPos(server.overworld(), GlobalPos.of(spawnPos.dimension(), validSpawn));
             }
         }
     }
