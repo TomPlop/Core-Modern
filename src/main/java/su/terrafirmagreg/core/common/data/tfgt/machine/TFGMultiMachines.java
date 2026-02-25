@@ -78,6 +78,7 @@ import su.terrafirmagreg.core.common.data.tfgt.TFGTRecipeTypes;
 import su.terrafirmagreg.core.common.data.tfgt.interdim_logistics.machine.InterplanetaryItemLauncherMachine;
 import su.terrafirmagreg.core.common.data.tfgt.interdim_logistics.machine.InterplanetaryItemReceiverMachine;
 import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric.*;
+import su.terrafirmagreg.core.common.data.tfgt.machine.render.BouleRender;
 
 @SuppressWarnings({ "unused", "SpellCheckingInspection" })
 public class TFGMultiMachines {
@@ -1002,8 +1003,8 @@ public class TFGMultiMachines {
 					.build())
 			.model(GTMachineModels.createWorkableCasingMachineModel(
 					TFGCore.id("block/casings/sterling_silver_casing"),
-					GTCEu.id("block/multiblock/implosion_compressor"))
-					// TODO: renderer
+					GTCEu.id("block/multiblock/gcym/large_chemical_bath"))
+					.andThen(b -> b.addDynamicRenderer(BouleRender::makeRender))
 			)
 			.additionalDisplay((controller, components) -> {
 					if (controller instanceof CoilWorkableElectricMultiblockMachine coilMachine && controller.isFormed()) {

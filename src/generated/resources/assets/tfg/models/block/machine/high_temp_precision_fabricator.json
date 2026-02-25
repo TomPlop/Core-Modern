@@ -1,5 +1,10 @@
 {
   "parent": "minecraft:block/block",
+  "dynamic_renders": [
+    {
+      "type": "tfg:boule"
+    }
+  ],
   "loader": "gtceu:machine",
   "machine": "tfg:high_temp_precision_fabricator",
   "texture_overrides": {
@@ -11,8 +16,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_emissive"
         }
       }
     },
@@ -21,8 +26,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front_paused",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_paused_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_paused",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_paused_emissive"
         }
       }
     },
@@ -31,8 +36,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front_active",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_active_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active_emissive"
         }
       }
     },
@@ -41,8 +46,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front_active",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_active_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active_emissive"
         }
       }
     },
@@ -51,8 +56,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_emissive"
         }
       }
     },
@@ -61,8 +66,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front_paused",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_paused_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_paused",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_paused_emissive"
         }
       }
     },
@@ -71,8 +76,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front_active",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_active_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active_emissive"
         }
       }
     },
@@ -81,8 +86,8 @@
         "parent": "gtceu:block/machine/template/cube_all/sided",
         "textures": {
           "all": "tfg:block/casings/sterling_silver_casing",
-          "overlay_front": "gtceu:block/multiblock/implosion_compressor/overlay_front_active",
-          "overlay_front_emissive": "gtceu:block/multiblock/implosion_compressor/overlay_front_active_emissive"
+          "overlay_front": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active",
+          "overlay_front_emissive": "gtceu:block/multiblock/gcym/large_chemical_bath/overlay_front_active_emissive"
         }
       }
     }
