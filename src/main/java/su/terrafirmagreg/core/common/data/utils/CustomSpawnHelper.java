@@ -126,7 +126,7 @@ public class CustomSpawnHelper {
             new float[] { 20f, 30f },
             new float[] { 0f, 90f },
             Level.OVERWORLD,
-            SPAWN_DIFFICULTIES.get("extreme"));
+            SPAWN_DIFFICULTIES.get("hard"));
 
     public static final CustomSpawnCondition POLAR_SPAWN = new CustomSpawnCondition(
             "polar",

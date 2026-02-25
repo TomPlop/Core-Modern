@@ -11,6 +11,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.event.PostMaterialEvent;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -106,14 +107,37 @@ public final class TFGCommonEventHandler {
         add(TFGItems.WIRELESS_CARD.get(), item, 1, GuiText.WirelessTerminals.getTranslationKey());
     }
 
-    /**
-     * Send the blaze burner liquid fuel map to send to the client and populate emi.
-     */
     private static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            //Send the blaze burner liquid fuel map to send to the client and populate emi.
             TFGNetworkHandler.INSTANCE.send(
                     PacketDistributor.PLAYER.with(() -> player),
                     new FuelSyncPacket(FuelSyncPacket.capturedJsonData));
+
+            //Checks if the player is in a custom dimension spawn,
+            // and puts them at that pos when they first join
+            GlobalPos spawnPos = CustomSpawnSaveHandler.getSpawnPos(Objects.requireNonNull(player.getServer()).overworld());
+
+            if (!spawnPos.dimension().equals(ServerLevel.OVERWORLD)) {
+                CompoundTag playerData = player.getPersistentData();
+                CompoundTag tfgPlayerData;
+
+                if (playerData.contains(TFGCore.MOD_ID, CompoundTag.TAG_COMPOUND)) {
+                    tfgPlayerData = playerData.getCompound(TFGCore.MOD_ID);
+                } else {
+                    tfgPlayerData = new CompoundTag();
+                    playerData.put(TFGCore.MOD_ID, tfgPlayerData);
+                }
+
+                if (!tfgPlayerData.getBoolean("hasJoinedBefore")) {
+                    tfgPlayerData.putBoolean("hasJoinedBefore", true);
+                    playerData.put(TFGCore.MOD_ID, tfgPlayerData);
+
+                    CustomSpawnHelper.respawnTeleporter(player, player.getServer().getLevel(spawnPos.dimension()), spawnPos);
+
+                }
+
+            }
         }
     }
 
