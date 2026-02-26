@@ -34,7 +34,6 @@ import net.minecraftforge.data.loading.DatagenModLoader;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
-import su.terrafirmagreg.core.common.data.TFGItems;
 import su.terrafirmagreg.core.common.data.TFGTags;
 
 public class BouleRender extends DynamicRender<IWorkableMultiController, BouleRender> {
@@ -49,7 +48,6 @@ public class BouleRender extends DynamicRender<IWorkableMultiController, BouleRe
     private ItemRenderer itemRenderer;
     private @Nullable ResourceLocation cachedRecipe;
     private @Nullable Fluid cachedFluid;
-    private boolean cachedIsBouleRecipe;
 
     public BouleRender() {
         fluidBlockRenderer = FluidBlockRenderer.Builder.create().getRenderer();
@@ -80,15 +78,12 @@ public class BouleRender extends DynamicRender<IWorkableMultiController, BouleRe
         if (recipe == null) {
             cachedFluid = null;
             cachedRecipe = null;
-            cachedIsBouleRecipe = false;
             return;
         }
 
         final MultiblockControllerMachine machineSelf = machine.self();
         if (machineSelf.getOffsetTimer() % 20 == 0 || recipe.id != cachedRecipe) {
             cachedRecipe = recipe.id;
-
-            cachedIsBouleRecipe = cachedRecipe.getPath().endsWith("_boule");
 
             if (machine.isActive()) {
                 cachedFluid = RenderUtil.getRecipeFluidToRender(recipe);
@@ -120,57 +115,69 @@ public class BouleRender extends DynamicRender<IWorkableMultiController, BouleRe
             poseStack.popPose();
         }
 
-        // Render the boule
-        if (cachedIsBouleRecipe) {
+        // Find the rod and dipped item
+        var contents = new ObjectArrayList<Content>();
+        contents.addAll(recipe.getInputContents(ItemRecipeCapability.CAP));
+        var ingredients = contents.stream()
+                .map(Content::getContent)
+                .map(ItemRecipeCapability.CAP::of)
+                .map(Ingredient::getItems)
+                .flatMap(Arrays::stream).toList();
+        var rod = ingredients.stream().filter(i -> i.is(TFGTags.Items.PrecisionFabricatorHolderRods)).findFirst();
+        var dipped = ingredients.stream().filter(i -> i.is(TFGTags.Items.PrecisionFabricatorDippedItems)).findFirst();
+        var output = ItemRecipeCapability.CAP.of(recipe.getOutputContents(ItemRecipeCapability.CAP).get(0).getContent()).getItems()[0];
 
-            // Find the rod item
-            var contents = new ObjectArrayList<Content>();
-            contents.addAll(recipe.getInputContents(ItemRecipeCapability.CAP));
-            var rod = contents.stream()
-                    .map(Content::getContent)
-                    .map(ItemRecipeCapability.CAP::of)
-                    .map(Ingredient::getItems)
-                    .flatMap(Arrays::stream)
-                    .filter(i -> i.is(TFGTags.Items.BouleHolderRods))
-                    .findFirst();
-            if (rod.isEmpty())
-                return;
+        // Rotate the pose stack to match the direction that the machine is facing
+        float facingYRot = machineSelf.getFrontFacing().toYRot();
+        float rotationOffset = 180f - facingYRot;
+        poseStack.pushPose();
+        poseStack.translate(0.5f, 0, 0.5f);
+        poseStack.mulPose(Axis.YP.rotationDegrees(rotationOffset));
+        poseStack.translate(-0.5f, 0, -0.5f);
 
-            var direction = machineSelf.getUpwardsFacing().getRotation();
-
-            if (progress < 0.05) {
+        // Then render
+        if (progress < 0.05) {
+            if (rod.isPresent()) {
                 poseStack.pushPose();
                 poseStack.translate(0.5, 2.45 - (progress * 20), 1.5);
                 poseStack.mulPose(Axis.YP.rotationDegrees((float) (progress * 36000f)));
                 poseStack.mulPose(Axis.ZP.rotationDegrees(-45));
-				poseStack.scale(1.05f, 1.05f, 1.05f);
+                poseStack.scale(1.05f, 1.05f, 1.05f);
+                //poseStack.rotateAround(direction, 0.5f, 0.5f, 0.5f);
                 itemRenderer.renderStatic(rod.get(), ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, machine.self().getLevel(), 0);
                 poseStack.popPose();
+            }
 
-                var seed = TFGItems.SILICON_SEED_CRYSTAL.get().getDefaultInstance();
+            if (dipped.isPresent()) {
                 poseStack.pushPose();
                 poseStack.translate(0.5, 1.85 - (progress * 20), 1.5);
                 poseStack.mulPose(Axis.YP.rotationDegrees((float) (progress * 36000f) + 90));
                 poseStack.mulPose(Axis.ZP.rotationDegrees(180));
                 poseStack.scale(0.25f, 0.25f, 0.25f);
-                itemRenderer.renderStatic(seed, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, machine.self().getLevel(), 0);
+                //poseStack.rotateAround(direction, 0.5f, 0.5f, 0.5f);
+                itemRenderer.renderStatic(dipped.get(), ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, machine.self().getLevel(), 0);
                 poseStack.popPose();
-            } else {
+            }
+        } else {
+            if (rod.isPresent()) {
                 poseStack.pushPose();
                 poseStack.translate(0.5, 1.45 + (progress - 0.05), 1.5);
                 poseStack.mulPose(Axis.YP.rotationDegrees((float) (progress * 36000f)));
                 poseStack.mulPose(Axis.ZP.rotationDegrees(-45));
+                //poseStack.rotateAround(direction, 0.5f, 0.5f, 0.5f);
                 itemRenderer.renderStatic(rod.get(), ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, machine.self().getLevel(), 0);
                 poseStack.popPose();
-
-                var boule = ItemRecipeCapability.CAP.of(recipe.getOutputContents(ItemRecipeCapability.CAP).get(0).getContent()).getItems()[0];
-                poseStack.pushPose();
-                poseStack.translate(0.5, 0.45 + (progress - 0.05), 1.5);
-                poseStack.mulPose(Axis.YP.rotationDegrees((float) (progress * 36000f) + 90));
-                poseStack.scale(0.9f, 0.9f, 0.9f);
-                itemRenderer.renderStatic(boule, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, machine.self().getLevel(), 0);
-                poseStack.popPose();
             }
+
+            poseStack.pushPose();
+            poseStack.translate(0.5, 0.45 + (progress - 0.05), 1.5);
+            poseStack.mulPose(Axis.YP.rotationDegrees((float) (progress * 36000f) + 90));
+            poseStack.scale(0.9f, 0.9f, 0.9f);
+            //poseStack.rotateAround(direction, 0.5f, 0.5f, 0.5f);
+            itemRenderer.renderStatic(output, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, machine.self().getLevel(), 0);
+            poseStack.popPose();
         }
+
+        poseStack.popPose();
     }
 }
