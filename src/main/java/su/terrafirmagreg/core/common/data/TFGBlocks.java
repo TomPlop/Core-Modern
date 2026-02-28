@@ -395,7 +395,7 @@ public final class TFGBlocks {
     public static final BlockEntry<DryIceBlock> DRY_ICE = TFGCore.REGISTRATE.block("dry_ice", DryIceBlock::new)
             .initialProperties(() -> Blocks.ICE)
             .properties(p -> p.sound(SoundType.BONE_BLOCK))
-            .simpleItem()
+            .item(BlockItem::new).model(ModelUtils.layeredItemModel(TFGCore.id("item/dry_ice"))).build()
             .register();
 
     public static final BlockEntry<ArtisanTableBlock> ARTISAN_TABLE = TFGCore.REGISTRATE.block("artisan_table",
@@ -738,7 +738,7 @@ public final class TFGBlocks {
     public static BlockEntry<Block>[] createGreenhouseCasings(String tier, List<TagKey<Block>> blockTags, List<TagKey<Item>> itemTags) {
         List<BlockEntry<ConnectedGlassBlock>> casings = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 5; i++) {
             String blockId = "casings/greenhouse/%s_greenhouse_casing_%s".formatted(tier, i);
             var blockBuilder = TFGCore.REGISTRATE.block(blockId, ConnectedGlassBlock::new)
                     .initialProperties(() -> Blocks.GLASS)

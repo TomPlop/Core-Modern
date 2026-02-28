@@ -70,6 +70,7 @@
         "common.firmalife.MixinGreenhousePortBlock",
         "common.flywheel.AnimatedBlazeBurnerMixin",
         "common.forge.CapabilityProviderMixin",
+        "common.kubejs.MiscForgeHelperMixin",
         "common.forge.ForgeConfigSpecMixin",
         "common.grappling_hook.AirFrictionControllerMixin",
         "common.grappling_hook.GrappleControllerMixin",
@@ -205,6 +206,7 @@
     "client": [
         "client.afc.TapBlockEntityProviderMixin",
         "client.carryon.ClientEventsMixin",
+        "client.create.XaeroTrainMapMixin",
         "client.firmalife.FLBeehiveBlockMixin",
         "client.ftb.ClientTeamManagerImplMixin",
         "client.ftb.QuestScreenMixin",
