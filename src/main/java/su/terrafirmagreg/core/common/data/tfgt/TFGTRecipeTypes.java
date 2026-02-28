@@ -149,7 +149,7 @@ public class TFGTRecipeTypes {
     public static final GTRecipeType GAS_PRESSURIZER_RECIPES = GTRecipeTypes
             .register("gas_pressurizer", GTRecipeTypes.ELECTRIC)
             .setEUIO(IO.IN)
-            .setMaxIOSize(1, 1, 3, 1)
+            .setMaxIOSize(3, 1, 3, 1)
             .setSlotOverlay(false, false, GuiTextures.INT_CIRCUIT_OVERLAY)
             .setProgressBar(GuiTextures.PROGRESS_BAR_COMPRESS, FillDirection.LEFT_TO_RIGHT)
             .setSound(GTSoundEntries.COMPRESSOR);
