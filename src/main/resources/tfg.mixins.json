@@ -167,6 +167,7 @@
         "common.tfc.IChunkDataCapabilityAccessor",
         "common.tfc.IIngotPileBlockEntityAccessor",
         "common.tfc.IIngotPileBlockEntityEntryAccessor",
+        "common.tfc.MoldCapabilityMixin",
         "common.tfc.RockDataMixin",
         "common.tfc.RockSpikeBlockMixin",
         "common.tfc.TFCBlocksMixin",
