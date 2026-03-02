@@ -1,6 +1,9 @@
 package su.terrafirmagreg.core.mixins.common.gtceu;
 
+import java.util.Objects;
+
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+@SuppressWarnings("deprecation")
 @Mixin(ConverterTrait.class)
 public abstract class ConverterTraitMixin extends NotifiableEnergyContainer {
     @Unique
@@ -29,7 +33,7 @@ public abstract class ConverterTraitMixin extends NotifiableEnergyContainer {
     @Inject(method = "serverTick", at = @At(value = "INVOKE", target = "Lcom/gregtechceu/gtceu/api/machine/trait/NotifiableEnergyContainer;serverTick()V"), remap = false)
     private void tfg$tryFeExtract(CallbackInfo ci) {
         var frontFacing = machine.getFrontFacing();
-        var thisEnergyContainer = GTCapabilityHelper.getForgeEnergy(machine.getLevel(),
+        var thisEnergyContainer = GTCapabilityHelper.getForgeEnergy(Objects.requireNonNull(machine.getLevel()),
                 machine.getPos(), null);
         for (Direction d : Direction.values()) {
             if (d == frontFacing)
@@ -38,6 +42,7 @@ public abstract class ConverterTraitMixin extends NotifiableEnergyContainer {
             var targetEnergyContainer = GTCapabilityHelper.getForgeEnergy(machine.getLevel(),
                     machine.getPos().relative(d), null);
             if (targetEnergyContainer != null && targetEnergyContainer.canExtract() && state.is(PORTABLE_ENERGY_INTERFACE)) {
+                assert thisEnergyContainer != null;
                 int energyExtracted = targetEnergyContainer.extractEnergy(
                         thisEnergyContainer.receiveEnergy(
                                 FeCompat.toFe(
