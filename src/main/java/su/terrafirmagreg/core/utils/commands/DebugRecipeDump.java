@@ -45,12 +45,25 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import xfacthd.framedblocks.common.crafting.FramingSawRecipe;
 
 public class DebugRecipeDump {
+
+    private static final Set<String> RECYCLING_TYPES = Set.of(
+            "greate:milling",
+            "gtceu:macerator",
+            "gtceu:arc_furnace");
+
+    private static final Set<String> PIPE_EXCLUDE_TYPES = Set.of(
+            "greate:milling",
+            "gtceu:macerator",
+            "gtceu:arc_furnace",
+            "gtceu:extractor",
+            "gtceu:packer");
 
     @SuppressWarnings("removal")
     private static final List<TagKey<Item>> PIPE_TAGS = List.of(
@@ -76,29 +89,34 @@ public class DebugRecipeDump {
         debug.then(literal("dump_recipes_detailed")
                 .executes(c -> dumpRecipes(c.getSource(), true)));
         debug.then(literal("dump_pipe_recipes")
-                .executes(c -> dumpPipeRecipes(c.getSource())));
+                .executes(c -> dumpPipeRecipes(c.getSource(), false))
+                .then(literal("no_recycling")
+                        .executes(c -> dumpPipeRecipes(c.getSource(), true))));
 
         // /tfg debug dump_recipes_where id_starts_with <"prefix">
-        // /tfg debug dump_recipes_where has_input <"#forge:tag" | "mod:item_id">
-        // /tfg debug dump_recipes_where id_starts_with <"prefix"> has_input <"#forge:tag" | "mod:item_id">
+        // /tfg debug dump_recipes_where has_input <"#mod:tag" | "mod:item_id"> [no_recycling]
+        // /tfg debug dump_recipes_where id_starts_with <"prefix"> has_input <"#mod:tag" | "mod:item_id">
         debug.then(literal("dump_recipes_where")
                 .then(literal("id_starts_with")
                         .then(argument("prefix", StringArgumentType.string())
                                 .executes(c -> dumpWhere(c.getSource(),
-                                        StringArgumentType.getString(c, "prefix"), null))
+                                        StringArgumentType.getString(c, "prefix"), null, false))
                                 .then(literal("has_input")
                                         .then(argument("input_filter", StringArgumentType.string())
                                                 .executes(c -> dumpWhere(c.getSource(),
                                                         StringArgumentType.getString(c, "prefix"),
-                                                        StringArgumentType.getString(c, "input_filter")))))))
+                                                        StringArgumentType.getString(c, "input_filter"), false))))))
                 .then(literal("has_input")
                         .then(argument("input_filter", StringArgumentType.string())
                                 .executes(c -> dumpWhere(c.getSource(),
-                                        null, StringArgumentType.getString(c, "input_filter"))))));
+                                        null, StringArgumentType.getString(c, "input_filter"), false))
+                                .then(literal("no_recycling")
+                                        .executes(c -> dumpWhere(c.getSource(),
+                                                null, StringArgumentType.getString(c, "input_filter"), true))))));
     }
 
     @SuppressWarnings("removal")
-    private static int dumpWhere(CommandSourceStack source, String prefix, String inputFilter) {
+    private static int dumpWhere(CommandSourceStack source, String prefix, String inputFilter, boolean noRecycling) {
         var registryAccess = source.getServer().registryAccess();
 
         Predicate<Recipe<?>> predicate = r -> true;
@@ -111,7 +129,9 @@ public class DebugRecipeDump {
 
         if (inputFilter != null) {
             var itemRegistry = registryAccess.registryOrThrow(Registries.ITEM);
+            var fluidRegistry = registryAccess.registryOrThrow(net.minecraftforge.registries.ForgeRegistries.Keys.FLUIDS);
             Set<Item> matchItems = new HashSet<>();
+            Set<net.minecraft.world.level.material.Fluid> matchFluids = new HashSet<>();
 
             if (inputFilter.startsWith("#")) {
                 String[] parts = inputFilter.substring(1).split(":", 2);
@@ -119,28 +139,46 @@ public class DebugRecipeDump {
                     source.sendFailure(Component.literal("Tag must be in namespace:path format, e.g. \"#forge:small_fluid_pipes\""));
                     return 0;
                 }
-                var tagKey = TagKey.create(Registries.ITEM, new ResourceLocation(parts[0], parts[1]));
-                itemRegistry.getTagOrEmpty(tagKey).forEach(h -> matchItems.add(h.value()));
-                if (matchItems.isEmpty()) {
-                    source.sendFailure(Component.literal("No items found for tag " + inputFilter));
+                var rl = new ResourceLocation(parts[0], parts[1]);
+                var itemTag = TagKey.create(Registries.ITEM, rl);
+                itemRegistry.getTagOrEmpty(itemTag).forEach(h -> matchItems.add(h.value()));
+                var fluidTag = TagKey.create(net.minecraftforge.registries.ForgeRegistries.Keys.FLUIDS, rl);
+                fluidRegistry.getTagOrEmpty(fluidTag).forEach(h -> matchFluids.add(h.value()));
+                if (matchItems.isEmpty() && matchFluids.isEmpty()) {
+                    source.sendFailure(Component.literal("No items or fluids found for tag " + inputFilter));
                     return 0;
                 }
             } else {
                 String[] parts = inputFilter.split(":", 2);
                 if (parts.length != 2) {
-                    source.sendFailure(Component.literal("Item/tag must be in namespace:path format, e.g. \"gtceu:copper_cable\" or \"#forge:small_fluid_pipes\""));
+                    source.sendFailure(Component.literal("Filter must be in namespace:path format, e.g. \"gtceu:copper_cable\" or \"#forge:small_fluid_pipes\""));
                     return 0;
                 }
-                var item = itemRegistry.get(new ResourceLocation(parts[0], parts[1]));
-                if (item == null) {
-                    source.sendFailure(Component.literal("Unknown item: " + inputFilter));
-                    return 0;
+                var rl = new ResourceLocation(parts[0], parts[1]);
+                var item = itemRegistry.get(rl);
+                if (item != null) {
+                    matchItems.add(item);
+                } else {
+                    var fluid = fluidRegistry.get(rl);
+                    if (fluid != null) {
+                        matchFluids.add(fluid);
+                    } else {
+                        source.sendFailure(Component.literal("Unknown item or fluid: " + inputFilter));
+                        return 0;
+                    }
                 }
-                matchItems.add(item);
             }
 
-            predicate = predicate.and(r -> recipeHasInput(r, matchItems));
+            if (!matchItems.isEmpty())
+                predicate = predicate.and(r -> recipeHasInput(r, matchItems));
+            if (!matchFluids.isEmpty())
+                predicate = predicate.and(r -> recipeHasFluidInput(r, matchFluids));
             descParts.add("has input " + inputFilter);
+        }
+
+        if (noRecycling) {
+            predicate = predicate.and(r -> !RECYCLING_TYPES.contains(r.getType().toString()));
+            descParts.add("no recycling");
         }
 
         String desc = String.join(" AND ", descParts);
@@ -208,7 +246,7 @@ public class DebugRecipeDump {
         return sorted.size();
     }
 
-    private static int dumpPipeRecipes(CommandSourceStack source) {
+    private static int dumpPipeRecipes(CommandSourceStack source, boolean noRecycling) {
         var registryAccess = source.getServer().registryAccess();
         var itemRegistry = registryAccess.registryOrThrow(Registries.ITEM);
 
@@ -237,11 +275,9 @@ public class DebugRecipeDump {
             for (Recipe<?> r : sorted) {
                 if (!recipeHasInput(r, pipeItems))
                     continue;
-                if (r.getType().toString().equals("greate:milling")
-                        || r.getType().toString().equals("gtceu:macerator")
-                        || r.getType().toString().equals("gtceu:arc_furnace")
-                        || r.getType().toString().equals("gtceu:extractor")
-                        || r.getType().toString().equals("gtceu:packer"))
+                if (PIPE_EXCLUDE_TYPES.contains(r.getType().toString()))
+                    continue;
+                if (noRecycling && RECYCLING_TYPES.contains(r.getType().toString()))
                     continue;
 
                 writeDetailedRecipe(jw, r, registryAccess);
@@ -282,6 +318,52 @@ public class DebugRecipeDump {
             for (var stack : ingredient.getItems())
                 if (matchItems.contains(stack.getItem()))
                     return true;
+        return false;
+    }
+
+    private static boolean recipeHasFluidInput(Recipe<?> r, Set<net.minecraft.world.level.material.Fluid> matchFluids) {
+        if (r instanceof GTRecipe gtRecipe) {
+            for (var map : List.of(gtRecipe.inputs, gtRecipe.tickInputs)) {
+                var contents = map.get(FluidRecipeCapability.CAP);
+                if (contents != null)
+                    for (var c : contents)
+                        if (c.content instanceof FluidIngredient fi)
+                            for (var stack : fi.getStacks())
+                                if (matchFluids.contains(stack.getFluid()))
+                                    return true;
+            }
+            return false;
+        }
+        if (r instanceof PotRecipe pot)
+            return fsiMatches(pot.getFluidIngredient(), matchFluids);
+        if (r instanceof VatRecipe vat)
+            return fsiMatches(vat.getInputFluid(), matchFluids);
+        if (r instanceof BarrelRecipe barrel)
+            return fsiMatches(barrel.getInputFluid(), matchFluids);
+        if (r instanceof MixingBowlRecipe bowl)
+            return fsiMatches(bowl.getFluidIngredient(), matchFluids);
+        if (r instanceof CastingRecipe casting)
+            return fsiMatches(casting.getFluidIngredient(), matchFluids);
+        if (r instanceof BlastFurnaceRecipe blast)
+            return fsiMatches(blast.getInputFluid(), matchFluids);
+        if (r instanceof BloomeryRecipe bloomery)
+            return fsiMatches(bloomery.getInputFluid(), matchFluids);
+        if (r instanceof AlloyRecipe alloy)
+            for (var metal : alloy.getRanges().keySet())
+                if (matchFluids.contains(metal.get().getFluid()))
+                    return true;
+        if (r instanceof ProcessingRecipe<?> proc)
+            for (var fi : proc.getFluidIngredients())
+                for (var stack : fi.getMatchingFluidStacks())
+                    if (matchFluids.contains(stack.getFluid()))
+                        return true;
+        return false;
+    }
+
+    private static boolean fsiMatches(FluidStackIngredient fsi, Set<Fluid> matchFluids) {
+        for (var fluid : fsi.ingredient().fluids())
+            if (matchFluids.contains(fluid))
+                return true;
         return false;
     }
 
