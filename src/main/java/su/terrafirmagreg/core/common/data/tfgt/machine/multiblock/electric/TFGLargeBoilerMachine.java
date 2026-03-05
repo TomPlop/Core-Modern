@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import com.gregtechceu.gtceu.api.machine.feature.IExplosionMachine;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +48,7 @@ import lombok.Getter;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements IDisplayUIMachine {
+public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements IDisplayUIMachine, IExplosionMachine {
 
     private static final Map<TagKey<Fluid>, Float> WATER_STEAM_MULTIPLIERS = new LinkedHashMap<>();
     static {
@@ -198,21 +199,16 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                             break;
                     }
                 }
-                // Shitty Explosion from Minecraft try to switch to old gregtech
                 if (drained < maxDrain) {
-                    getLevel().explode(null, getPos().getX(), getPos().getY(), getPos().getZ(),
-                            2f, Level.ExplosionInteraction.BLOCK);
+                    doExplosion(getPos(), 2f);
                     var center = getPos().below().relative(getFrontFacing().getOpposite());
                     if (GTValues.RNG.nextInt(100) > 80) {
-                        getLevel().explode(null, center.getX(), center.getY(), center.getZ(),
-                                2f, Level.ExplosionInteraction.BLOCK);
+                        doExplosion(center, 2f);
                     }
                     for (Direction x : Direction.Plane.HORIZONTAL) {
                         for (Direction y : Direction.Plane.HORIZONTAL) {
                             if (GTValues.RNG.nextInt(100) > 80) {
-                                var pos = center.relative(x).relative(y);
-                                getLevel().explode(null, pos.getX(), pos.getY(), pos.getZ(),
-                                        2f, Level.ExplosionInteraction.BLOCK);
+                                doExplosion(center.relative(x).relative(y), 2f);
                             }
                         }
                     }
