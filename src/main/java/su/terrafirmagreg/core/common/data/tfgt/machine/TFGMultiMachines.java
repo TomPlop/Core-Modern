@@ -1081,11 +1081,11 @@ public class TFGMultiMachines {
     public static final MultiblockMachineDefinition TFG_LARGE_BOILER_BRONZE = registerTFGLargeBoiler(
             "bronze",
             GTBlocks.CASING_BRONZE_BRICKS,
-            GTBlocks.CASING_BRONZE_PIPE, // pipe
+            GTBlocks.CASING_BRONZE_PIPE,
             GTBlocks.FIREBOX_BRONZE,
             GTCEu.id("block/casings/solid/machine_casing_bronze_plated_bricks"),
             BoilerFireboxType.BRONZE_FIREBOX,
-            1000, 1);
+            800, 1);
 
     public static final MultiblockMachineDefinition TFG_LARGE_BOILER_STEEL = registerTFGLargeBoiler(
             "steel",
@@ -1094,7 +1094,7 @@ public class TFGMultiMachines {
             GTBlocks.FIREBOX_STEEL,
             GTCEu.id("block/casings/solid/machine_casing_steel_solid"),
             BoilerFireboxType.STEEL_FIREBOX,
-            1750, 2);
+            1800, 2);
 
     // spotless:on
 }
