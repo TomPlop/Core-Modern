@@ -313,19 +313,39 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             this.currentThrottle = currentThrottle;
         }
 
+        /**
+         * Multplicator depending on the temperature of the boiler.
+         * When max temp -> 0.5 (burn 2 times faster)
+         */
+        private double getTemperatureMultiplier() {
+            TFGLargeBoilerMachine boiler = (TFGLargeBoilerMachine) machine;
+            int effectiveMax = boiler.getMaxTemperature() + 500; // Adding the boost - Could change it so first LBB isn't impacted
+            int current = boiler.getCurrentTemperature();
+            if (effectiveMax <= 0)
+                return 1.0;
+
+            // 1.0 is max temp
+            double ratio = Math.min(1.0, (double) current / effectiveMax);
+
+            // The higher the return the lower the increase in consumption
+            return 1.0 - (ratio * 0.1);
+        }
+
         @Override
         public void setupRecipe(GTRecipe recipe) {
             super.setupRecipe(recipe);
             if (lastRecipe != null) {
                 setCurrentThrottle(((TFGLargeBoilerMachine) machine).getThrottle());
-                duration = (int) Math.round(lastRecipe.duration / (currentThrottle / 100.0));
+                double tempMultiplier = getTemperatureMultiplier();
+                duration = (int) Math.round(lastRecipe.duration / (currentThrottle / 100.0) * tempMultiplier);
             }
         }
 
         public void modifyFuelBurnTime(int newThrottle) {
             if (lastRecipe != null) {
                 double newThrottleMultiplier = (double) currentThrottle / newThrottle;
-                duration = (int) Math.round(lastRecipe.duration / (newThrottle / 100.0));
+                double tempMultiplier = getTemperatureMultiplier();
+                duration = (int) Math.round(lastRecipe.duration / (newThrottle / 100.0) * tempMultiplier);
                 progress = (int) Math.round(newThrottleMultiplier * progress);
             }
             setCurrentThrottle(newThrottle);
