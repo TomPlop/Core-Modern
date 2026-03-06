@@ -54,7 +54,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         WATER_STEAM_MULTIPLIERS.put(
                 TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("tfg", "water_boiler_t2")),
                 1.5f);
-        // WATER_STEAM_MULTIPLIERS.put(TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("tfg", "water_boiler_t3"))_t3, 2.0f);
+        // WATER_STEAM_MULTIPLIERS.put(TagKey.create(Registries.FLUID, ResourceLocation.fromNamespaceAndPath("tfg", "water_boiler_t3")), 2.0f);
     }
 
     private static final TagKey<Fluid> WATER_BOILER = TagKey.create(
@@ -145,7 +145,6 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
 
                 for (Map.Entry<TagKey<Fluid>, Float> entry : WATER_STEAM_MULTIPLIERS.entrySet()) {
                     if (fluidStack.getFluid().is(entry.getKey())) {
-                        // Use Best multiplier
                         if (entry.getValue() > bestMultiplier) {
                             bestMultiplier = entry.getValue();
                         }
@@ -175,9 +174,13 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
 
             tryDrainBoostFluid();
 
-            var maxDrain = (int) Math.round(
-                    (double) currentTemperature * throttle * TICKS_PER_STEAM_GENERATION /
-                            (ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater * 100.0));
+            if (getOffsetTimer() % 20 == 0) {
+                getRecipeLogic().refreshDurationForTemperature();
+            }
+
+            double maxDrainExact = (double) currentTemperature * throttle * TICKS_PER_STEAM_GENERATION /
+                    (ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater * 100.0);
+            int maxDrain = (int) Math.round(maxDrainExact);
 
             if (currentTemperature < 100) {
                 steamGenerated = 0;
@@ -196,8 +199,10 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                 }
                 var drained = (drainWater == null || drainWater.isEmpty()) ? maxDrain : maxDrain - drainWater.get(0).getAmount();
 
-                steamGenerated = drained * ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater;
-                steamGenerated = (int) (steamGenerated * waterMultiplier);
+                steamGenerated = (int) Math.round(
+                        maxDrainExact * ((double) drained / Math.max(1, maxDrain))
+                                * ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater
+                                * waterMultiplier);
 
                 if (drained > 0) {
                     var fillSteam = List.of(FluidIngredient.of(GTMaterials.Steam.getFluid(steamGenerated)));
@@ -242,7 +247,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         return false;
     }
 
-    private int getEffectiveMaxTemperature() {
+    public int getEffectiveMaxTemperature() {
         var checkBoost = List.of(FluidIngredient.of(getBoostFluid(), BOOST_FLUID_AMOUNT_MB));
         List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
         inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
@@ -325,22 +330,20 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             this.currentThrottle = currentThrottle;
         }
 
-        /**
-         * Multplicator depending on the temperature of the boiler.
-         * When max temp -> 0.5 (burn 2 times faster)
-         */
         private double getTemperatureMultiplier() {
             TFGLargeBoilerMachine boiler = (TFGLargeBoilerMachine) machine;
-            int effectiveMax = /*boiler.getMaxTemperature()*/ 800; // Adding the boost - Could change it so first LBB isn't impacted
             int current = boiler.getCurrentTemperature();
-            if (effectiveMax <= 0)
+            final int THRESHOLD = 800;
+            final double REDUCTION_PER_100_DEGREES = 0.05; // 5% every 100C over 800
+
+            if (current <= THRESHOLD)
                 return 1.0;
 
-            // 1.0 is max temp
-            double ratio = Math.min(1.0, (double) current / effectiveMax);
+            double degreesAboveThreshold = current - THRESHOLD;
+            double reduction = (degreesAboveThreshold / 100.0) * REDUCTION_PER_100_DEGREES;
 
-            // The higher the return the lower the increase in consumption - (ratio * 0.1 ) for tiny increase
-            return 1.0 - (ratio * 0.3);
+            // Minimum
+            return Math.max(0.1, 1.0 - reduction);
         }
 
         @Override
@@ -361,6 +364,18 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                 progress = (int) Math.round(newThrottleMultiplier * progress);
             }
             setCurrentThrottle(newThrottle);
+        }
+
+        public void refreshDurationForTemperature() {
+            if (lastRecipe != null) {
+                double tempMultiplier = getTemperatureMultiplier();
+                int targetDuration = (int) Math.round(lastRecipe.duration / (currentThrottle / 100.0) * tempMultiplier);
+                if (Math.abs(duration - targetDuration) > 2) {
+                    double progressRatio = (double) progress / Math.max(1, duration);
+                    duration = targetDuration;
+                    progress = (int) Math.round(progressRatio * duration);
+                }
+            }
         }
     }
 }
