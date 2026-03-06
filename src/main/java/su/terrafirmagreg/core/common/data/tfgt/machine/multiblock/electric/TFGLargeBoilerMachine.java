@@ -282,9 +282,13 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         IDisplayUIMachine.super.addDisplayText(textList);
         if (isFormed()) {
             textList.add(Component.translatable("gtceu.multiblock.large_boiler.temperature",
-                    currentTemperature + 274, maxTemperature + 274));
+                    currentTemperature + 274, getEffectiveMaxTemperature() + 274));
             textList.add(Component.translatable("gtceu.multiblock.large_boiler.steam_output",
                     steamGenerated / TICKS_PER_STEAM_GENERATION));
+
+            int efficiencyPercent = (int) Math.round((1.0 - getRecipeLogic().getTemperatureMultiplier()) * 100);
+            textList.add(Component.translatable("tfg.multiblock.large_boiler.fuel_efficiency",
+                    ChatFormatting.YELLOW.toString() + efficiencyPercent + "%"));
 
             var throttleText = Component.translatable("gtceu.multiblock.large_boiler.throttle",
                     ChatFormatting.AQUA.toString() + getThrottle() + "%")
@@ -330,7 +334,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             this.currentThrottle = currentThrottle;
         }
 
-        private double getTemperatureMultiplier() {
+        public double getTemperatureMultiplier() {
             TFGLargeBoilerMachine boiler = (TFGLargeBoilerMachine) machine;
             int current = boiler.getCurrentTemperature();
             final int THRESHOLD = 800;
