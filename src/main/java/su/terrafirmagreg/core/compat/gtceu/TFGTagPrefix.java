@@ -361,12 +361,15 @@ public final class TFGTagPrefix {
                 .unificationEnabled(true);
 
         // Modify existing GT ones
-        TagPrefix.toolHeadBuzzSaw.generationCondition(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_BUZZSAW_BLADE));
         TagPrefix.toolHeadScrewdriver.generationCondition(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_SCREWDRIVER_HEAD));
         TagPrefix.toolHeadDrill.generationCondition(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_DRILL_HEAD));
         TagPrefix.toolHeadChainsaw.generationCondition(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_CHAINSAW_HEAD));
         TagPrefix.toolHeadWrench.generationCondition(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_WRENCH_HEAD));
         TagPrefix.toolHeadWireCutter.generationCondition(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_WIRE_CUTTER_HEAD));
+
+        // Has to be handled specially because otherwise some recipes crash on startup because of missing recipe inputs
+        TagPrefix.toolHeadBuzzSaw.generationCondition(TagPrefix.toolHeadBuzzSaw.generationCondition()
+                .or(mat -> mat.hasFlag(TFGMaterialFlags.GENERATE_BUZZSAW_BLADE)));
     }
 
     public static void init() {
