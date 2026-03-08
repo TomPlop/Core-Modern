@@ -279,16 +279,11 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
     // Drain the best Booster available
     // If no Booster then reset the max temperature
 
-    /**
-     * Trouve le meilleur booster disponible (simulate), le draine, et retourne son bonus.
-     * Retourne 0 si aucun booster compatible n'est disponible.
-     */
     private int tryDrainBoostFluid() {
         List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
         inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
         inputTanks.addAll(getCapabilitiesFlat(IO.BOTH, FluidRecipeCapability.CAP));
 
-        // 1. Trouver le meilleur booster disponible (simulate = true)
         BoosterFluid bestBooster = null;
         for (BoosterFluid booster : getCompatibleBoosters()) {
             var checkBoost = List.of(FluidIngredient.of(booster.fluid().get(), booster.fluidAmountMb()));
@@ -306,7 +301,6 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         if (bestBooster == null)
             return 0;
 
-        // 2. Drainer uniquement le meilleur booster (simulate = false)
         var drainBoost = List.of(FluidIngredient.of(bestBooster.fluid().get(), bestBooster.fluidAmountMb()));
         for (IRecipeHandler<?> tank : inputTanks) {
             drainBoost = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, drainBoost, false);
@@ -316,10 +310,6 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         return 0;
     }
 
-    /**
-     * Retourne la température max effective — utilise la même logique de sélection
-     * que tryDrainBoostFluid() pour garantir la cohérence.
-     */
     public int getEffectiveMaxTemperature() {
         List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
         inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
@@ -415,11 +405,6 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             this.currentThrottle = currentThrottle;
         }
 
-        /**
-         * Multiplicateur basé sur la température.
-         * Seuil fixe à 800°C — en dessous pas de réduction.
-         * Au dessus : -5% par 100°C supplémentaires, plancher à 10%.
-         */
         public double getTemperatureMultiplier() {
             TFGLargeBoilerMachine boiler = (TFGLargeBoilerMachine) machine;
             int current = boiler.getCurrentTemperature();
@@ -457,7 +442,6 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         }
 
         // Modify the recipe duration depending of the booster and the throttle
-        // Check every 20 ticks
 
         public void refreshDurationForTemperature() {
             if (lastRecipe != null) {
