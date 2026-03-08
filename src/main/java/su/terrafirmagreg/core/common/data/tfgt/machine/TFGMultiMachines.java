@@ -1020,81 +1020,99 @@ public class TFGMultiMachines {
             })
             .register();
 
-    public static MultiblockMachineDefinition registerTFGLargeBoiler(String name,
-                                                                     Supplier<? extends Block> casing,
-                                                                     Supplier<? extends Block> pipe,
-                                                                     Supplier<? extends Block> fireBox,
-                                                                     ResourceLocation texture,
-                                                                     BoilerFireboxType firebox,
-                                                                     int maxTemperature, int heatSpeed) {
-        return REGISTRATE
-                .multiblock("%s_large_boiler".formatted(name),
-                        holder -> new TFGLargeBoilerMachine(holder, maxTemperature, heatSpeed))
-                .langValue("Large %s Boiler".formatted(FormattingUtil.toEnglishName(name)))
-                .allowExtendedFacing(false)
-                .rotationState(RotationState.NON_Y_AXIS)
-                .recipeType(GTRecipeTypes.LARGE_BOILER_RECIPES)
-                .recipeModifier(TFGLargeBoilerMachine::recipeModifier, true)
-                .appearanceBlock(casing)
-                .partAppearance((controller, part, side) ->
-                        controller.self().getPos().below().getY() == part.self().getPos().getY() ?
-                                fireBox.get().defaultBlockState() : casing.get().defaultBlockState())
-                .pattern((definition) -> {
-                    TraceabilityPredicate fireboxPred = blocks(ALL_FIREBOXES.get(firebox).get()).setMinGlobalLimited(3)
-                            .or(abilities(PartAbility.IMPORT_FLUIDS).setMinGlobalLimited(1)
-                                    .setPreviewCount(1))
-                            .or(abilities(PartAbility.IMPORT_ITEMS).setMaxGlobalLimited(1)
-                                    .setPreviewCount(1))
-                            .or(abilities(PartAbility.MUFFLER).setExactLimit(1));
+    public static final MultiblockMachineDefinition TFG_LARGE_BOILER_BRONZE = REGISTRATE
+            .multiblock("bronze_large_boiler",
+                    holder -> new TFGLargeBoilerMachine(holder, 800, 1))
+            .langValue("Large Bronze Boiler")
+            .allowExtendedFacing(false)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .recipeType(GTRecipeTypes.LARGE_BOILER_RECIPES)
+            .recipeModifier(TFGLargeBoilerMachine::recipeModifier, true)
+            .appearanceBlock(GTBlocks.CASING_BRONZE_BRICKS)
+            .partAppearance((controller, part, side) ->
+                    controller.self().getPos().below().getY() == part.self().getPos().getY() ?
+                            GTBlocks.FIREBOX_BRONZE.get().defaultBlockState() :
+                            GTBlocks.CASING_BRONZE_BRICKS.get().defaultBlockState())
+            .pattern((definition) -> {
+                TraceabilityPredicate fireboxPred = blocks(ALL_FIREBOXES.get(BoilerFireboxType.BRONZE_FIREBOX).get())
+                        .setMinGlobalLimited(3)
+                        .or(abilities(PartAbility.IMPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1))
+                        .or(abilities(PartAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1))
+                        .or(abilities(PartAbility.MUFFLER).setExactLimit(1));
+                if (ConfigHolder.INSTANCE.machines.enableMaintenance) {
+                    fireboxPred = fireboxPred.or(abilities(PartAbility.MAINTENANCE).setExactLimit(1));
+                }
+                return FactoryBlockPattern.start()
+                        .aisle("XXX", "CCC", "CCC", "CCC")
+                        .aisle("XXX", "CPC", "CPC", "CCC")
+                        .aisle("XXX", "CSC", "CCC", "CCC")
+                        .where('S', controller(blocks(definition.getBlock())))
+                        .where('P', blocks(GTBlocks.CASING_BRONZE_PIPE.get()))
+                        .where('X', fireboxPred)
+                        .where('C', blocks(GTBlocks.CASING_BRONZE_BRICKS.get()).setMinGlobalLimited(20)
+                                .or(abilities(PartAbility.EXPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1)))
+                        .build();
+            })
+            .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
+            .model(GTMachineModels.createWorkableCasingMachineModel(
+                            GTCEu.id("block/casings/solid/machine_casing_bronze_plated_bricks"),
+                            GTCEu.id("block/multiblock/generator/large_bronze_boiler"))
+                    .andThen(b -> b.addDynamicRenderer(
+                            () -> DynamicRenderHelper.makeBoilerPartRender(
+                                    BoilerFireboxType.BRONZE_FIREBOX, GTBlocks.CASING_BRONZE_BRICKS))))
+            .tooltips(
+                    Component.translatable("gtceu.multiblock.large_boiler.max_temperature", 1074, 800),
+                    Component.translatable("gtceu.multiblock.large_boiler.heat_time_tooltip", 800 / 1 / 20),
+                    Component.translatable("gtceu.multiblock.large_boiler.explosion_tooltip")
+                            .withStyle(ChatFormatting.DARK_RED))
+            .register();
 
-                    if (ConfigHolder.INSTANCE.machines.enableMaintenance) {
-                        fireboxPred = fireboxPred.or(abilities(PartAbility.MAINTENANCE).setExactLimit(1));
-                    }
-
-                    return FactoryBlockPattern.start()
-                            .aisle("XXX", "CCC", "CCC", "CCC")
-                            .aisle("XXX", "CPC", "CPC", "CCC")
-                            .aisle("XXX", "CSC", "CCC", "CCC")
-                            .where('S', controller(blocks(definition.getBlock())))
-                            .where('P', blocks(pipe.get()))
-                            .where('X', fireboxPred)
-                            .where('C', blocks(casing.get()).setMinGlobalLimited(20)
-                                    .or(abilities(PartAbility.EXPORT_FLUIDS).setMinGlobalLimited(1)
-                                            .setPreviewCount(1)))
-                            .build();
-                })
-                .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
-                .model(GTMachineModels.createWorkableCasingMachineModel(texture,
-                                GTCEu.id("block/multiblock/generator/large_%s_boiler".formatted(name)))
-                        .andThen(b -> b.addDynamicRenderer(
-                                () -> DynamicRenderHelper.makeBoilerPartRender(firebox, casing))))
-                .tooltips(
-                        Component.translatable("gtceu.multiblock.large_boiler.max_temperature",
-                                maxTemperature + 274, maxTemperature),
-                        Component.translatable("gtceu.multiblock.large_boiler.heat_time_tooltip",
-                                maxTemperature / heatSpeed / 20),
-                        Component.translatable("gtceu.multiblock.large_boiler.explosion_tooltip")
-                                .withStyle(ChatFormatting.DARK_RED))
-                .register();
-    }
-
-    public static final MultiblockMachineDefinition TFG_LARGE_BOILER_BRONZE = registerTFGLargeBoiler(
-            "bronze",
-            GTBlocks.CASING_BRONZE_BRICKS,
-            GTBlocks.CASING_BRONZE_PIPE,
-            GTBlocks.FIREBOX_BRONZE,
-            GTCEu.id("block/casings/solid/machine_casing_bronze_plated_bricks"),
-            BoilerFireboxType.BRONZE_FIREBOX,
-            800, 1);
-
-    public static final MultiblockMachineDefinition TFG_LARGE_BOILER_STEEL = registerTFGLargeBoiler(
-            "steel",
-            GTBlocks.CASING_STEEL_SOLID,
-            GTBlocks.CASING_STEEL_PIPE,
-            GTBlocks.FIREBOX_STEEL,
-            GTCEu.id("block/casings/solid/machine_casing_steel_solid"),
-            BoilerFireboxType.STEEL_FIREBOX,
-            1800, 2);
+    public static final MultiblockMachineDefinition TFG_LARGE_BOILER_STEEL = REGISTRATE
+            .multiblock("steel_large_boiler",
+                    holder -> new TFGLargeBoilerMachine(holder, 1800, 2))
+            .langValue("Large Steel Boiler")
+            .allowExtendedFacing(false)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .recipeType(GTRecipeTypes.LARGE_BOILER_RECIPES)
+            .recipeModifier(TFGLargeBoilerMachine::recipeModifier, true)
+            .appearanceBlock(GTBlocks.CASING_STEEL_SOLID)
+            .partAppearance((controller, part, side) ->
+                    controller.self().getPos().below().getY() == part.self().getPos().getY() ?
+                            GTBlocks.FIREBOX_STEEL.get().defaultBlockState() :
+                            GTBlocks.CASING_STEEL_SOLID.get().defaultBlockState())
+            .pattern((definition) -> {
+                TraceabilityPredicate fireboxPred = blocks(ALL_FIREBOXES.get(BoilerFireboxType.STEEL_FIREBOX).get())
+                        .setMinGlobalLimited(3)
+                        .or(abilities(PartAbility.IMPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1))
+                        .or(abilities(PartAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1))
+                        .or(abilities(PartAbility.MUFFLER).setExactLimit(1));
+                if (ConfigHolder.INSTANCE.machines.enableMaintenance) {
+                    fireboxPred = fireboxPred.or(abilities(PartAbility.MAINTENANCE).setExactLimit(1));
+                }
+                return FactoryBlockPattern.start()
+                        .aisle("XXX", "CCC", "CCC", "CCC")
+                        .aisle("XXX", "CPC", "CPC", "CCC")
+                        .aisle("XXX", "CSC", "CCC", "CCC")
+                        .where('S', controller(blocks(definition.getBlock())))
+                        .where('P', blocks(GTBlocks.CASING_STEEL_PIPE.get()))
+                        .where('X', fireboxPred)
+                        .where('C', blocks(GTBlocks.CASING_STEEL_SOLID.get()).setMinGlobalLimited(20)
+                                .or(abilities(PartAbility.EXPORT_FLUIDS).setMinGlobalLimited(1).setPreviewCount(1)))
+                        .build();
+            })
+            .modelProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS, RecipeLogic.Status.IDLE)
+            .model(GTMachineModels.createWorkableCasingMachineModel(
+                            GTCEu.id("block/casings/solid/machine_casing_solid_steel"),
+                            GTCEu.id("block/multiblock/generator/large_steel_boiler"))
+                    .andThen(b -> b.addDynamicRenderer(
+                            () -> DynamicRenderHelper.makeBoilerPartRender(
+                                    BoilerFireboxType.STEEL_FIREBOX, GTBlocks.CASING_STEEL_SOLID))))
+            .tooltips(
+                    Component.translatable("gtceu.multiblock.large_boiler.max_temperature", 2074, 1800),
+                    Component.translatable("gtceu.multiblock.large_boiler.heat_time_tooltip", 1800 / 2 / 20),
+                    Component.translatable("gtceu.multiblock.large_boiler.explosion_tooltip")
+                            .withStyle(ChatFormatting.DARK_RED))
+            .register();
 
     // spotless:on
 }
