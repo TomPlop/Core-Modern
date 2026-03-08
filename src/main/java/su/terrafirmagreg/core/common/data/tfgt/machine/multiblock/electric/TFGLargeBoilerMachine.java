@@ -286,7 +286,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             textList.add(Component.translatable("gtceu.multiblock.large_boiler.steam_output",
                     steamGenerated / TICKS_PER_STEAM_GENERATION));
 
-            int efficiencyPercent = (int) Math.round((1.0 - getRecipeLogic().getTemperatureMultiplier()) * 100);
+            int efficiencyPercent = (int) Math.round(100 - ((1.0 - getRecipeLogic().getTemperatureMultiplier()) * 100));
             textList.add(Component.translatable("tfg.multiblock.large_boiler.fuel_efficiency",
                     ChatFormatting.YELLOW.toString() + efficiencyPercent + "%"));
 
