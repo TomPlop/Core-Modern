@@ -7,9 +7,6 @@ import org.jetbrains.annotations.Nullable;
 
 import com.gregtechceu.gtceu.api.capability.ITurbineMachine;
 import com.gregtechceu.gtceu.api.capability.recipe.RecipeCapability;
-import com.gregtechceu.gtceu.api.gui.GuiTextures;
-import com.gregtechceu.gtceu.api.gui.fancy.IFancyTooltip;
-import com.gregtechceu.gtceu.api.gui.fancy.TooltipsPanel;
 import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.feature.ITieredMachine;
@@ -27,10 +24,8 @@ import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.level.Level;
 
 import lombok.Getter;
 
@@ -57,41 +52,41 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
         }
         return null;
     }
-/*
+    /*
     private boolean isIntakesObstructed() {
         BlockPos rotorPos = getRotorHolderPos();
         if (rotorPos == null)
             return false;
-
+    
         Level level = getLevel();
         Direction front = getFrontFacing();
         Direction right = front.getClockWise();
-
+    
         boolean obstructed = false;
-
+    
         // Vérifie les deux couches sous le rotor (-1 et -2)
         for (int yOffset = -1; yOffset >= -2; yOffset--) {
             BlockPos planeOrigin = rotorPos.offset(0, yOffset, 0);
-
+    
             for (int z = -2; z <= 2; z++) {
                 for (int x = -2; x <= 2; x++) {
-
+    
                     // Coins (X) ignorés
                     if (Math.abs(x) == 2 && Math.abs(z) == 2) {
                         continue;
                     }
-
+    
                     BlockPos pos = planeOrigin
                             .relative(right, x)
                             .relative(front, z);
-
+    
                     if (!level.getBlockState(pos).isAir()) {
                         obstructed = true;
                     }
                 }
             }
         }
-
+    
         // Vérifie les blocs uniques au-dessus du rotor (+5 à +8)
         for (int y = 5; y <= 8; y++) {
             BlockPos pos = rotorPos.above(y);
@@ -99,10 +94,10 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
                 return true;
             }
         }
-
+    
         return obstructed;
-
-
+    
+    
     }*/
 
     @Nullable
@@ -281,7 +276,7 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
             }
         }
     }
-/*
+    /*
     @Override
     public void attachTooltips(TooltipsPanel tooltipsPanel) {
         super.attachTooltips(tooltipsPanel);
@@ -292,6 +287,6 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
                 this::isIntakesObstructed,
                 () -> null));
     }
-
- */
+    
+     */
 }
