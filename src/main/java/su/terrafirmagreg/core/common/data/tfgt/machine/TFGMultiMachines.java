@@ -1,5 +1,6 @@
 package su.terrafirmagreg.core.common.data.tfgt.machine;
 
+import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.blocks;
 import static com.gregtechceu.gtceu.common.data.GCYMBlocks.MOLYBDENUM_DISILICIDE_COIL_BLOCK;
@@ -23,7 +24,9 @@ import com.gregtechceu.gtceu.api.data.RotationState;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.machine.MachineDefinition;
+import com.gregtechceu.gtceu.api.machine.MetaMachine;
 import com.gregtechceu.gtceu.api.machine.MultiblockMachineDefinition;
+import com.gregtechceu.gtceu.api.machine.feature.multiblock.IRotorHolderMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.CoilWorkableElectricMultiblockMachine;
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 import com.gregtechceu.gtceu.api.machine.multiblock.WorkableElectricMultiblockMachine;
@@ -33,6 +36,7 @@ import com.gregtechceu.gtceu.api.pattern.FactoryBlockPattern;
 import com.gregtechceu.gtceu.api.pattern.MultiblockShapeInfo;
 import com.gregtechceu.gtceu.api.pattern.Predicates;
 import com.gregtechceu.gtceu.api.pattern.TraceabilityPredicate;
+import com.gregtechceu.gtceu.api.pattern.predicates.SimplePredicate;
 import com.gregtechceu.gtceu.api.pattern.util.RelativeDirection;
 import com.gregtechceu.gtceu.api.recipe.content.ContentModifier;
 import com.gregtechceu.gtceu.api.recipe.modifier.ModifierFunction;
@@ -48,6 +52,7 @@ import com.gregtechceu.gtceu.common.machine.multiblock.electric.DistillationTowe
 import com.gregtechceu.gtceu.common.machine.multiblock.steam.SteamParallelMultiblockMachine;
 import com.gregtechceu.gtceu.config.ConfigHolder;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
+import com.lowdragmc.lowdraglib.utils.BlockInfo;
 import com.simibubi.create.AllBlocks;
 
 import net.dries007.tfc.common.TFCTags;
@@ -61,6 +66,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -1112,6 +1118,51 @@ public class TFGMultiMachines {
                     Component.translatable("gtceu.multiblock.large_boiler.heat_time_tooltip", 1800 / 2 / 20),
                     Component.translatable("gtceu.multiblock.large_boiler.explosion_tooltip")
                             .withStyle(ChatFormatting.DARK_RED))
+            .register();
+
+    public static final MultiblockMachineDefinition LARGE_STEAM_TURBINE = REGISTRATE
+            .multiblock("large_steam_turbine", holder -> new LargeSteamTurbine(holder, GTValues.HV))
+            .rotationState(RotationState.ALL)
+            .recipeType(GTRecipeTypes.STEAM_TURBINE_FUELS)
+            .generator(true)
+            .recipeModifier(LargeSteamTurbine::recipeModifier, true)
+            .appearanceBlock(GTBlocks.CASING_STEEL_TURBINE)
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("CCCC", "CHHC", "CCCC")
+                    .aisle("CHHC", "RGGR", "CHHC")
+                    .aisle("CCCC", "CSHC", "CCCC")
+                    .where('S', Predicates.controller(Predicates.blocks(definition.getBlock())))
+                    .where('G', Predicates.blocks(GTBlocks.CASING_STEEL_GEARBOX.get()))
+                    .where('C', Predicates.blocks(GTBlocks.CASING_STEEL_TURBINE.get()))
+                    .where('R',
+                            new TraceabilityPredicate(
+                                    new SimplePredicate(
+                                            state -> MetaMachine.getMachine(state.getWorld(),
+                                                    state.getPos()) instanceof IRotorHolderMachine rotorHolder &&
+                                                    state.getWorld()
+                                                            .getBlockState(state.getPos()
+                                                                    .relative(rotorHolder.self().getFrontFacing()))
+                                                            .isAir(),
+                                            () -> PartAbility.ROTOR_HOLDER.getAllBlocks().stream()
+                                                    .map(BlockInfo::fromBlock).toArray(BlockInfo[]::new)))
+                                    .addTooltips(Component.translatable("gtceu.multiblock.pattern.clear_amount_3"))
+                                    .addTooltips(Component.translatable("gtceu.multiblock.pattern.error.limited.1",
+                                            VN[GTValues.HV]))
+                                    .setExactLimit(1)
+                                    .or(Predicates.abilities(PartAbility.OUTPUT_ENERGY)).setExactLimit(1))
+                    .where('H', Predicates.blocks(GTBlocks.CASING_STEEL_TURBINE.get())
+                            .or(Predicates.autoAbilities(definition.getRecipeTypes(), false, false, true, true, true, true))
+                            .or(Predicates.autoAbilities(true, false, false))) // needsMuffler = false
+                    .build())
+            .recoveryItems(
+                    () -> new ItemLike[] {
+                            GTMaterialItems.MATERIAL_ITEMS.get(TagPrefix.dustTiny, GTMaterials.Ash).get() })
+            .workableCasingModel(
+                    GTCEu.id("block/casings/mechanic/machine_casing_turbine_steel"),
+                    GTCEu.id("block/multiblock/generator/large_steam_turbine"))
+            .tooltips(
+                    Component.translatable("gtceu.universal.tooltip.base_production_eut", V[GTValues.HV] * 4),
+                    Component.translatable("gtceu.multiblock.turbine.efficiency_tooltip", VNF[GTValues.HV]))
             .register();
 
     // spotless:on
