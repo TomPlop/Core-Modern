@@ -1142,8 +1142,10 @@ public class TFGMultiMachines {
                                                     state.getWorld()
                                                             .getBlockState(state.getPos()
                                                                     .relative(rotorHolder.self().getFrontFacing()))
-                                                            .isAir(),
-                                            () -> PartAbility.ROTOR_HOLDER.getBlockRange(HV, EV).stream()
+                                                            .isAir() &&
+                                                    rotorHolder.self().getDefinition().getTier() >= GTValues.HV &&
+                                                    rotorHolder.self().getDefinition().getTier() <= GTValues.EV,
+                                            () -> PartAbility.ROTOR_HOLDER.getBlockRange(GTValues.HV, GTValues.EV).stream()
                                                     .map(BlockInfo::fromBlock).toArray(BlockInfo[]::new)))
                                     .addTooltips(Component.translatable("gtceu.multiblock.pattern.clear_amount_3"))
                                     .addTooltips(Component.translatable("gtceu.multiblock.pattern.error.limited.1",
