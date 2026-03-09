@@ -1026,8 +1026,8 @@ public class TFGMultiMachines {
             })
             .register();
 
-    public static final MultiblockMachineDefinition TFG_LARGE_BOILER_BRONZE = REGISTRATE
-            .multiblock("bronze_large_boiler",
+    public static final MultiblockMachineDefinition LARGE_BOILER_BRONZE = REGISTRATE
+            .multiblock("large_bronze_boiler",
                     holder -> new TFGLargeBoilerMachine(holder, 480, 1))
             .langValue("Large Bronze Boiler")
             .allowExtendedFacing(false)
@@ -1073,8 +1073,8 @@ public class TFGMultiMachines {
                             .withStyle(ChatFormatting.DARK_RED))
             .register();
 
-    public static final MultiblockMachineDefinition TFG_LARGE_BOILER_STEEL = REGISTRATE
-            .multiblock("steel_large_boiler",
+    public static final MultiblockMachineDefinition LARGE_STEEL_BOILER = REGISTRATE
+            .multiblock("large_steel_boiler",
                     holder -> new TFGLargeBoilerMachine(holder, 1280, 2))
             .langValue("Large Steel Boiler")
             .allowExtendedFacing(false)
