@@ -172,30 +172,43 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                 .toList();
     }
 
-    private float getWaterMultiplierFromTanks() {
+    private DrainResult tryDrainWater(int maxDrain) {
         List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
         inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
         inputTanks.addAll(getCapabilitiesFlat(IO.BOTH, FluidRecipeCapability.CAP));
 
-        float bestMultiplier = 1.0f;
-
-        for (IRecipeHandler<?> tank : inputTanks) {
-            for (Object content : tank.getContents()) {
-                if (!(content instanceof net.minecraftforge.fluids.FluidStack fluidStack))
-                    continue;
-                if (fluidStack.isEmpty())
-                    continue;
-
-                for (Map.Entry<TagKey<Fluid>, Float> entry : WATER_STEAM_MULTIPLIERS.entrySet()) {
-                    if (fluidStack.getFluid().is(entry.getKey())) {
-                        if (entry.getValue() > bestMultiplier) {
-                            bestMultiplier = entry.getValue();
-                        }
-                    }
+        for (Map.Entry<TagKey<Fluid>, Float> entry : WATER_STEAM_MULTIPLIERS.entrySet()) {
+            List<FluidIngredient> check = new ArrayList<>(List.of(FluidIngredient.of(entry.getKey(), maxDrain)));
+            for (IRecipeHandler<?> tank : inputTanks) {
+                check = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, check, true);
+                if (check == null || check.isEmpty())
+                    break;
+            }
+            if (check == null || check.isEmpty()) {
+                // Drain only if possible
+                List<FluidIngredient> drain = new ArrayList<>(List.of(FluidIngredient.of(entry.getKey(), maxDrain)));
+                for (IRecipeHandler<?> tank : inputTanks) {
+                    drain = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, drain, false);
+                    if (drain == null || drain.isEmpty())
+                        break;
                 }
+                return new DrainResult(maxDrain, entry.getValue());
             }
         }
-        return bestMultiplier;
+
+        // Fallback
+        List<FluidIngredient> drainWater = new ArrayList<>(List.of(FluidIngredient.of(WATER_BOILER, maxDrain)));
+        for (IRecipeHandler<?> tank : inputTanks) {
+            drainWater = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, drainWater, false);
+            if (drainWater == null || drainWater.isEmpty())
+                return new DrainResult(maxDrain, 1.0f);
+        }
+
+        int drained = (drainWater == null || drainWater.isEmpty()) ? maxDrain : maxDrain - drainWater.get(0).getAmount();
+        return new DrainResult(drained, 1.0f);
+    }
+
+    private record DrainResult(int drained, float multiplier) {
     }
 
     protected void updateCurrentTemperature() {
@@ -230,18 +243,9 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                 steamGenerated = 0;
             } else if (maxDrain > 0) {
 
-                float waterMultiplier = getWaterMultiplierFromTanks();
-
-                var drainWater = List.of(FluidIngredient.of(WATER_BOILER, maxDrain));
-                List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
-                inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
-                inputTanks.addAll(getCapabilitiesFlat(IO.BOTH, FluidRecipeCapability.CAP));
-                for (IRecipeHandler<?> tank : inputTanks) {
-                    drainWater = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, drainWater, false);
-                    if (drainWater == null || drainWater.isEmpty())
-                        break;
-                }
-                var drained = (drainWater == null || drainWater.isEmpty()) ? maxDrain : maxDrain - drainWater.get(0).getAmount();
+                DrainResult drainResult = tryDrainWater(maxDrain);
+                int drained = drainResult.drained();
+                float waterMultiplier = drainResult.multiplier();
 
                 steamGenerated = (int) Math.round(
                         maxDrainExact * ((double) drained / Math.max(1, maxDrain))
