@@ -21,7 +21,7 @@
     }
   ],
   "loader": "gtceu:machine",
-  "machine": "tfg:steel_large_boiler",
+  "machine": "tfg:large_steel_boiler",
   "texture_overrides": {
     "all": "gtceu:block/casings/solid/machine_casing_solid_steel"
   },
