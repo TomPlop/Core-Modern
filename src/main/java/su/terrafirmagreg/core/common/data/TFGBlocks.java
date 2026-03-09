@@ -648,7 +648,7 @@ public final class TFGBlocks {
     public static final BlockEntry<Block> BIOCULTURE_CASING = createCasingBlock("casings/machine_casing_bioculture", GTModels.cubeAllModel(TFGCore.id("block/casings/machine_casing_bioculture")),
             SoundType.COPPER, 5.5f, 6f, MapColor.COLOR_RED, false);
 
-    public static final BlockEntry<Block> BIOCULTURE_GLASS_CASING = TFGCore.REGISTRATE.block("casings/machine_casing_bioculture_glass", Block::new)
+    public static final BlockEntry<ConnectedGlassBlock> BIOCULTURE_GLASS_CASING = TFGCore.REGISTRATE.block("casings/machine_casing_bioculture_glass", ConnectedGlassBlock::new)
             .initialProperties(() -> Blocks.IRON_BLOCK)
             .properties(p -> p.isValidSpawn((state, level, pos, ent) -> false)
                     .sound(SoundType.GLASS).strength(5, 6).noOcclusion()
