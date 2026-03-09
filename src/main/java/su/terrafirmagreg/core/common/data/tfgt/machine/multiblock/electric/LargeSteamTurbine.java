@@ -57,7 +57,7 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
         }
         return null;
     }
-
+/*
     private boolean isIntakesObstructed() {
         BlockPos rotorPos = getRotorHolderPos();
         if (rotorPos == null)
@@ -101,7 +101,9 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
         }
 
         return obstructed;
-    }
+
+
+    }*/
 
     @Nullable
     private IRotorHolderMachine getRotorHolder() {
@@ -202,9 +204,9 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
         if (!(machine instanceof LargeSteamTurbine turbineMachine)) {
             return RecipeModifier.nullWrongType(LargeSteamTurbine.class, machine);
         }
-        if (turbineMachine.isIntakesObstructed()) {
-            return ModifierFunction.NULL;
-        }
+        //if (turbineMachine.isIntakesObstructed()) {
+        //    return ModifierFunction.NULL;
+        //}
         var rotorHolder = turbineMachine.getRotorHolder();
         if (rotorHolder == null)
             return ModifierFunction.NULL;
@@ -279,7 +281,7 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
             }
         }
     }
-
+/*
     @Override
     public void attachTooltips(TooltipsPanel tooltipsPanel) {
         super.attachTooltips(tooltipsPanel);
@@ -290,4 +292,6 @@ public class LargeSteamTurbine extends WorkableElectricMultiblockMachine
                 this::isIntakesObstructed,
                 () -> null));
     }
+
+ */
 }
