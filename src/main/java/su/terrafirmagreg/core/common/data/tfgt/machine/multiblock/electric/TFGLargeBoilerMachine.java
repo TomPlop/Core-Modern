@@ -73,12 +73,12 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             new BoosterFluid(
                     () -> GTMaterials.Creosote.getFluid(1).getFluid(),
                     10, 500,
-                    0,
+                    0, // Works for all the Boilers
                     "block.gtceu.creosote"),
             new BoosterFluid(
                     () -> GTMaterials.Lubricant.getFluid(1).getFluid(),
                     20, 1000,
-                    1800,
+                    1280, // Only works for Steel Boiler and +
                     "material.gtceu.lubricant")
 
     /*
@@ -113,6 +113,15 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
     @Nullable
     protected TickableSubscription temperatureSubs;
     private int steamGenerated;
+
+    // Track last water type used — for GUI display
+    @Persisted
+    @DescSynced
+    @Nullable
+    private String lastWaterTagKey = null; // null = standard water (water_boiler tag)
+    @Persisted
+    @DescSynced
+    private float lastWaterMultiplier = 1.0f;
 
     public TFGLargeBoilerMachine(IMachineBlockEntity holder, int maxTemperature, int heatSpeed, Object... args) {
         super(holder, args);
@@ -192,7 +201,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                     if (drain == null || drain.isEmpty())
                         break;
                 }
-                return new DrainResult(maxDrain, entry.getValue());
+                return new DrainResult(maxDrain, entry.getValue(), entry.getKey().location().toString());
             }
         }
 
@@ -201,14 +210,14 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         for (IRecipeHandler<?> tank : inputTanks) {
             drainWater = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, drainWater, false);
             if (drainWater == null || drainWater.isEmpty())
-                return new DrainResult(maxDrain, 1.0f);
+                return new DrainResult(maxDrain, 1.0f, null);
         }
 
         int drained = (drainWater == null || drainWater.isEmpty()) ? maxDrain : maxDrain - drainWater.get(0).getAmount();
-        return new DrainResult(drained, 1.0f);
+        return new DrainResult(drained, 1.0f, null);
     }
 
-    private record DrainResult(int drained, float multiplier) {
+    private record DrainResult(int drained, float multiplier, @Nullable String tagKey) {
     }
 
     protected void updateCurrentTemperature() {
@@ -240,17 +249,23 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                     (ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater * 100.0);
 
             // Only for amount of water consummed
-            final int WATER_THRESHOLD = 800;
+            final int WATER_THRESHOLD = 800; // From that temperature water is getting more consumed
             double tempFactor = currentTemperature <= WATER_THRESHOLD ? 1.0 : 1.0 + ((currentTemperature - WATER_THRESHOLD) / 100.0) * 0.10;
 
             int maxDrain = (int) Math.round(baseDrainExact * tempFactor); // eau consommée augmentée
 
             if (currentTemperature < 100) {
                 steamGenerated = 0;
+                lastWaterTagKey = null;
+                lastWaterMultiplier = 1.0f;
             } else if (maxDrain > 0) {
                 DrainResult drainResult = tryDrainWater(maxDrain);
                 int drained = drainResult.drained();
                 float waterMultiplier = drainResult.multiplier();
+
+                // Update GUI water display state
+                lastWaterTagKey = drainResult.tagKey();
+                lastWaterMultiplier = waterMultiplier;
 
                 // Steam on baseDrainExact and not maxDrain
                 steamGenerated = (int) Math.round(
@@ -354,6 +369,15 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         return ModifierFunction.IDENTITY;
     }
 
+    public void cycleRecipeType() {
+        if (!this.getRecipeLogic().isWorking()) {
+            int nextIndex = (this.getActiveRecipeType() + 1) % this.getRecipeTypes().length;
+            this.setActiveRecipeType(nextIndex);
+            this.getRecipeLogic().updateTickSubscription();
+        }
+    }
+
+    @Override
     public void addDisplayText(List<Component> textList) {
         IDisplayUIMachine.super.addDisplayText(textList);
         if (isFormed()) {
@@ -372,9 +396,28 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                         .withStyle(ChatFormatting.GRAY));
             }
 
+            // Water type currently in use
+            if (lastWaterTagKey != null) {
+                String tagPath = ResourceLocation.parse(lastWaterTagKey).getPath();
+                textList.add(Component.translatable("tfg.multiblock.large_boiler.water_boosted",
+                        Component.translatable("fluid.tag.tfg." + tagPath).withStyle(ChatFormatting.AQUA),
+                        Component.literal("x" + lastWaterMultiplier).withStyle(ChatFormatting.AQUA)));
+            } else {
+                textList.add(Component.translatable("tfg.multiblock.large_boiler.water_normal")
+                        .withStyle(ChatFormatting.GRAY));
+            }
+
             int efficiencyPercent = (int) Math.round(100 - ((1.0 - getRecipeLogic().getTemperatureMultiplier()) * 100));
             textList.add(Component.translatable("tfg.multiblock.large_boiler.fuel_efficiency",
                     ChatFormatting.YELLOW.toString() + efficiencyPercent + "%"));
+
+            if (getRecipeTypes().length > 1) {
+                var modeText = Component.translatable("tfg.multiblock.large_boiler.mode")
+                        .append(Component.translatable("tfg.recipe_type." + getRecipeType().registryName.getPath()).withStyle(ChatFormatting.AQUA))
+                        .append(" ")
+                        .append(ComponentPanelWidget.withButton(Component.literal("[SWITCH]"), "switch_mode"));
+                textList.add(modeText);
+            }
 
             var throttleText = Component.translatable("gtceu.multiblock.large_boiler.throttle",
                     ChatFormatting.AQUA.toString() + getThrottle() + "%")
@@ -393,9 +436,14 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
 
     public void handleDisplayClick(String componentData, ClickData clickData) {
         if (!clickData.isRemote) {
-            int result = componentData.equals("add") ? 5 : -5;
-            this.throttle = Mth.clamp(throttle + result, 25, 100);
-            ((TFGLargeBoilerRecipeLogic) this.getRecipeLogic()).modifyFuelBurnTime(this.throttle);
+            if (componentData.equals("add") || componentData.equals("sub")) {
+                int result = componentData.equals("add") ? 5 : -5;
+                this.throttle = Mth.clamp(throttle + result, 25, 100);
+                ((TFGLargeBoilerRecipeLogic) this.getRecipeLogic()).modifyFuelBurnTime(this.throttle);
+
+            } else if (componentData.equals("switch_mode")) {
+                this.cycleRecipeType();
+            }
         }
     }
 
@@ -404,7 +452,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         return GuiTextures.DISPLAY_STEAM.get(maxTemperature > 800);
     }
 
-    public static class TFGLargeBoilerRecipeLogic extends RecipeLogic {
+    public class TFGLargeBoilerRecipeLogic extends RecipeLogic {
 
         @Persisted
         @DescSynced
@@ -423,7 +471,7 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         public double getTemperatureMultiplier() {
             TFGLargeBoilerMachine boiler = (TFGLargeBoilerMachine) machine;
             int current = boiler.getCurrentTemperature();
-            final int THRESHOLD = 800;
+            final int THRESHOLD = 800; // After this Temperature the recipe starts to be faster
             final double REDUCTION_PER_100_DEGREES = 0.05; // 5% every 100C over 800
 
             if (current <= THRESHOLD)
