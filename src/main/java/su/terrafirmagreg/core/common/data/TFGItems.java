@@ -4,9 +4,11 @@ import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.item.ComponentItem;
 import com.gregtechceu.gtceu.api.item.IComponentItem;
 import com.gregtechceu.gtceu.api.item.component.IItemComponent;
+import com.gregtechceu.gtceu.common.data.GTCovers;
 import com.gregtechceu.gtceu.common.data.GTMedicalConditions;
 import com.gregtechceu.gtceu.common.data.materials.GTFoods;
 import com.gregtechceu.gtceu.common.item.AntidoteBehavior;
+import com.gregtechceu.gtceu.common.item.CoverPlaceBehavior;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -30,6 +32,7 @@ import earth.terrarium.adastra.common.items.vehicles.RocketItem;
 
 import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.data.items.*;
+import su.terrafirmagreg.core.common.data.tfgt.TFGTCovers;
 import su.terrafirmagreg.core.common.data.tfgt.TFGTMedicalConditions;
 import su.terrafirmagreg.core.utils.ModelUtils;
 
@@ -329,6 +332,7 @@ public class TFGItems {
 
     public static ItemEntry<ComponentItem> COVER_ROTTEN_VOIDING = TFGCore.REGISTRATE
             .item("rotten_voiding_cover", ComponentItem::create)
+            .onRegister(attach(new CoverPlaceBehavior(TFGTCovers.ITEM_VOIDING_ROTTEN)))
             .register();
 
     public static <T extends IComponentItem> NonNullConsumer<T> attach(IItemComponent components) {
