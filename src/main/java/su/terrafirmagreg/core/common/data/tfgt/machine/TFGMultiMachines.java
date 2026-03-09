@@ -1079,7 +1079,7 @@ public class TFGMultiMachines {
             .langValue("Large Steel Boiler")
             .allowExtendedFacing(false)
             .rotationState(RotationState.NON_Y_AXIS)
-            .recipeType(GTRecipeTypes.LARGE_BOILER_RECIPES)
+            .recipeTypes(GTRecipeTypes.LARGE_BOILER_RECIPES, TFGTRecipeTypes.SUPER_BOILER)
             .recipeModifier(TFGLargeBoilerMachine::recipeModifier, true)
             .appearanceBlock(GTBlocks.CASING_STEEL_SOLID)
             .partAppearance((controller, part, side) ->
