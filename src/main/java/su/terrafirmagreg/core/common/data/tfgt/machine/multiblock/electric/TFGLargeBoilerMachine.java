@@ -235,20 +235,26 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                 getRecipeLogic().refreshDurationForTemperature();
             }
 
-            double maxDrainExact = (double) currentTemperature * throttle * TICKS_PER_STEAM_GENERATION /
+            // Amount of steam output
+            double baseDrainExact = (double) currentTemperature * throttle * TICKS_PER_STEAM_GENERATION /
                     (ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater * 100.0);
-            int maxDrain = (int) Math.round(maxDrainExact);
+
+            // Only for amount of water consummed
+            final int WATER_THRESHOLD = 800;
+            double tempFactor = currentTemperature <= WATER_THRESHOLD ? 1.0 : 1.0 + ((currentTemperature - WATER_THRESHOLD) / 100.0) * 0.10;
+
+            int maxDrain = (int) Math.round(baseDrainExact * tempFactor); // eau consommée augmentée
 
             if (currentTemperature < 100) {
                 steamGenerated = 0;
             } else if (maxDrain > 0) {
-
                 DrainResult drainResult = tryDrainWater(maxDrain);
                 int drained = drainResult.drained();
                 float waterMultiplier = drainResult.multiplier();
 
+                // Steam on baseDrainExact and not maxDrain
                 steamGenerated = (int) Math.round(
-                        maxDrainExact * ((double) drained / Math.max(1, maxDrain))
+                        baseDrainExact * ((double) drained / Math.max(1, maxDrain))
                                 * ConfigHolder.INSTANCE.machines.largeBoilers.steamPerWater
                                 * waterMultiplier);
 
