@@ -64,8 +64,8 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             Supplier<Fluid> fluid,
             int fluidAmountMb,
             int temperatureBonus,
-            int minBoilerTemperature // maxTemperature required define in the Multiblock
-    ) {
+            int minBoilerTemperature, // maxTemperature required define in the Multiblock
+            String translationKey) {
     }
 
     // Every Boosters available
@@ -73,11 +73,13 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
             new BoosterFluid(
                     () -> GTMaterials.Creosote.getFluid(1).getFluid(),
                     10, 500,
-                    0),
+                    0,
+                    "block.gtceu.creosote"),
             new BoosterFluid(
                     () -> GTMaterials.Lubricant.getFluid(1).getFluid(),
                     20, 1000,
-                    1800)
+                    1800,
+                    "material.gtceu.lubricant")
 
     /*
     // Example of a Booster that requires 1800 Temp (minBoilerTemperature = 1800) :
@@ -276,10 +278,8 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
         updateSteamSubscription();
     }
 
-    // Drain the best Booster available
-    // If no Booster then reset the max temperature
-
-    private int tryDrainBoostFluid() {
+    @Nullable
+    private BoosterFluid getBestAvailableBooster() {
         List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
         inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
         inputTanks.addAll(getCapabilitiesFlat(IO.BOTH, FluidRecipeCapability.CAP));
@@ -297,9 +297,20 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                 }
             }
         }
+        return bestBooster;
+    }
 
+    // Drain the best Booster available
+    // If no Booster then reset the max temperature
+
+    private int tryDrainBoostFluid() {
+        BoosterFluid bestBooster = getBestAvailableBooster();
         if (bestBooster == null)
             return 0;
+
+        List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
+        inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
+        inputTanks.addAll(getCapabilitiesFlat(IO.BOTH, FluidRecipeCapability.CAP));
 
         var drainBoost = List.of(FluidIngredient.of(bestBooster.fluid().get(), bestBooster.fluidAmountMb()));
         for (IRecipeHandler<?> tank : inputTanks) {
@@ -311,24 +322,8 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
     }
 
     public int getEffectiveMaxTemperature() {
-        List<IRecipeHandler<?>> inputTanks = new ArrayList<>();
-        inputTanks.addAll(getCapabilitiesFlat(IO.IN, FluidRecipeCapability.CAP));
-        inputTanks.addAll(getCapabilitiesFlat(IO.BOTH, FluidRecipeCapability.CAP));
-
-        int bestBonus = 0;
-        for (BoosterFluid booster : getCompatibleBoosters()) {
-            var checkBoost = List.of(FluidIngredient.of(booster.fluid().get(), booster.fluidAmountMb()));
-            for (IRecipeHandler<?> tank : inputTanks) {
-                var result = (List<FluidIngredient>) tank.handleRecipe(IO.IN, null, checkBoost, true);
-                if (result == null || result.isEmpty()) {
-                    if (booster.temperatureBonus() > bestBonus) {
-                        bestBonus = booster.temperatureBonus();
-                    }
-                    break;
-                }
-            }
-        }
-        return maxTemperature + bestBonus;
+        BoosterFluid best = getBestAvailableBooster();
+        return maxTemperature + (best != null ? best.temperatureBonus() : 0);
     }
 
     protected int getCoolDownRate() {
@@ -356,6 +351,16 @@ public class TFGLargeBoilerMachine extends WorkableMultiblockMachine implements 
                     currentTemperature + 274, getEffectiveMaxTemperature() + 274));
             textList.add(Component.translatable("gtceu.multiblock.large_boiler.steam_output",
                     steamGenerated / TICKS_PER_STEAM_GENERATION));
+
+            BoosterFluid activeBooster = getBestAvailableBooster();
+            if (activeBooster != null) {
+                textList.add(Component.translatable("tfg.multiblock.large_boiler.booster_active",
+                        Component.translatable(activeBooster.translationKey()).withStyle(ChatFormatting.GREEN),
+                        Component.literal("+" + activeBooster.temperatureBonus()).withStyle(ChatFormatting.GREEN)));
+            } else {
+                textList.add(Component.translatable("tfg.multiblock.large_boiler.booster_none")
+                        .withStyle(ChatFormatting.GRAY));
+            }
 
             int efficiencyPercent = (int) Math.round(100 - ((1.0 - getRecipeLogic().getTemperatureMultiplier()) * 100));
             textList.add(Component.translatable("tfg.multiblock.large_boiler.fuel_efficiency",
