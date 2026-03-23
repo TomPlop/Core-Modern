@@ -110,9 +110,9 @@ public class CustomSpawnHelper {
         }
     }
 
-    public static HashMap<String, CustomSpawnCondition> CUSTOM_SPAWN_CONDITIONS = new HashMap<>();
+    public static final HashMap<String, CustomSpawnCondition> CUSTOM_SPAWN_CONDITIONS = new HashMap<>();
 
-    public static HashMap<String, MutableComponent> SPAWN_DIFFICULTIES = new HashMap<>(Map.of(
+    public static final HashMap<String, MutableComponent> SPAWN_DIFFICULTIES = new HashMap<>(Map.of(
             "easy", Component.translatable("tfg.gui.spawn_difficulty.easy"),
             "normal", Component.translatable("tfg.gui.spawn_difficulty.normal"),
             "hard", Component.translatable("tfg.gui.spawn_difficulty.hard"),
@@ -128,15 +128,25 @@ public class CustomSpawnHelper {
             Level.OVERWORLD,
             SPAWN_DIFFICULTIES.get("hard"));
 
+    public static final CustomSpawnCondition TUNDRA_SPAWN = new CustomSpawnCondition(
+            "tundra",
+            0,
+            -10000,
+            1,
+            new float[] { -16f, -10f },
+            new float[] { 150f, 300f },
+            Level.OVERWORLD,
+            SPAWN_DIFFICULTIES.get("hard"));
+
     public static final CustomSpawnCondition POLAR_SPAWN = new CustomSpawnCondition(
             "polar",
             -2000,
             -10000,
             1,
-            new float[] { -20f, -10f },
+            new float[] { -20f, -16f },
             new float[] { 100f, 250f },
             Level.OVERWORLD,
-            SPAWN_DIFFICULTIES.get("hard"));
+            SPAWN_DIFFICULTIES.get("extreme"));
 
     public static final CustomSpawnCondition TEMPERATE_SPAWN = new CustomSpawnCondition(
             "temperate",
@@ -190,9 +200,10 @@ public class CustomSpawnHelper {
         initNewType(DEFAULT_SPAWN);
         initNewType(TEMPERATE_SPAWN);
         initNewType(TROPICAL_SPAWN);
+        initNewType(TUNDRA_SPAWN);
         initNewType(POLAR_SPAWN);
         initNewType(DESERT_SPAWN);
-        initNewType(BENEATH_SPAWN);
+        //initNewType(BENEATH_SPAWN); Disabled for now
     }
 
     /// Holds spawn conditions for a particular custom world spawn

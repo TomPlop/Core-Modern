@@ -1,6 +1,10 @@
 package su.terrafirmagreg.core.config;
 
+import java.util.stream.Collectors;
+
 import net.minecraftforge.common.ForgeConfigSpec;
+
+import su.terrafirmagreg.core.common.data.utils.CustomSpawnHelper;
 
 /**
  * Common Config Not synced with server, saved per Minecraft instance Use for config settings that don't make sense to
@@ -18,7 +22,8 @@ public final class CommonConfig {
                 .define("tfcAmbientalCompat", true);
         builder.pop();
         builder.push("worldSpawn");
-        NEW_WORLD_SPAWN = builder.comment("ID of the custom spawn conditions for the next generated world").define("id", "default");
+        NEW_WORLD_SPAWN = builder.comment("ID of the custom spawn conditions for the next generated world.\nValid ids are: "
+                + CustomSpawnHelper.CUSTOM_SPAWN_CONDITIONS.values().stream().map(CustomSpawnHelper.CustomSpawnCondition::id).collect(Collectors.joining(", "))).define("id", "default");
         builder.pop();
 
     }
