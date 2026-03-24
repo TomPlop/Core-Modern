@@ -32,7 +32,7 @@ public class CustomSpawnHelper {
     public static final GlobalPos MARS_PLACEHOLDER = GlobalPos.of(Planet.MARS, BlockPos.ZERO);
 
     public static void respawnTeleporter(ServerPlayer player, ServerLevel targetLevel, GlobalPos worldSpawn) {
-        System.out.println("attempting to spawn player at: " + worldSpawn);
+        //System.out.println("attempting to spawn player at: " + worldSpawn);
 
         player.changeDimension(targetLevel, new ITeleporter() {
 

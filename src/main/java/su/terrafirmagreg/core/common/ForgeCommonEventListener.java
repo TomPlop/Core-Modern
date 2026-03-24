@@ -139,18 +139,16 @@ public final class ForgeCommonEventListener {
 
                 int chunkSearchRadius = 32;
 
-                Predicate<Holder<Biome>> lushCavePredicate = testBiome -> testBiome.is(ResourceLocation.fromNamespaceAndPath(TFGCore.MOD_ID, "nether/lush_hollow"));
-
                 int count = 0;
                 while (Objects.isNull(validSpawn)) {
                     ChunkPos chunkPos = new ChunkPos(random.nextInt(chunkSearchRadius * 2) - chunkSearchRadius, random.nextInt(chunkSearchRadius * 2) - chunkSearchRadius);
-                    System.out.println("ChunkPos: " + chunkPos);
+                    //System.out.println("ChunkPos: " + chunkPos);
                     var testPos = chunkPos.getMiddleBlockPosition(128);
 
                     int buildHeightLimit = Math.min(targetLevel.getMaxBuildHeight(), targetLevel.getMinBuildHeight() + targetLevel.getLogicalHeight()) - 1;
                     BlockPos.MutableBlockPos mutableTestPos = testPos.mutable();
 
-                    System.out.println(targetLevel.getBlockState(mutableTestPos).getBlock().toString() + targetLevel.getBlockState(mutableTestPos.above()).getBlock());
+                    //System.out.println(targetLevel.getBlockState(mutableTestPos).getBlock().toString() + targetLevel.getBlockState(mutableTestPos.above()).getBlock());
 
                     ChunkAccess chunk = targetLevel.getChunk(mutableTestPos.immutable());
 
@@ -191,7 +189,7 @@ public final class ForgeCommonEventListener {
                         //validSpawn = BlockPos.ZERO;
                         chunkSearchRadius = chunkSearchRadius * 2;
                         count = -1;
-                        System.out.println("No Valid Spawn :(, trying search radius of " + chunkSearchRadius);
+                        //System.out.println("No Valid Spawn :(, trying search radius of " + chunkSearchRadius);
                     }
 
                     count++;
