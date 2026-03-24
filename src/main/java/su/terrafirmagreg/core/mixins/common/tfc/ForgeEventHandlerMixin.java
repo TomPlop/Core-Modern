@@ -2,6 +2,10 @@ package su.terrafirmagreg.core.mixins.common.tfc;
 
 import static net.dries007.tfc.TerraFirmaCraft.LOGGER;
 
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -66,6 +70,21 @@ public class ForgeEventHandlerMixin {
         // Otherwise do as usual
         return original.call(level, pos, newState);
     }
+
+    @Inject(method = "onLivingSpawnCheck", at = @At("TAIL"), remap = false)
+    private static void tfg$onLivingSpawnCheck(MobSpawnEvent.FinalizeSpawn event, CallbackInfo ci) {
+        // Prevent surface slimes because TFC makes an exception for them for some reason
+        final MobSpawnType spawn = event.getSpawnType();
+        if (spawn == MobSpawnType.NATURAL || spawn == MobSpawnType.CHUNK_GENERATION) {
+            final LivingEntity entity = event.getEntity();
+            if (entity.getType() == EntityType.SLIME && event.getLevel().getRawBrightness(entity.blockPosition(), 0) != 0) {
+                event.setSpawnCancelled(true);
+                event.setCanceled(true);
+            }
+        }
+    }
+
+
 
     /**
      * @author
@@ -157,7 +176,7 @@ public class ForgeEventHandlerMixin {
             event.setCanceled(true);
         }
 
-        
+
     }
 
 
