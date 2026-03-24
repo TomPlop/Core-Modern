@@ -69,7 +69,8 @@ jobs:
           PROJECT_VERSION_TYPE="${{ steps.project_info.outputs.version_type }}"
           GAME_VERSIONS="${{ steps.project_info.outputs.minecraft_version }}"
           JAVA_VERSION="${{ steps.project_info.outputs.java_version }}"
-          LOADERS="${{ steps.project_info.outputs.loaders }}"
+          LOADERS="${{ steps.project_info.outputs.loader }}"
+          LOADERS_VERSION="${{ steps.project_info.outputs.forge_version }}"
 
           # Preparation
           IS_RELEASE_CANDIDATE="false"
@@ -89,6 +90,7 @@ jobs:
           echo "game_version=$GAME_VERSIONS" >> $GITHUB_OUTPUT
           echo "java_version=$JAVA_VERSION" >> $GITHUB_OUTPUT
           echo "loaders=$LOADERS" >> $GITHUB_OUTPUT
+          echo "loaders_version=$LOADERS_VERSION" >> $GITHUB_OUTPUT
           echo "name=$PROJECT_NAME" >> $GITHUB_OUTPUT
           echo "version=$PROJECT_VERSION" >> $GITHUB_OUTPUT
           echo "version_type=$PROJECT_VERSION_TYPE" >> $GITHUB_OUTPUT
@@ -109,6 +111,7 @@ jobs:
             | 📃 **Release Type** | `${{ steps.check.outputs.version_type }}` |
             | 📃 **Game Versions** | `${{ steps.check.outputs.game_version }}` |
             | 📃 **Loaders** | `${{ steps.check.outputs.loaders }}` |
+            | 📃 **Loaders Version** | `${{ steps.check.outputs.loaders_version }}` |
 
             ### Build Decision
             | Parameter | Value |
