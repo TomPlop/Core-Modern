@@ -1,12 +1,14 @@
 package su.terrafirmagreg.core.common.data;
 
+import java.util.*;
+
 import com.eerussianguy.firmalife.common.blocks.FLBlocks;
 import com.eerussianguy.firmalife.common.blocks.greenhouse.Greenhouse;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.data.blockentity.ArtisanTableBlockEntity;
@@ -15,8 +17,6 @@ import su.terrafirmagreg.core.common.data.blockentity.LargeNestBoxBlockEntity;
 import su.terrafirmagreg.core.common.data.blockentity.ReflectorBlockEntity;
 import su.terrafirmagreg.core.common.data.blockentity.TickerBlockEntity;
 import su.terrafirmagreg.core.mixins.common.minecraft.BlockEntityTypeAccessor;
-
-import java.util.*;
 
 public class TFGBlockEntities {
     public static void init() {
@@ -61,7 +61,7 @@ public class TFGBlockEntities {
     }
 
     public static void finaliseBEModification() {
-        for (var key: beModification.keySet()) {
+        for (var key : beModification.keySet()) {
             var beType = (BlockEntityTypeAccessor) key.get();
             Set<Block> blocks = new HashSet<>();
             blocks.addAll(beType.tfg$getValidBlocks());
