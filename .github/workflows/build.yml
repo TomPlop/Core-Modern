@@ -150,8 +150,7 @@ jobs:
       name: "[🚀] Release"
       needs: [info, build]
       runs-on: ubuntu-latest
-      if: false
-      # if: ${{ needs.info.outputs.make_release == 'true' }}
+      if: ${{ needs.info.outputs.make_release }}
 
       steps:
         - name: "[📦] Download artifact"
