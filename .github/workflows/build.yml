@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - dev
-    paths:
-      - 'gradle/**'
-      - 'src/**'
-      - 'gradle.properties'
-      - 'CHANGELOG.md'
+    # paths:
+    #   - 'gradle/**'
+    #   - 'src/**'
+    #   - 'gradle.properties'
+    #   - 'CHANGELOG.md'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
