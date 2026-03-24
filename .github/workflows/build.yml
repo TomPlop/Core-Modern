@@ -18,7 +18,7 @@ jobs:
   info:
     name: "[🖥️] Project Info"
     runs-on: ubuntu-latest
-    if: ${{ github.repository_owner == 'TerraFirmaGreg-Team' }}
+    if: ${{ !github.event.repository.fork }}
     outputs:
       name: ${{ steps.check.outputs.name }}
       version: ${{ steps.check.outputs.version }}
@@ -124,7 +124,7 @@ jobs:
             echo "::error::gradle.properties not found"
             exit 1
           fi
-          sed -i "s/^mod_version=.*/mod_version=${VERSION}/g" gradle.properties
+          sed -i "s/^mod_version[[:space:]]*=.*/mod_version = ${VERSION}/g" gradle.properties
 
       - name: "[📁] Setup Java"
         uses: actions/setup-java@v5.2.0
