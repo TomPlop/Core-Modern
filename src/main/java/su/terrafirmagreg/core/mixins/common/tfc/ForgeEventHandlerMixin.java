@@ -111,9 +111,9 @@ public class ForgeEventHandlerMixin {
                                 random, extension));
                 Region.Point regionPoint = regionGen.getOrCreateRegionPoint(Units.blockToGrid(chunkPos.getMinBlockX()), Units.blockToGrid(chunkPos.getMinBlockZ()));
 
-                System.out.println("Testing chunkPos " + chunkPos.getWorldPosition());
-                System.out.println(regionPoint.temperature);
-                System.out.println(regionPoint.rainfall);
+                //System.out.println("Testing chunkPos " + chunkPos.getWorldPosition());
+                //System.out.println(regionPoint.temperature);
+                //System.out.println(regionPoint.rainfall);
                 if (CustomSpawnHelper.testWithinRanges(regionPoint.temperature, regionPoint.rainfall, condition)) {
                     climateMatch = true;
                 } else {
