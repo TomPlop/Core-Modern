@@ -195,7 +195,7 @@ public final class ForgeCommonEventListener {
                     count++;
                 }
 
-                System.out.println("Found valid spawn point: " + validSpawn);
+                TFGCore.LOGGER.info("Found valid spawn point: " + validSpawn);
                 CustomSpawnSaveHandler.setSpawnPos(server.overworld(), GlobalPos.of(spawnPos.dimension(), validSpawn));
             }
         }
