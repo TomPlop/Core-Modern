@@ -105,14 +105,16 @@ public class ForgeEventHandlerMixin {
                 }
             }
 
-            levelData.setSpawn(chunkPos.getWorldPosition().offset(8, generator.getSpawnHeight(level), 8), 0.0F);
+            BlockPos defaultPos = chunkPos.getWorldPosition().offset(8, generator.getSpawnHeight(level), 8);
+
+            levelData.setSpawn(defaultPos, 0.0F);
 
             boolean foundExactSpawn = false;
             int x = 0, z = 0;
             int xStep = 0;
             int zStep = -1;
 
-            GlobalPos globalSpawnPos = null;
+            GlobalPos globalSpawnPos = GlobalPos.of(ServerLevel.OVERWORLD, defaultPos);
 
             for (int tries = 0; tries < 1024; ++tries) {
                 if (x > -16 && x <= 16 && z > -16 && z <= 16) {

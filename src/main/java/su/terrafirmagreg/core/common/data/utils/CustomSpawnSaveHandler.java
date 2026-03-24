@@ -15,7 +15,7 @@ public class CustomSpawnSaveHandler extends SaveHandler {
 
     @Override
     public void loadData(CompoundTag compoundTag) {
-        GlobalPos.CODEC.parse(NbtOps.INSTANCE, compoundTag).result().ifPresent(globalPos -> data = globalPos);
+        GlobalPos.CODEC.parse(NbtOps.INSTANCE, compoundTag.get("spawn")).result().ifPresent(globalPos -> data = globalPos);
     }
 
     @Override
@@ -32,16 +32,11 @@ public class CustomSpawnSaveHandler extends SaveHandler {
     public static void setSpawnPos(ServerLevel level, GlobalPos globalPos) {
         CustomSpawnSaveHandler handler = read(level);
         handler.data = globalPos;
+        handler.setDirty();
     }
 
     public static CustomSpawnSaveHandler read(ServerLevel level) {
         return (CustomSpawnSaveHandler) read(level.getDataStorage(), CustomSpawnSaveHandler::new, "tfg_spawn_position_data");
-    }
-
-    //This probably doesn't need to always be true, I just don't know enough about it
-    @Override
-    public boolean isDirty() {
-        return true;
     }
 
 }
