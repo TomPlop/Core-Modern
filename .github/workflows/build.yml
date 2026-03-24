@@ -14,9 +14,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-env:
-  DEV_ENVIRONMENT: ${{ github.ref_name != 'main' }}
-
 jobs:
   info:
     name: "[🖥️] Project Info"
@@ -99,7 +96,7 @@ jobs:
             ### Project Info
             | Parameter | Value |
             |-----------|-------|
-            | 📃 **Name** | ${{ steps.check.outputs.name }} |
+            | 📃 **Name** | `${{ steps.check.outputs.name }}` |
             | 📃 **Version** | `${{ steps.check.outputs.version }}` |
             | 📃 **Release Type** | `${{ steps.check.outputs.version_type }}` |
             | 📃 **Game Versions** | `${{ steps.check.outputs.game_version }}` |
@@ -122,9 +119,12 @@ jobs:
       - name: "[🔄] Replace"
         shell: bash
         run: |
-          set +e
-          VERSION=${{ needs.info.outputs.version }}
-          sed -i -e "s/^mod_version=.*/mod_version=${VERSION}/g" gradle.properties
+          VERSION="${{ needs.info.outputs.version }}"
+          if [ ! -f gradle.properties ]; then
+            echo "::error::gradle.properties not found"
+            exit 1
+          fi
+          sed -i "s/^mod_version=.*/mod_version=${VERSION}/g" gradle.properties
 
       - name: "[📁] Setup Java"
         uses: actions/setup-java@v5.2.0
@@ -137,13 +137,14 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build -x spotlessCheck
+          ls -la build/libs/
 
       - name: "[🚀] Upload Artifact"
         uses: actions/upload-artifact@v7.0.0
         with:
           name: ${{ needs.info.outputs.full_name }}
           path: build/libs/${{ needs.info.outputs.full_name }}.jar
-          if-no-files-found: warn
+          if-no-files-found: error
 
   release:
       name: "[🚀] Release"
