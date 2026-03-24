@@ -38,6 +38,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: "[🔍] Check required files and folders"
+        uses: andstor/file-existence-action@v3.0.0
+        with:
+          fail: true
+          ignore_case: true
+          files: "gradle.properties, build.gradle, LICENSE, README.md, src"
+
       - name: "[📥] Get Project Info"
         id: project_info
         uses: madhead/read-java-properties@latest
