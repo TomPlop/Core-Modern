@@ -83,9 +83,7 @@ public class ForgeEventHandlerMixin {
             }
         }
     }
-
-
-
+    
     /**
      * @author
      * @reason It was becoming too complicated to do as a normal mixin.
