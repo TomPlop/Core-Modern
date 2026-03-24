@@ -4,12 +4,12 @@ on:
   push:
     branches:
       - dev
-    paths:
-      - 'gradle/**'
-      - 'src/**'
-      - '*.gradle'
-      - 'gradle.properties'
-      - 'CHANGELOG.md'
+    # paths:
+    #   - 'gradle/**'
+    #   - 'src/**'
+    #   - '*.gradle'
+    #   - 'gradle.properties'
+    #   - 'CHANGELOG.md'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -154,7 +154,12 @@ jobs:
       if: ${{ needs.info.outputs.make_release == 'true' }}
 
       steps:
-        - name: "[📦] Download artifact"
+        - name: "[�] Debug make_release"
+          run: |
+            echo "make_release = '${{ needs.info.outputs.make_release }}'"
+            echo "Comparison result: ${{ needs.info.outputs.make_release == 'true' }}"
+        
+        - name: "[�📦] Download artifact"
           uses: actions/download-artifact@v8
 
         - name: "[🔒] Verify"
