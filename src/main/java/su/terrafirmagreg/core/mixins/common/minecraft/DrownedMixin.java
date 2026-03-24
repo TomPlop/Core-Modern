@@ -74,8 +74,11 @@ public abstract class DrownedMixin extends Zombie {
     @Overwrite
     protected void populateDefaultEquipmentSlots(RandomSource random, @NotNull DifficultyInstance difficulty) {
         int i = random.nextInt(10);
-        if (i < 10) {
+        if (i == 0) {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TFCItems.METAL_ITEMS.get(Metal.Default.COPPER).get(Metal.ItemType.FISHING_ROD).get()));
+        }
+        if (i == 1) {
+            this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TFCItems.METAL_ITEMS.get(Metal.Default.BISMUTH_BRONZE).get(Metal.ItemType.FISHING_ROD).get()));
         } else {
             this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.TRIDENT));
         }
