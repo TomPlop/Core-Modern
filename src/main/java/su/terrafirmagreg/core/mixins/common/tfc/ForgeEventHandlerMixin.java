@@ -2,10 +2,6 @@ package su.terrafirmagreg.core.mixins.common.tfc;
 
 import static net.dries007.tfc.TerraFirmaCraft.LOGGER;
 
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -26,6 +22,9 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.PlayerRespawnLogic;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -33,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.LevelEvent;
 
@@ -83,7 +83,7 @@ public class ForgeEventHandlerMixin {
             }
         }
     }
-    
+
     /**
      * @author
      * @reason It was becoming too complicated to do as a normal mixin.
@@ -174,9 +174,6 @@ public class ForgeEventHandlerMixin {
             event.setCanceled(true);
         }
 
-
     }
-
-
 
 }
