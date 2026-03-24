@@ -203,7 +203,7 @@ public class CustomSpawnHelper {
         initNewType(TUNDRA_SPAWN);
         initNewType(POLAR_SPAWN);
         initNewType(DESERT_SPAWN);
-        //initNewType(BENEATH_SPAWN); Disabled for now
+        //initNewType(BENEATH_SPAWN); //Disabled for now
     }
 
     /// Holds spawn conditions for a particular custom world spawn

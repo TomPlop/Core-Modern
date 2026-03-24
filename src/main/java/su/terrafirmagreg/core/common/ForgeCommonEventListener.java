@@ -1,12 +1,14 @@
 package su.terrafirmagreg.core.common;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import com.gregtechceu.gtceu.GTCEu;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -135,9 +137,13 @@ public final class ForgeCommonEventListener {
 
                 BlockPos validSpawn = null;
 
+                int chunkSearchRadius = 32;
+
+                Predicate<Holder<Biome>> lushCavePredicate = testBiome -> testBiome.is(ResourceLocation.fromNamespaceAndPath(TFGCore.MOD_ID, "nether/lush_hollow"));
+
                 int count = 0;
                 while (Objects.isNull(validSpawn)) {
-                    ChunkPos chunkPos = new ChunkPos(random.nextInt(32), random.nextInt(32));
+                    ChunkPos chunkPos = new ChunkPos(random.nextInt(chunkSearchRadius * 2) - chunkSearchRadius, random.nextInt(chunkSearchRadius * 2) - chunkSearchRadius);
                     System.out.println("ChunkPos: " + chunkPos);
                     var testPos = chunkPos.getMiddleBlockPosition(128);
 
@@ -181,9 +187,11 @@ public final class ForgeCommonEventListener {
 
                     }
 
-                    if (count >= 50) {
-                        validSpawn = BlockPos.ZERO;
-                        System.out.println("No Valid Spawn :(");
+                    if (count >= 25) {
+                        //validSpawn = BlockPos.ZERO;
+                        chunkSearchRadius = chunkSearchRadius * 2;
+                        count = -1;
+                        System.out.println("No Valid Spawn :(, trying search radius of " + chunkSearchRadius);
                     }
 
                     count++;
