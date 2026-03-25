@@ -98,6 +98,15 @@ legacyForge {
             gameDirectory = project.file('run/client')
        }
 
+        client2 {
+            client()
+            ideName = "Client2"
+            sourceSet = sourceSets.dev
+            programArgument '--username'
+            programArgument 'Dev2'
+            gameDirectory = project.file('run/client2')
+        }
+
         server {
             server()
             ideName = "Server"
