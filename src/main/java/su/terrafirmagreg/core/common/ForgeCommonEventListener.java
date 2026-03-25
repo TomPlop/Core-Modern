@@ -1,8 +1,10 @@
 package su.terrafirmagreg.core.common;
 
-import com.gregtechceu.gtceu.GTCEu;
+import java.util.Objects;
 
+import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.worldgen.bedrockfluid.BedrockFluidVeinSavedData;
+
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -48,8 +50,6 @@ import su.terrafirmagreg.core.network.packet.FuelSyncPacket;
 import su.terrafirmagreg.core.utils.commands.TFGCommands;
 import su.terrafirmagreg.core.world.BedrockFluidFeatureGenerator;
 import su.terrafirmagreg.core.world.BedrockFluidSpoutLoader;
-
-import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = TFGCore.MOD_ID)
 public final class ForgeCommonEventListener {
@@ -212,7 +212,7 @@ public final class ForgeCommonEventListener {
                         System.out.print(!blockB.isCollisionShapeFullBlock(targetLevel, mutableTestPos.immutable()));
                         System.out.println(blockC);
                         System.out.print(blockC.isCollisionShapeFullBlock(targetLevel, mutableTestPos.immutable()));
-
+                        
                          */
 
                         if (blockA.isAir() && !blockB.isCollisionShapeFullBlock(targetLevel, mutableTestPos.immutable())) {

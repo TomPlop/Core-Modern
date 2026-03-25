@@ -2,7 +2,6 @@ package su.terrafirmagreg.core.mixins.common.tfc;
 
 import static net.dries007.tfc.TerraFirmaCraft.LOGGER;
 
-import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
