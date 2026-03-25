@@ -3,6 +3,7 @@ package su.terrafirmagreg.core.common.data.tfgt.machine.trait;
 import com.gregtechceu.gtceu.GTCEu;
 import com.gregtechceu.gtceu.api.data.worldgen.bedrockfluid.BedrockFluidVeinSavedData;
 import com.gregtechceu.gtceu.api.data.worldgen.bedrockfluid.FluidVeinWorldEntry;
+import com.gregtechceu.gtceu.common.data.GTFluids;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 
 import net.minecraft.core.SectionPos;
@@ -18,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import lombok.Getter;
 
+import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric.GasWellMachine;
 
 @Getter
@@ -66,8 +68,7 @@ public class GasWellRecipeLogic {
             return;
 
         // Only work for natural_gas
-        var naturalGas = ForgeRegistries.FLUIDS
-                .getValue(GTCEu.id("natural_gas"));
+        var naturalGas = GTMaterials.NaturalGas.getFluid();
         if (naturalGas == null || !veinFluid.isSame(naturalGas))
             return;
 
@@ -152,10 +153,8 @@ public class GasWellRecipeLogic {
         return false;
     }
 
-    private static final TagKey<Item> EXPLOSIVES = ItemTags.create(ResourceLocation.fromNamespaceAndPath("tfg", "explosives"));
-
     private boolean isExplosive(ItemStack stack) {
-        return stack.is(EXPLOSIVES);
+        return stack.is(TFGTags.Items.Explosives);
     }
 
     private int getFluidToProduce(FluidVeinWorldEntry entry) {
