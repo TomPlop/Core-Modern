@@ -3,16 +3,27 @@ package su.terrafirmagreg.core.common;
 import com.gregtechceu.gtceu.GTCEu;
 
 import com.gregtechceu.gtceu.api.data.worldgen.bedrockfluid.BedrockFluidVeinSavedData;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -29,12 +40,16 @@ import su.terrafirmagreg.core.common.data.TFGItems;
 import su.terrafirmagreg.core.common.data.capabilities.LargeEggCapability;
 import su.terrafirmagreg.core.common.data.capabilities.LargeEggHandler;
 import su.terrafirmagreg.core.common.data.tfgt.machine.TFGMultiMachines;
+import su.terrafirmagreg.core.common.data.utils.CustomSpawnHelper;
+import su.terrafirmagreg.core.common.data.utils.CustomSpawnSaveHandler;
 import su.terrafirmagreg.core.common.perf.SupportCache;
 import su.terrafirmagreg.core.network.TFGNetworkHandler;
 import su.terrafirmagreg.core.network.packet.FuelSyncPacket;
 import su.terrafirmagreg.core.utils.commands.TFGCommands;
 import su.terrafirmagreg.core.world.BedrockFluidFeatureGenerator;
 import su.terrafirmagreg.core.world.BedrockFluidSpoutLoader;
+
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = TFGCore.MOD_ID)
 public final class ForgeCommonEventListener {
