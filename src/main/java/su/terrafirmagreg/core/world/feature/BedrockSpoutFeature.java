@@ -3,8 +3,6 @@ package su.terrafirmagreg.core.world.feature;
 import com.gregtechceu.gtceu.common.worldgen.feature.configurations.FluidSproutConfiguration;
 import com.mojang.serialization.Codec;
 
-import net.dries007.tfc.common.blocks.TFCBlocks;
-import net.dries007.tfc.common.blocks.rock.Rock;
 import net.dries007.tfc.world.chunkdata.ChunkData;
 import net.dries007.tfc.world.chunkdata.ChunkDataProvider;
 import net.dries007.tfc.world.settings.RockSettings;
