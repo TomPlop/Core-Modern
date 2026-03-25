@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric;
+package su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.steam;
 
 import java.util.List;
 
