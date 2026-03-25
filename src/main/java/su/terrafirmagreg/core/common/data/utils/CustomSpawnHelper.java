@@ -71,14 +71,6 @@ public class CustomSpawnHelper {
         int defaultRainScale = 20000;
         float rainMultiplier = (float) rainfallScale / defaultRainScale;
 
-        System.out.println("temp scale");
-        System.out.println(temperatureScale);
-        System.out.println(tempMultiplier);
-
-        System.out.println("rainfall scale");
-        System.out.println(rainfallScale);
-        System.out.println(rainMultiplier);
-
         return new ArrayList<>(List.of(tempMultiplier, rainMultiplier));
     }
 
