@@ -104,10 +104,13 @@ public class ForgeEventHandlerMixin {
             boolean climateMatch = false;
             int seedTicker = 0;
 
+            var settingsMultiplier = CustomSpawnHelper.findSettingsMultipliers(extension);
+
             while (!climateMatch) {
 
                 chunkPos = new ChunkPos(
-                        CustomSpawnHelper.findSpawnBiome(condition.spawnCenterX(), condition.spawnCenterZ(), extension.settings().spawnDistance() * condition.spawnRadiusMultiplier(),
+                        CustomSpawnHelper.findSpawnBiome((int) (condition.spawnCenterX() * settingsMultiplier.get(1)), (int) (condition.spawnCenterZ() * settingsMultiplier.get(0)),
+                                extension.settings().spawnDistance() * condition.spawnRadiusMultiplier(),
                                 random, extension));
                 Region.Point regionPoint = regionGen.getOrCreateRegionPoint(Units.blockToGrid(chunkPos.getMinBlockX()), Units.blockToGrid(chunkPos.getMinBlockZ()));
 

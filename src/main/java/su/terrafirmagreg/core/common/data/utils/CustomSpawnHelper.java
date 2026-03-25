@@ -1,8 +1,6 @@
 package su.terrafirmagreg.core.common.data.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 import net.dries007.tfc.TerraFirmaCraft;
@@ -58,6 +56,30 @@ public class CustomSpawnHelper {
 
     public static void resetConfigValue() {
         TFGConfig.COMMON.NEW_WORLD_SPAWN.set(DEFAULT_SPAWN.id);
+    }
+
+    /// Outputs a list with
+    ///
+    /// 0: temperature multiplier
+    /// 1: rainfall multiplier
+    public static List<Float> findSettingsMultipliers(ChunkGeneratorExtension extension) {
+        int temperatureScale = extension.settings().temperatureScale();
+        int defaultTempScale = 20000;
+        float tempMultiplier = (float) temperatureScale / defaultTempScale;
+
+        int rainfallScale = extension.settings().rainfallScale();
+        int defaultRainScale = 20000;
+        float rainMultiplier = (float) rainfallScale / defaultRainScale;
+
+        System.out.println("temp scale");
+        System.out.println(temperatureScale);
+        System.out.println(tempMultiplier);
+
+        System.out.println("rainfall scale");
+        System.out.println(rainfallScale);
+        System.out.println(rainMultiplier);
+
+        return new ArrayList<>(List.of(tempMultiplier, rainMultiplier));
     }
 
     public static boolean testWithinRanges(float temperature, float rainfall, CustomSpawnCondition condition) {
