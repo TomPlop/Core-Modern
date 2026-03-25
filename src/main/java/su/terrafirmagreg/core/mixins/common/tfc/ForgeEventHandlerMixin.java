@@ -42,7 +42,6 @@ import su.terrafirmagreg.core.common.data.utils.CustomSpawnHelper;
 import su.terrafirmagreg.core.common.data.utils.CustomSpawnSaveHandler;
 
 @Mixin(value = ForgeEventHandler.class, remap = false)
-@Debug(export = true)
 public class ForgeEventHandlerMixin {
 
     // Forcibly disable nether portals because there's some funky mod conflict going on with
