@@ -27,11 +27,11 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 import su.terrafirmagreg.core.common.block.LargeNestBoxBlock;
 import su.terrafirmagreg.core.common.capability.ILargeEgg;
 import su.terrafirmagreg.core.common.capability.LargeEggCapability;
 import su.terrafirmagreg.core.common.container.LargeNestBoxContainer;
+import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 import su.terrafirmagreg.core.common.entity.TFGWoolEggProducingAnimal;
 
 public class LargeNestBoxBlockEntity

@@ -24,8 +24,8 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 import su.terrafirmagreg.core.common.blockentity.TickerBlockEntity;
+import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 
 /**
  * Basic particle emitter block.

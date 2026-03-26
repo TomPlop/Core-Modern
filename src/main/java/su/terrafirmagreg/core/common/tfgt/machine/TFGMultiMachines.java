@@ -79,14 +79,13 @@ import fi.dea.mc.deafission.common.data.FisssionGtPartAbilities;
 import fi.dea.mc.deafission.common.data.machine.hb.HbMachine;
 
 import su.terrafirmagreg.core.TFGCore;
+import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Casings;
-import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.tfgt.TFGPartAbility;
 import su.terrafirmagreg.core.common.tfgt.TFGTRecipeTypes;
 import su.terrafirmagreg.core.common.tfgt.interdim_logistics.machine.InterplanetaryItemLauncherMachine;
 import su.terrafirmagreg.core.common.tfgt.interdim_logistics.machine.InterplanetaryItemReceiverMachine;
-import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric.*;
 import su.terrafirmagreg.core.common.tfgt.machine.multiblock.electric.*;
 import su.terrafirmagreg.core.common.tfgt.machine.multiblock.steam.GasWellMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.multiblock.steam.TFGLargeBoilerMachine;

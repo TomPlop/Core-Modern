@@ -31,8 +31,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import dev.latvian.mods.kubejs.typings.Info;
 import lombok.AllArgsConstructor;
 
-import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 import su.terrafirmagreg.core.common.blockentity.TickerBlockEntity;
+import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 
 /**
  * Particle emitter block with active/inactive states.

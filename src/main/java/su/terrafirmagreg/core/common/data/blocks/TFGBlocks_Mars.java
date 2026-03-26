@@ -31,9 +31,9 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.blockentity.LargeNestBoxBlockEntity;
 import su.terrafirmagreg.core.common.block.LargeNestBoxBlock;
 import su.terrafirmagreg.core.common.block.MarsIceBlock;
+import su.terrafirmagreg.core.common.blockentity.LargeNestBoxBlockEntity;
 import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 
 public class TFGBlocks_Mars {

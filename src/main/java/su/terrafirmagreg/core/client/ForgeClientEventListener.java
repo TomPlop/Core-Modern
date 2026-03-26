@@ -19,8 +19,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Earth;
 import su.terrafirmagreg.core.common.data.TFGPlant;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Earth;
 import su.terrafirmagreg.core.common.event.AdvancedOreProspectorEventHelper;
 import su.terrafirmagreg.core.common.event.NormalOreProspectorEventHelper;
 import su.terrafirmagreg.core.common.event.OreProspectorEvent;

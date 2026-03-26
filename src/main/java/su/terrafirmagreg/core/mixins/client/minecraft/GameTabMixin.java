@@ -15,8 +15,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import su.terrafirmagreg.core.utils.CustomSpawnHelper;
 import su.terrafirmagreg.core.config.TFGConfig;
+import su.terrafirmagreg.core.utils.CustomSpawnHelper;
 
 @Mixin(targets = "net.minecraft.client.gui.screens.worldselection.CreateWorldScreen$GameTab")
 @OnlyIn(Dist.CLIENT)

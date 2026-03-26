@@ -34,8 +34,8 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 import su.terrafirmagreg.core.common.blockentity.LargeNestBoxBlockEntity;
+import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 
 public class LargeNestBoxBlock extends BottomSupportedDeviceBlock {
     public static final IntegerProperty NEST_PART = IntegerProperty.create("nest_part", 0, 3);

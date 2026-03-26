@@ -27,9 +27,9 @@ import earth.terrarium.adastra.client.renderers.entities.vehicles.RocketRenderer
 
 import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.CommonProxy;
-import su.terrafirmagreg.core.common.data.*;
 import su.terrafirmagreg.core.common.container.ArtisanTableScreen;
 import su.terrafirmagreg.core.common.container.LargeNestBoxScreen;
+import su.terrafirmagreg.core.common.data.*;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Casings;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Earth;

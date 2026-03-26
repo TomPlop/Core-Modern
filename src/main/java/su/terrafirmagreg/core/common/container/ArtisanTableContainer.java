@@ -19,9 +19,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
+import su.terrafirmagreg.core.common.blockentity.ArtisanTableBlockEntity;
 import su.terrafirmagreg.core.common.data.TFGContainers;
 import su.terrafirmagreg.core.common.data.TFGRecipeTypes;
-import su.terrafirmagreg.core.common.blockentity.ArtisanTableBlockEntity;
 import su.terrafirmagreg.core.common.recipe.ArtisanPattern;
 import su.terrafirmagreg.core.common.recipe.ArtisanType;
 

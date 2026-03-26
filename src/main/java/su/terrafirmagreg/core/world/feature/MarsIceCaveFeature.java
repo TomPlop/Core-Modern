@@ -19,9 +19,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.common.Tags;
 
+import su.terrafirmagreg.core.common.data.TFGFluids;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Mars;
-import su.terrafirmagreg.core.common.data.TFGFluids;
 
 public class MarsIceCaveFeature extends Feature<NoneFeatureConfiguration> {
 

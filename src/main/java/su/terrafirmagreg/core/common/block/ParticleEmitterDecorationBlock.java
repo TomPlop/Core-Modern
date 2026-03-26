@@ -33,9 +33,9 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import su.terrafirmagreg.core.common.blockentity.TickerBlockEntity;
 import su.terrafirmagreg.core.common.data.TFGBlockEntities;
 import su.terrafirmagreg.core.common.data.TFGBlockProperties;
-import su.terrafirmagreg.core.common.blockentity.TickerBlockEntity;
 
 /**
  * Decoration variant particle emitter with fluid logging support.

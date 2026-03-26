@@ -38,16 +38,16 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.MissingMappingsEvent;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.TFGItems;
 import su.terrafirmagreg.core.common.capability.LargeEggCapability;
 import su.terrafirmagreg.core.common.capability.LargeEggHandler;
-import su.terrafirmagreg.core.common.tfgt.machine.TFGMultiMachines;
-import su.terrafirmagreg.core.utils.CustomSpawnHelper;
-import su.terrafirmagreg.core.utils.CustomSpawnSaveHandler;
+import su.terrafirmagreg.core.common.data.TFGCommands;
+import su.terrafirmagreg.core.common.data.TFGItems;
 import su.terrafirmagreg.core.common.perf.SupportCache;
+import su.terrafirmagreg.core.common.tfgt.machine.TFGMultiMachines;
 import su.terrafirmagreg.core.network.TFGNetworkHandler;
 import su.terrafirmagreg.core.network.packet.FuelSyncPacket;
-import su.terrafirmagreg.core.common.data.TFGCommands;
+import su.terrafirmagreg.core.utils.CustomSpawnHelper;
+import su.terrafirmagreg.core.utils.CustomSpawnSaveHandler;
 import su.terrafirmagreg.core.world.BedrockFluidFeatureGenerator;
 import su.terrafirmagreg.core.world.BedrockFluidSpoutLoader;
 

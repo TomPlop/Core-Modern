@@ -52,7 +52,6 @@ import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.tfgt.TFGPartAbility;
 import su.terrafirmagreg.core.common.tfgt.TFGTRecipeTypes;
 import su.terrafirmagreg.core.common.tfgt.interdim_logistics.machine.InterplanetaryLogisticsMonitorMachine;
-import su.terrafirmagreg.core.common.data.tfgt.machine.electric.*;
 import su.terrafirmagreg.core.common.tfgt.machine.electric.AqueousAccumulatorMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.electric.FoodRefrigeratorMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.electric.GasPressurizerMachine;

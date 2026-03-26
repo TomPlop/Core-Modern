@@ -27,8 +27,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.container.ArtisanTableContainer;
+import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.recipe.ArtisanPattern;
 import su.terrafirmagreg.core.common.recipe.ArtisanType;
 

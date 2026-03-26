@@ -1,7 +1,7 @@
 package su.terrafirmagreg.core.common.data.blocks;
 
-import static su.terrafirmagreg.core.common.data.blocks.TFGBlocks.dropBetween;
 import static su.terrafirmagreg.core.common.data.TFGItems.*;
+import static su.terrafirmagreg.core.common.data.blocks.TFGBlocks.dropBetween;
 
 import java.util.Locale;
 import java.util.Map;

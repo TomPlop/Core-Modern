@@ -6,6 +6,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 
 import net.minecraft.commands.CommandSourceStack;
+
 import su.terrafirmagreg.core.common.command.DebugRecipeDump;
 import su.terrafirmagreg.core.common.command.DebugWorldgenVersions;
 

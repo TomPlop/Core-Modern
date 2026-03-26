@@ -5,7 +5,6 @@ import com.gregtechceu.gtceu.api.recipe.condition.RecipeConditionType;
 import com.gregtechceu.gtceu.api.registry.GTRegistries;
 import com.mojang.serialization.Codec;
 
-import su.terrafirmagreg.core.common.data.tfgt.recipe.condition.*;
 import su.terrafirmagreg.core.common.tfgt.recipe.condition.*;
 
 /**

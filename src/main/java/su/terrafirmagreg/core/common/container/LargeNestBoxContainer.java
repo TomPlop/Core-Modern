@@ -7,8 +7,8 @@ import net.dries007.tfc.common.container.PestContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 
-import su.terrafirmagreg.core.common.data.TFGContainers;
 import su.terrafirmagreg.core.common.blockentity.LargeNestBoxBlockEntity;
+import su.terrafirmagreg.core.common.data.TFGContainers;
 
 public class LargeNestBoxContainer extends BlockEntityContainer<LargeNestBoxBlockEntity> implements PestContainer {
 

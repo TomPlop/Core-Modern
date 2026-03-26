@@ -27,9 +27,9 @@ import net.minecraft.world.level.Level;
 
 import lombok.Getter;
 
+import su.terrafirmagreg.core.common.container.ArtisanTableContainer;
 import su.terrafirmagreg.core.common.data.TFGRecipeSerializers;
 import su.terrafirmagreg.core.common.data.TFGRecipeTypes;
-import su.terrafirmagreg.core.common.container.ArtisanTableContainer;
 
 /**
  * Represents the recipes for the Artisan Table.

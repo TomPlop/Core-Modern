@@ -36,9 +36,9 @@ import net.minecraftforge.common.ForgeMod;
 import net.wanmine.wab.entity.Surfer;
 import net.wanmine.wab.entity.Toxlacanth;
 
-import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.TFGEntities;
 import su.terrafirmagreg.core.common.data.TFGTags;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 
 /**
  * Most of this code is copied and pasted from TFCFrog, because it's a very simple animal that only has
