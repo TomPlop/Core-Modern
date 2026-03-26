@@ -25,7 +25,7 @@ import earth.terrarium.adastra.api.planets.Planet;
 import earth.terrarium.adastra.common.tags.ModBlockTags;
 
 import su.terrafirmagreg.core.common.data.TFGBlockProperties;
-import su.terrafirmagreg.core.common.data.TFGBlocks;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.TFGFluids;
 
 @Mixin(value = CaveSpikesFeature.class, remap = false)

@@ -24,8 +24,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.capabilities.ILargeEgg;
-import su.terrafirmagreg.core.common.data.capabilities.LargeEggCapability;
+import su.terrafirmagreg.core.common.capability.ILargeEgg;
+import su.terrafirmagreg.core.common.capability.LargeEggCapability;
 
 @Mod.EventBusSubscriber(modid = TFGCore.MOD_ID, value = Dist.CLIENT)
 @OnlyIn(Dist.CLIENT)

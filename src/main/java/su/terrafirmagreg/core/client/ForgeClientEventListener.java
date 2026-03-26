@@ -19,12 +19,12 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.TFGBlocks_Earth;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Earth;
 import su.terrafirmagreg.core.common.data.TFGPlant;
-import su.terrafirmagreg.core.common.data.events.AdvancedOreProspectorEventHelper;
-import su.terrafirmagreg.core.common.data.events.NormalOreProspectorEventHelper;
-import su.terrafirmagreg.core.common.data.events.OreProspectorEvent;
-import su.terrafirmagreg.core.common.data.events.WeakOreProspectorEventHelper;
+import su.terrafirmagreg.core.common.event.AdvancedOreProspectorEventHelper;
+import su.terrafirmagreg.core.common.event.NormalOreProspectorEventHelper;
+import su.terrafirmagreg.core.common.event.OreProspectorEvent;
+import su.terrafirmagreg.core.common.event.WeakOreProspectorEventHelper;
 import su.terrafirmagreg.core.common.perf.SupportCache;
 
 @Mod.EventBusSubscriber(modid = TFGCore.MOD_ID, value = Dist.CLIENT)

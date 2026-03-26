@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 
 import lombok.Getter;
 
-import su.terrafirmagreg.core.common.data.TFGBlocks;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.TFGTags;
 
 public class PlanetEnvironmentalHelpers {

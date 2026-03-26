@@ -37,8 +37,8 @@ import net.minecraftforge.event.level.LevelEvent;
 
 import earth.terrarium.adastra.api.planets.Planet;
 
-import su.terrafirmagreg.core.common.data.utils.CustomSpawnHelper;
-import su.terrafirmagreg.core.common.data.utils.CustomSpawnSaveHandler;
+import su.terrafirmagreg.core.utils.CustomSpawnHelper;
+import su.terrafirmagreg.core.utils.CustomSpawnSaveHandler;
 
 @Mixin(value = ForgeEventHandler.class, remap = false)
 public class ForgeEventHandlerMixin {

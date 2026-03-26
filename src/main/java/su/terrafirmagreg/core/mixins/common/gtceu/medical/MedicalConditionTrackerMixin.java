@@ -23,7 +23,7 @@ import net.minecraft.world.entity.player.Player;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 
 import su.terrafirmagreg.core.common.data.TFGEffects;
-import su.terrafirmagreg.core.common.data.tfgt.TFGTMedicalConditions;
+import su.terrafirmagreg.core.common.tfgt.TFGTMedicalConditions;
 
 @Mixin(value = MedicalConditionTracker.class, remap = false)
 public abstract class MedicalConditionTrackerMixin {

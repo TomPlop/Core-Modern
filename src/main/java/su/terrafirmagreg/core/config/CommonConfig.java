@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import su.terrafirmagreg.core.common.data.utils.CustomSpawnHelper;
+import su.terrafirmagreg.core.utils.CustomSpawnHelper;
 
 /**
  * Common Config Not synced with server, saved per Minecraft instance Use for config settings that don't make sense to

@@ -23,8 +23,9 @@ import de.mennomax.astikorcarts.item.CartItem;
 import earth.terrarium.adastra.common.items.vehicles.RocketItem;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.items.*;
-import su.terrafirmagreg.core.common.data.tfgt.TFGTCovers;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
+import su.terrafirmagreg.core.common.item.*;
+import su.terrafirmagreg.core.common.tfgt.TFGTCovers;
 import su.terrafirmagreg.core.utils.ModelUtils;
 
 @SuppressWarnings("unused")

@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import su.terrafirmagreg.core.common.data.TFGBlockEntities;
-import su.terrafirmagreg.core.common.data.blockentity.GTGreenhousePortBlockEntity;
+import su.terrafirmagreg.core.common.blockentity.GTGreenhousePortBlockEntity;
 
 @Mixin(GreenhousePortBlock.class)
 public abstract class MixinGreenhousePortBlock implements EntityBlock {

@@ -21,7 +21,7 @@ import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.rhino.util.HideFromJS;
 
 import su.terrafirmagreg.core.common.data.TFGBlockEntities;
-import su.terrafirmagreg.core.common.data.blocks.ParticleEmitterDecorationBlock;
+import su.terrafirmagreg.core.common.block.ParticleEmitterDecorationBlock;
 
 /**
  * KubeJS builder for decoration particle emitters.

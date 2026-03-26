@@ -9,7 +9,7 @@ import com.gregtechceu.gtceu.api.data.chemical.material.properties.HazardPropert
 import com.gregtechceu.gtceu.api.data.chemical.material.properties.IMaterialProperty;
 import com.llamalad7.mixinextras.sugar.Local;
 
-import su.terrafirmagreg.core.common.data.tfgt.TFGTMedicalConditions;
+import su.terrafirmagreg.core.common.tfgt.TFGTMedicalConditions;
 
 @Mixin(value = Material.Builder.class)
 public class MaterialBuilderMixin {
