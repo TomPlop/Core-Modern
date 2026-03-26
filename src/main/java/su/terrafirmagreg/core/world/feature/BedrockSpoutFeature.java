@@ -44,15 +44,7 @@ public class BedrockSpoutFeature extends Feature<FluidSproutConfiguration> {
         final RockSettings rock = data.getRockData().getRock(blockpos.getX(), -50, blockpos.getZ());
         final Block raw = rock.raw();
 
-        Block magma = TFCBlocks.MAGMA_BLOCKS.get(Rock.BASALT).get();
-        if (raw == TFCBlocks.ROCK_BLOCKS.get(Rock.GRANITE).get(Rock.BlockType.RAW).get())
-            magma = TFCBlocks.MAGMA_BLOCKS.get(Rock.GRANITE).get();
-        else if (raw == TFCBlocks.ROCK_BLOCKS.get(Rock.DIORITE).get(Rock.BlockType.RAW).get())
-            magma = TFCBlocks.MAGMA_BLOCKS.get(Rock.DIORITE).get();
-        else if (raw == TFCBlocks.ROCK_BLOCKS.get(Rock.GABBRO).get(Rock.BlockType.RAW).get())
-            magma = TFCBlocks.MAGMA_BLOCKS.get(Rock.GABBRO).get();
-
-        final BlockState magmaBlockState = magma.defaultBlockState();
+        final BlockState rockBlockState = raw.defaultBlockState();
         final BlockState fluidBlockState = config.fluid().defaultFluidState().createLegacyBlock();
 
         int size = config.size().sample(random);
@@ -86,7 +78,7 @@ public class BedrockSpoutFeature extends Feature<FluidSproutConfiguration> {
                     if (distFromCenter > 1)
                         continue;
 
-                    BlockState state = distFromCenter > 0.75 ? magmaBlockState : fluidBlockState;
+                    BlockState state = distFromCenter > 0.75 ? rockBlockState : fluidBlockState;
                     mutablePos.set(x0 + x, y0 + y, z0 + z);
                     if (!level.isOutsideBuildHeight(mutablePos)) {
                         level.getChunk(mutablePos).setBlockState(mutablePos, state, false);
@@ -111,7 +103,7 @@ public class BedrockSpoutFeature extends Feature<FluidSproutConfiguration> {
                 }
 
                 if (currentY <= surfaceHeight) {
-                    var edgeState = currentY < surfaceHeight && currentY > topOfSphere ? magmaBlockState : fluidBlockState;
+                    var edgeState = currentY < surfaceHeight && currentY > topOfSphere ? rockBlockState : fluidBlockState;
 
                     setIfValid(level, mutablePos, currentX + 1, currentY, currentZ, fluidBlockState);
                     setIfValid(level, mutablePos, currentX - 1, currentY, currentZ, fluidBlockState);

@@ -63,6 +63,7 @@
         "common.createliquidfuel.LiquidBurnerFuelJsonLoaderMixin",
         "common.emi.ItemEmiStackMixin",
         "common.fallingtrees.StandardTreeMixin",
+        "common.firmaciv.BlockEventHandlerMixin",
         "common.firmalife.ClimateStationOxygenatedMixin",
         "common.firmalife.HydroponicPlanterBlockEntityMixin",
         "common.firmalife.LargePlanterBlockEntityOxygenMixin",

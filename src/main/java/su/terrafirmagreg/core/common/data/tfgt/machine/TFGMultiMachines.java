@@ -87,6 +87,8 @@ import su.terrafirmagreg.core.common.data.tfgt.TFGTRecipeTypes;
 import su.terrafirmagreg.core.common.data.tfgt.interdim_logistics.machine.InterplanetaryItemLauncherMachine;
 import su.terrafirmagreg.core.common.data.tfgt.interdim_logistics.machine.InterplanetaryItemReceiverMachine;
 import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric.*;
+import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.steam.GasWellMachine;
+import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.steam.TFGLargeBoilerMachine;
 import su.terrafirmagreg.core.common.data.tfgt.machine.render.BouleRender;
 import su.terrafirmagreg.core.common.data.tfgt.machine.trait.GasWellRecipeLogic;
 

@@ -25,7 +25,7 @@ import su.terrafirmagreg.core.common.data.TFGRecipeTypes;
 import su.terrafirmagreg.core.common.data.recipes.ArtisanRecipe;
 import su.terrafirmagreg.core.common.data.recipes.repair.ItemRepairRecipe;
 import su.terrafirmagreg.core.common.data.tfgt.machine.TFGMultiMachines;
-import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric.TFGLargeBoilerMachine;
+import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.steam.TFGLargeBoilerMachine;
 
 @EmiEntrypoint
 public class TFGEmiPlugin implements EmiPlugin {

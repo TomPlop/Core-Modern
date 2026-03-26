@@ -134,7 +134,7 @@ public enum TFGPlant implements RegistryPlant {
         TALL_GRASS((plant, type) -> TFCTallGrassBlock.create(plant, fire(nonSolid(plant)).offsetType(BlockBehaviour.OffsetType.XZ))),
         SHORT_SHRUB((plant, type) -> TFGPlantBlock.createShortShrub(plant, fire(nonSolid(plant)))),
         SHRUB((plant, type) -> TFGPlantBlock.createShrub(plant, fire(nonSolid(plant)))),
-        FLOWERBED((plant, type) -> PlantBlock.createFlat(plant, fire(nonSolid(plant).offsetType(BlockBehaviour.OffsetType.XZ)))),
+        FLOWERBED((plant, type) -> PlantBlock.createFlat(plant, fire(nonSolid(plant)))),
         CACTUSBED((plant, type) -> CactusBedBlock.createBarrel(plant, fire(solid().strength(0.25F).sound(SoundType.WOOL).offsetType(BlockBehaviour.OffsetType.XZ).dynamicShape()))),
         PASSABLE_CACTUS((plant, type) -> PassableCactusBlock.create(plant, fire(nonSolid(plant).strength(0.25F).sound(SoundType.WOOL)).pathType(BlockPathTypes.DAMAGE_OTHER))),
         PERCHED_EPIPHYTE((plant, type) -> TFGPlantBlock.createPerchedEpiphyte(plant, fire(nonSolid(plant)).offsetType(BlockBehaviour.OffsetType.XZ))),

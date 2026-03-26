@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.capability.IFluidHandler;
 import lombok.Getter;
 
 import su.terrafirmagreg.core.common.data.TFGTags;
-import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.electric.GasWellMachine;
+import su.terrafirmagreg.core.common.data.tfgt.machine.multiblock.steam.GasWellMachine;
 
 @Getter
 public class GasWellRecipeLogic {
