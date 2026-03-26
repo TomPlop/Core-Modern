@@ -28,7 +28,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
-import su.terrafirmagreg.core.common.data.blocks.*;
+import su.terrafirmagreg.core.common.block.*;
+import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Earth;
 
 public enum TFGPlant implements RegistryPlant {
     // Short grasses
