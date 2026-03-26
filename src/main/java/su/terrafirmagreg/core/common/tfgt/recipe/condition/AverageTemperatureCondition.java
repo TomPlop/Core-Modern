@@ -14,7 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeConditions;
+import su.terrafirmagreg.core.common.data.tfgt.TFGRecipeConditions;
 
 /**
  * Recipe condition that checks TFC average temperature at the machine position.
@@ -93,7 +93,7 @@ public class AverageTemperatureCondition extends RecipeCondition<AverageTemperat
 
     @Override
     public RecipeConditionType<AverageTemperatureCondition> getType() {
-        return TFGTRecipeConditions.CLIMATE_AVG_TEMPERATURE;
+        return TFGRecipeConditions.CLIMATE_AVG_TEMPERATURE;
     }
 
     @Override

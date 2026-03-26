@@ -11,10 +11,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.compat.gtceu.TFGTagPrefix;
+import su.terrafirmagreg.core.common.data.tfgt.TFGTagPrefix;
 
 @Mod.EventBusSubscriber(modid = TFGCore.MOD_ID)
-public class TFGTRepairHelper {
+public class GTRepairHelper {
     private static final float DEFAULT_REPAIR_PERCENT = 0.25f;
 
     @SubscribeEvent

@@ -21,7 +21,7 @@ import net.dries007.tfc.util.calendar.Season;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeConditions;
+import su.terrafirmagreg.core.common.data.tfgt.TFGRecipeConditions;
 
 /**
  * Recipe condition that matches specific seasons or a season range.
@@ -76,7 +76,7 @@ public class SeasonCondition extends RecipeCondition<SeasonCondition> {
 
     @Override
     public RecipeConditionType<SeasonCondition> getType() {
-        return TFGTRecipeConditions.SEASONS;
+        return TFGRecipeConditions.SEASONS;
     }
 
     @Override

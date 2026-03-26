@@ -1,11 +1,11 @@
-package su.terrafirmagreg.core.common.tfgt;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import com.gregtechceu.gtceu.api.data.medicalcondition.MedicalCondition;
 import com.gregtechceu.gtceu.api.data.medicalcondition.Symptom;
 
 import net.minecraft.world.effect.MobEffects;
 
-public class TFGTMedicalConditions {
+public class TFGMedicalConditions {
 
     public static final Symptom GLOWING = new Symptom("symptom.tfg.glowing", 5, 1, MobEffects.GLOWING);
 

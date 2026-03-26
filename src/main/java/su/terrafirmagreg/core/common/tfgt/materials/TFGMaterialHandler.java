@@ -1,8 +1,8 @@
-package su.terrafirmagreg.core.compat.gtceu.materials;
+package su.terrafirmagreg.core.common.tfgt.materials;
 
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.*;
 import static com.gregtechceu.gtceu.common.data.GTMaterials.*;
-import static su.terrafirmagreg.core.compat.gtceu.TFGTagPrefix.*;
+import static su.terrafirmagreg.core.common.data.tfgt.TFGTagPrefix.*;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -38,7 +38,7 @@ import earth.terrarium.adastra.common.registry.ModItems;
 import electrolyte.greate.registry.GreateMaterials;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.TFGHelpers;
+import su.terrafirmagreg.core.utils.TFGHelpers;
 
 public final class TFGMaterialHandler {
 

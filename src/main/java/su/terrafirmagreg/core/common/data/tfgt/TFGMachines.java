@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt.machine;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import static com.gregtechceu.gtceu.api.capability.recipe.IO.OUT;
 import static com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties.IS_FORMED;
@@ -49,8 +49,6 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.fluids.FluidType;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.tfgt.TFGPartAbility;
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeTypes;
 import su.terrafirmagreg.core.common.tfgt.interdim_logistics.machine.InterplanetaryLogisticsMonitorMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.electric.AqueousAccumulatorMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.electric.FoodRefrigeratorMachine;

@@ -16,7 +16,7 @@ import net.minecraft.server.level.ServerLevel;
 
 import earth.terrarium.adastra.api.systems.OxygenApi;
 
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeConditions;
+import su.terrafirmagreg.core.common.data.tfgt.TFGRecipeConditions;
 
 /**
  * Recipe condition that requires oxygen adjacency using ad_astra's OxygenApi.
@@ -51,7 +51,7 @@ public class OxygenatedCondition extends RecipeCondition<OxygenatedCondition> {
 
     @Override
     public RecipeConditionType<OxygenatedCondition> getType() {
-        return TFGTRecipeConditions.OXYGENATED;
+        return TFGRecipeConditions.OXYGENATED;
     }
 
     @Override

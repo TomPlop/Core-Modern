@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt.covers;
+package su.terrafirmagreg.core.common.tfgt.cover;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -18,7 +18,7 @@ import net.minecraft.server.level.ServerLevel;
 import earth.terrarium.adastra.api.systems.GravityApi;
 import earth.terrarium.adastra.common.constants.PlanetConstants;
 
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeConditions;
+import su.terrafirmagreg.core.common.data.tfgt.TFGRecipeConditions;
 
 /**
  * Recipe condition that checks ad_astra's gravity at the machine position.
@@ -102,7 +102,7 @@ public class GravityCondition extends RecipeCondition<GravityCondition> {
 
     @Override
     public RecipeConditionType<GravityCondition> getType() {
-        return TFGTRecipeConditions.GRAVITY;
+        return TFGRecipeConditions.GRAVITY;
     }
 
     @Override

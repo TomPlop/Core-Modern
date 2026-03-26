@@ -9,7 +9,8 @@ import com.gregtechceu.gtceu.api.registry.registrate.GTRegistrate;
 import net.minecraft.data.recipes.FinishedRecipe;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.tfgt.machine.TFGTCraftingComponents;
+import su.terrafirmagreg.core.common.data.tfgt.TFGCovers;
+import su.terrafirmagreg.core.common.data.tfgt.TFGCraftingComponents;
 
 @GTAddon
 @SuppressWarnings("unused")
@@ -21,7 +22,7 @@ public class TFGTAddon implements IGTAddon {
 
     @Override
     public void registerCovers() {
-        TFGTCovers.init();
+        TFGCovers.init();
     }
 
     @Override
@@ -35,7 +36,7 @@ public class TFGTAddon implements IGTAddon {
 
     @Override
     public void addRecipes(Consumer<FinishedRecipe> provider) {
-        TFGTCraftingComponents.register();
+        TFGCraftingComponents.register();
         TFGTRecipes.init(provider);
     }
 }

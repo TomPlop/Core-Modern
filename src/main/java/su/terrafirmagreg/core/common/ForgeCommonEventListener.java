@@ -43,7 +43,7 @@ import su.terrafirmagreg.core.common.capability.LargeEggHandler;
 import su.terrafirmagreg.core.common.data.TFGCommands;
 import su.terrafirmagreg.core.common.data.TFGItems;
 import su.terrafirmagreg.core.common.perf.SupportCache;
-import su.terrafirmagreg.core.common.tfgt.machine.TFGMultiMachines;
+import su.terrafirmagreg.core.common.data.tfgt.TFGMultiMachines;
 import su.terrafirmagreg.core.network.TFGNetworkHandler;
 import su.terrafirmagreg.core.network.packet.FuelSyncPacket;
 import su.terrafirmagreg.core.utils.CustomSpawnHelper;

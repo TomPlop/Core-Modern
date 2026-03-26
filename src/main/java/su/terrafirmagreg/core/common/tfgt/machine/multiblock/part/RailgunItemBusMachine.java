@@ -17,7 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 
 import su.terrafirmagreg.core.common.data.TFGTags;
-import su.terrafirmagreg.core.common.tfgt.machine.TFGMachines;
+import su.terrafirmagreg.core.common.data.tfgt.TFGMachines;
 
 public class RailgunItemBusMachine extends ItemBusPartMachine implements IRedstoneSignalMachine {
     public RailgunItemBusMachine(IMachineBlockEntity holder, int tier, IO io) {

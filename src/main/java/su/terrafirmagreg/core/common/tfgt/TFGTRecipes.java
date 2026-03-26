@@ -20,8 +20,8 @@ import net.minecraft.data.recipes.FinishedRecipe;
 import electrolyte.greate.registry.Pumps;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.tfgt.machine.TFGMachines;
-import su.terrafirmagreg.core.common.tfgt.machine.TFGTCraftingComponents;
+import su.terrafirmagreg.core.common.data.tfgt.TFGMachines;
+import su.terrafirmagreg.core.common.data.tfgt.TFGCraftingComponents;
 
 public class TFGTRecipes {
 
@@ -54,14 +54,14 @@ public class TFGTRecipes {
                 'P', GTCraftingComponents.PUMP,
                 'G', GTCraftingComponents.GLASS,
                 'C', GTCraftingComponents.CIRCUIT,
-                'W', TFGTCraftingComponents.WHISK);
+                'W', TFGCraftingComponents.WHISK);
 
         MetaTileEntityLoader.registerMachineRecipe(provider, true, TFGMachines.FOOD_REFRIGERATOR,
                 "CFC", "SHS", "PRP",
                 'C', GTCraftingComponents.CABLE,
                 'F', GTCraftingComponents.CIRCUIT,
                 'S', ChemicalHelper.get(TagPrefix.plate, GTMaterials.Polyethylene),
-                'H', TFGTCraftingComponents.HERMETIC_CASING,
+                'H', TFGCraftingComponents.HERMETIC_CASING,
                 'P', GTCraftingComponents.PUMP,
                 'R', GTCraftingComponents.ROTOR);
 
@@ -96,7 +96,7 @@ public class TFGTRecipes {
                 "ABA", "BCB", "ADA",
                 'A', GTCraftingComponents.CIRCUIT.get(0),
                 'B', GTCraftingComponents.PLATE.get(0),
-                'C', TFGTCraftingComponents.HERMETIC_CASING.get(0),
+                'C', TFGCraftingComponents.HERMETIC_CASING.get(0),
                 'D', Pumps.STEEL_MECHANICAL_PUMP.get());
 
         VanillaRecipeHelper.addShapelessNBTClearingRecipe(provider, "super_tank_nbt_ulv",

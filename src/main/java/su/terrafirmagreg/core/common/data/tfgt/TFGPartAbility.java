@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import com.gregtechceu.gtceu.api.machine.multiblock.PartAbility;
 

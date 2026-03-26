@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common;
+package su.terrafirmagreg.core.utils;
 
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 

@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import java.util.function.Supplier;
 
@@ -10,12 +10,12 @@ import com.gregtechceu.gtceu.client.renderer.cover.SimpleCoverRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.tfgt.covers.RottenVoidCover;
+import su.terrafirmagreg.core.common.tfgt.cover.RottenVoidCover;
 
 /**
  * Registration of TFG GT covers.
  */
-public class TFGTCovers {
+public class TFGCovers {
 
     public static CoverDefinition ITEM_VOIDING_ROTTEN;
 

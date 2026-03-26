@@ -30,7 +30,7 @@ import net.minecraft.network.chat.Component;
 
 import lombok.Getter;
 
-import su.terrafirmagreg.core.common.TFGHelpers;
+import su.terrafirmagreg.core.utils.TFGHelpers;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

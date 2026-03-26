@@ -26,7 +26,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import su.terrafirmagreg.core.common.buds.BudIndicator;
 import su.terrafirmagreg.core.common.buds.BudIndicatorItem;
-import su.terrafirmagreg.core.compat.gtceu.TFGTagPrefix;
+import su.terrafirmagreg.core.common.data.tfgt.TFGTagPrefix;
 
 public class TFGBlocks_Buds {
     public static void init() {

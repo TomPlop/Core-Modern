@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.compat.gtceu;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import static com.gregtechceu.gtceu.api.data.tag.TagPrefix.Conditions.*;
 
@@ -9,8 +9,8 @@ import com.gregtechceu.gtceu.api.data.tag.TagPrefix;
 import com.gregtechceu.gtceu.api.item.tool.GTToolType;
 import com.gregtechceu.gtceu.common.data.GTMaterialItems;
 
-import su.terrafirmagreg.core.compat.gtceu.materials.TFGMaterialFlags;
-import su.terrafirmagreg.core.compat.gtceu.materials.TFGMaterialIconType;
+import su.terrafirmagreg.core.common.tfgt.materials.TFGMaterialFlags;
+import su.terrafirmagreg.core.common.tfgt.materials.TFGMaterialIconType;
 
 public final class TFGTagPrefix {
 

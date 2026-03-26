@@ -20,7 +20,7 @@ import net.dries007.tfc.util.calendar.Month;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeConditions;
+import su.terrafirmagreg.core.common.data.tfgt.TFGRecipeConditions;
 
 /**
  * Recipe condition that matches specific months or a month range
@@ -75,7 +75,7 @@ public class MonthCondition extends RecipeCondition<MonthCondition> {
 
     @Override
     public RecipeConditionType<MonthCondition> getType() {
-        return TFGTRecipeConditions.MONTHS;
+        return TFGRecipeConditions.MONTHS;
     }
 
     @Override

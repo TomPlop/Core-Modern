@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt.machine;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import com.gregtechceu.gtceu.common.data.GTBlocks;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
@@ -6,11 +6,11 @@ import com.gregtechceu.gtceu.data.recipe.CraftingComponent;
 
 import electrolyte.greate.registry.GreateTagPrefixes;
 
-public class TFGTCraftingComponents {
+public class TFGCraftingComponents {
     public static CraftingComponent WHISK;
     public static CraftingComponent HERMETIC_CASING;
 
-    public TFGTCraftingComponents() {
+    public TFGCraftingComponents() {
     }
 
     public static void register() {

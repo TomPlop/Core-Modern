@@ -42,7 +42,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import lombok.Getter;
 
-import su.terrafirmagreg.core.common.TFGHelpers;
+import su.terrafirmagreg.core.utils.TFGHelpers;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

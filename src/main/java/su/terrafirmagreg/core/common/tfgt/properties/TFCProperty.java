@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.compat.gtceu.properties;
+package su.terrafirmagreg.core.common.tfgt.properties;
 
 import javax.annotation.Nullable;
 

@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.compat.gtceu.behaviors;
+package su.terrafirmagreg.core.common.item.behavior;
 
 import java.util.List;
 

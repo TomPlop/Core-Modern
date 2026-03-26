@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.compat.gtceu.materials;
+package su.terrafirmagreg.core.common.tfgt.materials;
 
 import com.gregtechceu.gtceu.api.data.chemical.material.info.MaterialFlag;
 

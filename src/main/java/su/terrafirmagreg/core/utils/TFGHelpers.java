@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common;
+package su.terrafirmagreg.core.utils;
 
 import java.util.*;
 
@@ -24,6 +24,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.mixins.common.tfc.IIngotPileBlockEntityEntryAccessor;
 
+@SuppressWarnings("unused")
 public final class TFGHelpers {
 
     public static final Random RANDOM = new Random();

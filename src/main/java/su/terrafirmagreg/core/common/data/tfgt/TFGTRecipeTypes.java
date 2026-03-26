@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import static su.terrafirmagreg.core.common.container.ProgressBars.*;
 

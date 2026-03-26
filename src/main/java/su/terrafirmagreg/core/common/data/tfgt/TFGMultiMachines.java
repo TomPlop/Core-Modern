@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.common.tfgt.machine;
+package su.terrafirmagreg.core.common.data.tfgt;
 
 import static com.gregtechceu.gtceu.api.GTValues.*;
 import static com.gregtechceu.gtceu.api.pattern.Predicates.*;
@@ -82,8 +82,6 @@ import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Casings;
-import su.terrafirmagreg.core.common.tfgt.TFGPartAbility;
-import su.terrafirmagreg.core.common.tfgt.TFGTRecipeTypes;
 import su.terrafirmagreg.core.common.tfgt.interdim_logistics.machine.InterplanetaryItemLauncherMachine;
 import su.terrafirmagreg.core.common.tfgt.interdim_logistics.machine.InterplanetaryItemReceiverMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.multiblock.electric.*;
