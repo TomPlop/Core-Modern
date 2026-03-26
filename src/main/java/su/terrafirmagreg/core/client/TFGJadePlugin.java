@@ -7,7 +7,7 @@ import snownee.jade.api.IWailaPlugin;
 import snownee.jade.api.WailaPlugin;
 
 import su.terrafirmagreg.core.TFGCore;
-import su.terrafirmagreg.core.common.data.TierLockedBlock;
+import su.terrafirmagreg.core.common.data.blocks.TierLockedBlock;
 
 @WailaPlugin
 public class TFGJadePlugin implements IWailaPlugin {

@@ -44,6 +44,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import su.terrafirmagreg.core.TFGCore;
 import su.terrafirmagreg.core.common.data.blocks.CoarseDirtBlock;
 import su.terrafirmagreg.core.common.data.blocks.ConnectedDuffBlock;
+import su.terrafirmagreg.core.common.data.blocks.TierLockedBlock;
 
 @SuppressWarnings("unused")
 public class TFGBlocks_Earth {
