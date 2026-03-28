@@ -51,8 +51,7 @@ public class BedrockSpoutFeature extends Feature<BedrockSpoutConfig> {
 
         final ChunkDataProvider provider = ChunkDataProvider.get(context.chunkGenerator());
         final ChunkData data = provider.get(level, blockpos);
-        final RockSettings rock = data.getRockData().getRock(blockpos);
-
+        RockSettings rock = data.getRockData().getRock(blockpos);
         final BlockState rockBlockState = rock.raw().defaultBlockState();
         final BlockState fluidBlockState = fluid.defaultFluidState().createLegacyBlock();
 
@@ -111,7 +110,9 @@ public class BedrockSpoutFeature extends Feature<BedrockSpoutConfig> {
             }
 
             if (currentY <= surfaceHeight) {
-                var edgeState = currentY < surfaceHeight && currentY > topOfSphere ? rockBlockState : fluidBlockState;
+				rock = data.getRockData().getRock(currentX, currentY, currentZ);
+
+                var edgeState = currentY < surfaceHeight && currentY > topOfSphere ? rock.raw().defaultBlockState() : fluidBlockState;
 
                 setIfValid(level, mutablePos, currentX + 1, currentY, currentZ, fluidBlockState);
                 setIfValid(level, mutablePos, currentX - 1, currentY, currentZ, fluidBlockState);
