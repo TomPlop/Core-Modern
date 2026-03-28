@@ -51,7 +51,7 @@ public class BedrockSpoutFeature extends Feature<BedrockSpoutConfig> {
 
         final ChunkDataProvider provider = ChunkDataProvider.get(context.chunkGenerator());
         final ChunkData data = provider.get(level, blockpos);
-        final RockSettings rock = data.getRockData().getRock(blockpos.getX(), -50, blockpos.getZ());
+        final RockSettings rock = data.getRockData().getRock(blockpos);
 
         final BlockState rockBlockState = rock.raw().defaultBlockState();
         final BlockState fluidBlockState = fluid.defaultFluidState().createLegacyBlock();
