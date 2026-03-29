@@ -66,7 +66,6 @@ jobs:
           # Get data from previous steps
           TAG_EXISTS="${{ steps.tag_check.outputs.exists }}"
           PROJECT_NAME="${{ steps.project_info.outputs.mod_name }}-${{ steps.project_info.outputs.mod_name_suffix }}"
-          PROJECT_VERSION_TYPE="${{ steps.project_info.outputs.version_type }}"
           GAME_VERSIONS="${{ steps.project_info.outputs.minecraft_version }}"
           JAVA_VERSION="${{ steps.project_info.outputs.java_version }}"
           LOADERS="${{ steps.project_info.outputs.loader }}"
@@ -80,7 +79,7 @@ jobs:
 
           if [[ "$IS_RELEASE_CANDIDATE" == "true" ]]; then
             PROJECT_VERSION="${{ steps.project_info.outputs.mod_version }}"
-            PROJECT_VERSION_TYPE="${{ steps.project_info.outputs.version_type }}"
+            PROJECT_VERSION_TYPE="${{ steps.project_info.outputs.mod_version_type }}"
           else
             PROJECT_VERSION="${{ steps.project_info.outputs.mod_version }}-build-${{ github.run_number }}"
             PROJECT_VERSION_TYPE="Unreleased"
