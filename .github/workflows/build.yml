@@ -219,18 +219,17 @@ jobs:
         - name: "[🚀] Release"
           uses: Xikaro/game-publish@3.3.1
           with:
-            modrinth-id: ${{ vars.MODRINTH_ID }}
-            modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+            # modrinth-id: ${{ vars.MODRINTH_ID }}
+            # modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
-            curseforge-id: ${{ vars.CURSEFORGE_ID }}
-            curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+            # curseforge-id: ${{ vars.CURSEFORGE_ID }}
+            # curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
             github-name: ${{ needs.info.outputs.version }}
             github-tag: ${{ needs.info.outputs.version }}
             github-generate-changelog: true
             github-draft: false
             github-prerelease: ${{ needs.info.outputs.version_type != 'release' }}
-            github-commitish: main
             github-token: ${{ secrets.GITHUB_TOKEN }}
 
             files: ${{ needs.info.outputs.full_name }}.jar
