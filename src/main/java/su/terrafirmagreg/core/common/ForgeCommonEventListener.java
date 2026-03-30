@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.gregtechceu.gtceu.GTCEu;
 
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
@@ -131,15 +130,15 @@ public final class ForgeCommonEventListener {
     @SubscribeEvent
     public static void onLevelLoad(LevelEvent.Load event) {
         LevelAccessor level = event.getLevel();
-        if (level instanceof ClientLevel)
+        if (!(level instanceof ServerLevel serverLevel))
             return;
 
-        MinecraftServer server = Objects.requireNonNull(level.getServer());
-        if (server.overworld() != level) {
+        MinecraftServer server = Objects.requireNonNull(serverLevel.getServer());
+        if (server.overworld() != serverLevel) {
             GlobalPos spawnPos = CustomSpawnSaveHandler.getSpawnPos(server.overworld());
 
             var targetLevel = server.getLevel(spawnPos.dimension());
-            if (targetLevel == level) {
+            if (targetLevel == serverLevel) {
 
                 RandomSource random = new XoroshiroRandomSource(targetLevel.getSeed());
 

@@ -3,6 +3,7 @@ package su.terrafirmagreg.core.common.data;
 import static java.util.Arrays.stream;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 import com.eerussianguy.firmalife.common.blocks.FLBlocks;
 import com.eerussianguy.firmalife.common.blocks.greenhouse.Greenhouse;
@@ -75,9 +76,9 @@ public class TFGBlockEntities {
                     .toArray(NonNullSupplier[]::new))
             .register();
 
-    private static final Map<BlockEntityEntry<?>, Set<Block>> beModification = new Object2ObjectOpenHashMap<>();
+    private static final Map<Supplier<?>, Set<Block>> beModification = new Object2ObjectOpenHashMap<>();
 
-    public static void addValidBEBlock(BlockEntityEntry<?> type, Block block) {
+    public static void addValidBEBlock(Supplier<?> type, Block block) {
         beModification.computeIfAbsent(type, t -> new HashSet<>());
         beModification.get(type).add(block);
     }
