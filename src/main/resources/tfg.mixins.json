@@ -92,6 +92,7 @@
         "common.gtceu.GTEMIPluginMixin",
         "common.gtceu.GTEmiOreProcessingMixin",
         "common.gtceu.GTMachineUtilsMixin",
+        "common.gtceu.GTMaterialBlocksMixin",
         "common.gtceu.GTMultiMachinesMixin",
         "common.gtceu.GTRecipeJSMixin",
         "common.gtceu.GTRecipeTypesMixin",
