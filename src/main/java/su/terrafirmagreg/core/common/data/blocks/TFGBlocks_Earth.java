@@ -83,7 +83,9 @@ public class TFGBlocks_Earth {
                     .requiresCorrectToolForDrops())
             .setData(ProviderType.BLOCKSTATE, NonNullBiConsumer.noop())
             .tag(TFCTags.Blocks.CAN_CARVE, BlockTags.MINEABLE_WITH_SHOVEL)
-            .item(BlockItem::new).build()
+            .item(BlockItem::new)
+            .tag(TFCClayItemTag)
+            .build()
             .loot(dropBetween(() -> Items.CLAY_BALL, 1, 3))
             .register();
 

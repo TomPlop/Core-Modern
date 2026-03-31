@@ -23,4 +23,9 @@ public class TFCBlocksMixin {
     public static ToIntFunction<BlockState> lavaLoggedBlockEmission() {
         return state -> state.getValue(TFGBlockProperties.SPACE_WATER_AND_LAVA).is(((IFluidLoggable) state.getBlock()).getFluidProperty().keyFor(Fluids.LAVA)) ? 15 : 0;
     }
+    /*
+    @ModifyArg(method = "lambda$static$40()Lnet/minecraft/world/level/block/Block;", at = @At(value = "INVOKE", target = "net/minecraft/world/level/block/state/BlockBehaviour$Properties.mapColor (Lnet/minecraft/world/level/material/MapColor;)Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;"))
+    private static MapColor tfg$hideIndicatorsOnMap(MapColor p_285137_) {
+        return MapColor.NONE;
+    }*/
 }
