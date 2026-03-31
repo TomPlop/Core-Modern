@@ -25,6 +25,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.goal.ZombieAttackGoal;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.monster.Zombie;
@@ -115,7 +116,8 @@ public abstract class DrownedMixin extends Zombie {
         }
 
         if (isJavelin) {
-            this.goalSelector.addGoal(4, new JavelinAttackGoal<>(this, 1, 15f));
+            this.goalSelector.addGoal(2, new JavelinAttackGoal<>(this, 1, 15f));
+            this.goalSelector.getAvailableGoals().removeIf(g -> g.getGoal() instanceof ZombieAttackGoal);
         }
     }
 }
