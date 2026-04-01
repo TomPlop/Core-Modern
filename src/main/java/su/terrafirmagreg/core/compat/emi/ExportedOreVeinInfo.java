@@ -476,7 +476,7 @@ package su.terrafirmagreg.core.compat.emi;
 			new OreVeinInfoRecipe("normal_sulfide", "minecraft:overworld", 
 				170, 0.29, 10, 70, 34, 10, 0, new String[] {
 				"tfc:rock/raw/granite","tfc:rock/raw/diorite","tfc:rock/raw/gabbro","tfc:rock/raw/rhyolite","tfc:rock/raw/basalt","tfc:rock/raw/andesite","tfc:rock/raw/dacite","tfc:rock/raw/shale","tfc:rock/raw/claystone","tfc:rock/raw/limestone","tfc:rock/raw/conglomerate","tfc:rock/raw/dolomite","tfc:rock/raw/chert","tfc:rock/raw/chalk","minecraft:tuff","tfc:rock/raw/quartzite","tfc:rock/raw/slate","tfc:rock/raw/phyllite","tfc:rock/raw/schist","tfc:rock/raw/gneiss","tfc:rock/raw/marble",}, new OreVeinInfoRecipe.WeightedBlock[] {
-				new OreVeinInfoRecipe.WeightedBlock("sulfur", 25),new OreVeinInfoRecipe.WeightedBlock("stibnite", 18),new OreVeinInfoRecipe.WeightedBlock("bornite", 56),},
+				new OreVeinInfoRecipe.WeightedBlock("sulfur", 17),new OreVeinInfoRecipe.WeightedBlock("stibnite", 13),new OreVeinInfoRecipe.WeightedBlock("bornite", 39),new OreVeinInfoRecipe.WeightedBlock("sphalerite", 30),},
 				new String[] {"ore_vein.tfg.normal_sulfide.emi.0"}),
 			new OreVeinInfoRecipe("deep_copper_sulfide", "minecraft:overworld", 
 				34, 0.27, -60, -45, 21, 6, 0, new String[] {
