@@ -21,7 +21,7 @@ import dev.emi.emi.api.EmiRegistry;
 @Mixin(value = MultiblockInfoEmiCategory.class)
 public class MultiblockInfoEmiCategoryMixin {
 
-	// Hides certain multiblocks from EMI
+    // Hides certain multiblocks from EMI
 
     @Unique
     private final static List<ResourceLocation> tfg$excludedMultis = List.of(
