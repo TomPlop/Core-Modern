@@ -89,6 +89,7 @@ import su.terrafirmagreg.core.common.tfgt.machine.multiblock.steam.GasWellMachin
 import su.terrafirmagreg.core.common.tfgt.machine.multiblock.steam.TFGLargeBoilerMachine;
 import su.terrafirmagreg.core.common.tfgt.machine.render.BouleRender;
 import su.terrafirmagreg.core.common.tfgt.machine.trait.GasWellRecipeLogic;
+import su.terrafirmagreg.core.common.tfgt.recipe.modifier.AnimalProductModifier;
 
 @SuppressWarnings({ "unused", "SpellCheckingInspection" })
 public class TFGMultiMachines {
@@ -1233,6 +1234,35 @@ public class TFGMultiMachines {
             .workableCasingModel(
                     GTCEu.id("block/casings/steam/steel/side"),
                     GTCEu.id("block/generators/naquadah_reactor_solid"))
+            .register();
+
+    public static final MultiblockMachineDefinition PASTORAL_ENGINE = REGISTRATE
+            .multiblock("pastoral_engine", PastoralEngineMachine::new)
+            .rotationState(RotationState.NON_Y_AXIS)
+            .allowFlip(false)
+            .allowExtendedFacing(false)
+            .recipeType(TFGTRecipeTypes.PASTORAL_ENGINE_RECIPES)
+            .recipeModifiers(AnimalProductModifier.INSTANCE)
+            .appearanceBlock(GTBlocks.CASING_STEEL_SOLID)
+            .workableCasingModel(
+                    GTCEu.id("block/casings/solid/machine_casing_solid_steel"),
+                    TFGCore.id("block/machines/pastoral_engine"))
+            .pattern(definition -> FactoryBlockPattern.start()
+                    .aisle("CCCCC", "CCCCC", "CCCCC", "CCCCC", "CCCCC")
+                    .aisle("CCCCC", "C   C", "C   C", "C   C", "CGGGC")
+                    .aisle("CCCCC", "C   C", "C   C", "C   C", "CGGGC")
+                    .aisle("CCCCC", "C   C", "C   C", "C   C", "CGGGC")
+                    .aisle("CCCCC", "CGSGC", "CGGGC", "CGGGC", "CCCCC")
+                    .where('S', Predicates.controller(Predicates.blocks(definition.get())))
+                    .where(' ', Predicates.air())
+                    .where('G', Predicates.blocks((GTBlocks.CLEANROOM_GLASS.get())))
+                    .where('C', Predicates.blocks(GTBlocks.CASING_STEEL_SOLID.get()).setMinGlobalLimited(10)
+                            .or(Predicates.autoAbilities(true, false, false))
+                            .or(Predicates.abilities(PartAbility.INPUT_ENERGY).setMinGlobalLimited(1).setMaxGlobalLimited(2))
+                            .or(Predicates.abilities(PartAbility.EXPORT_FLUIDS).setMaxGlobalLimited(2))
+                            .or(Predicates.abilities(PartAbility.IMPORT_ITEMS).setMaxGlobalLimited(4).setPreviewCount(1))
+                            .or(Predicates.abilities(PartAbility.EXPORT_ITEMS).setMaxGlobalLimited(2)))
+                    .build())
             .register();
 
     // spotless:on
