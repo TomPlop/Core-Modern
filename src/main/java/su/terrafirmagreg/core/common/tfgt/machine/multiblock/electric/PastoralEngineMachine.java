@@ -11,7 +11,6 @@ import com.lowdragmc.lowdraglib.syncdata.annotation.Persisted;
 import com.lowdragmc.lowdraglib.syncdata.field.ManagedFieldHolder;
 
 import net.dries007.tfc.common.entities.livestock.DairyAnimal;
-import net.dries007.tfc.common.entities.livestock.ProducingMammal;
 import net.dries007.tfc.common.entities.livestock.TFCAnimalProperties;
 import net.dries007.tfc.common.entities.livestock.WoolyAnimal;
 import net.dries007.tfc.common.fluids.FluidHelpers;
@@ -200,12 +199,8 @@ public class PastoralEngineMachine extends WorkableElectricMultiblockMachine {
 
                 allAnimals.stream()
                         .filter(e -> e instanceof TFCAnimalProperties animal
-                                // Filter so only animals that can produce milk have their cooldown checked
-                                && e instanceof ProducingMammal producer
-                                && animal.getAgeType() == TFCAnimalProperties.Age.ADULT
-                                && animal.getGender() == TFCAnimalProperties.Gender.FEMALE
-                                && !animal.isReadyForAnimalProduct()
-                                && producer.getProducedTick() > 0) // Check that the animal already produced milk at least once
+                                && animal.getAgeType() != TFCAnimalProperties.Age.OLD
+                                && !animal.isReadyForAnimalProduct())
                         .collect(java.util.stream.Collectors.groupingBy(
                                 e -> ForgeRegistries.ENTITY_TYPES.getKey(e.getType()),
                                 java.util.stream.Collectors.minBy(
