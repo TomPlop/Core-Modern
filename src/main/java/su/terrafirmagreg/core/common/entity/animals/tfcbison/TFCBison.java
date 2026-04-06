@@ -10,6 +10,7 @@ import net.dries007.tfc.common.entities.prey.RammingPrey;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
@@ -19,11 +20,10 @@ import su.terrafirmagreg.core.common.data.TFGSounds;
 
 public class TFCBison extends RammingPrey {
     public TFCBison(EntityType<? extends RammingPrey> type, Level level) {
-        super(type, level, TFGSounds.BISON, 0.75d);
+        super(type, level, TFGSounds.BISON, 1.0d);
     }
 
-    public static boolean spawnRules(EntityType<?> type, LevelAccessor level, MobSpawnType spawn,
-            BlockPos pos, RandomSource rand) {
+    public static boolean spawnRules(EntityType<?> type, LevelAccessor level, MobSpawnType spawn, BlockPos pos, RandomSource rand) {
         return level.getBlockState(pos).isAir() && level.getBlockState(pos.below()).isFaceSturdy(level, pos.below(), Direction.UP);
     }
 }
