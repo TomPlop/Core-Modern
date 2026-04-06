@@ -215,17 +215,17 @@ public final class ForgeCommonEventListener {
     }
 
     private static void remapBlocks(MissingMappingsEvent.Mapping<Block> mapping) {
-        if (mapping.getKey() == GTCEu.id("heat_exchanger"))
+        if (mapping.getKey().equals(GTCEu.id("heat_exchanger")))
             mapping.remap(TFGMultiMachines.HEAT_EXCHANGER.getBlock());
     }
 
     private static void remapItems(MissingMappingsEvent.Mapping<Item> mapping) {
-        if (mapping.getKey() == GTCEu.id("heat_exchanger"))
+        if (mapping.getKey().equals(GTCEu.id("heat_exchanger")))
             mapping.remap(TFGMultiMachines.HEAT_EXCHANGER.getItem());
     }
 
     private static void remapBlockEntities(MissingMappingsEvent.Mapping<BlockEntityType<?>> mapping) {
-        if (mapping.getKey() == GTCEu.id("heat_exchanger"))
+        if (mapping.getKey().equals(GTCEu.id("heat_exchanger")))
             mapping.remap(TFGMultiMachines.HEAT_EXCHANGER.getBlockEntityType());
     }
 }
