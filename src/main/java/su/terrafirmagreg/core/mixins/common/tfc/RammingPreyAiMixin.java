@@ -26,6 +26,9 @@ import su.terrafirmagreg.core.common.data.TFGTags;
 @Mixin(value = RammingPreyAi.class, remap = false)
 public class RammingPreyAiMixin {
 
+	// Mixin to stop ramming prey (bison, wildebeest, boars, moose) from ramming other ramming prey, resulting in
+	// herds killing themselves
+
     @Shadow
     @Final
     private static UniformInt TIME_BETWEEN_RAMS_MALE;
