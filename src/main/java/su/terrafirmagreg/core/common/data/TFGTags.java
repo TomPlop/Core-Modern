@@ -132,6 +132,7 @@ public final class TFGTags {
 
     public static final class Entities {
         public static final TagKey<EntityType<?>> IgnoresGravity = createEntityTag("ignores_gravity");
+        public static final TagKey<EntityType<?>> IgnoresCacti = createEntityTag("ignores_cacti");
 
         private static TagKey<EntityType<?>> createEntityTag(String path) {
             return createEntityTag(TFGCore.id(path));
