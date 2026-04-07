@@ -30,7 +30,6 @@ import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -91,11 +90,11 @@ public abstract class DrownedMixin extends Zombie {
     @Overwrite
     protected void populateDefaultEquipmentSlots(RandomSource random, @NotNull DifficultyInstance difficulty) {
         if (random.nextFloat() < 0.67f) {
-			this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
-			return;
-		}
+            this.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
+            return;
+        }
 
-		boolean isJavelin = false;
+        boolean isJavelin = false;
 
         int i = random.nextInt(10);
         if (i == 0) {
