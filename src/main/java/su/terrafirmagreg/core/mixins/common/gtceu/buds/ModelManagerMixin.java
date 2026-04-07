@@ -1,4 +1,4 @@
-package su.terrafirmagreg.core.mixins.common.gtceu;
+package su.terrafirmagreg.core.mixins.common.gtceu.buds;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
