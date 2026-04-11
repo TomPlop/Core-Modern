@@ -19,6 +19,7 @@ import net.dries007.tfc.util.calendar.ICalendar;
 import net.dries007.tfc.util.events.AnimalProductEvent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -136,20 +137,18 @@ public class PastoralEngineMachine extends WorkableElectricMultiblockMachine {
         }
 
         BlockPos self = getPos();
-        int minX = self.getX(), minY = self.getY(), minZ = self.getZ();
-        int maxX = self.getX(), maxY = self.getY(), maxZ = self.getZ();
+        Direction front = getFrontFacing();
+        Direction right = front.getClockWise();
 
-        for (var part : getParts()) {
-            BlockPos p = part.self().getPos();
-            minX = Math.min(minX, p.getX());
-            minY = Math.min(minY, p.getY());
-            minZ = Math.min(minZ, p.getZ());
-            maxX = Math.max(maxX, p.getX());
-            maxY = Math.max(maxY, p.getY());
-            maxZ = Math.max(maxZ, p.getZ());
-        }
+        var min = self.relative(right, -6)
+                .relative(front, -6)
+                .relative(Direction.DOWN, 1);
 
-        return new AABB(minX, minY, minZ, maxX + 1, maxY + 1, maxZ + 1);
+        var max = self.relative(right, 2)
+                .relative(front, 1)
+                .relative(Direction.UP, 1);
+
+        return new AABB(min, max);
     }
 
     @Override
