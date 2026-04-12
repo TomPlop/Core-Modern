@@ -50,7 +50,7 @@ public class ClimateWeightModifier {
         return null;
     }
 
-	/// @throws NullPointerException If there's an existing fluid drilling rig in an old worldgen chunk
+    /// @throws NullPointerException If there's an existing fluid drilling rig in an old worldgen chunk
     public ChunkData getChunkData(ServerLevel level, BlockPos pos) {
         ChunkAccess currentChunk = CHUNK_ACCESS_CACHE.get(new ChunkPos(pos));
         return ChunkDataProvider.get(level.getChunkSource().getGenerator()).get(currentChunk);
