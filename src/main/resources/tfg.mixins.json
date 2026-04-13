@@ -96,7 +96,7 @@
         "common.gtceu.backports.GTEmiOreProcessingMixin",
         "common.gtceu.backports.GTProgrammedCircuitWrapperMixin",
         "common.gtceu.backports.GTRecipeJSMixin",
-        "common.gtceu.backports.GTUtilMixin",
+        "common.gtceu.GTUtilMixin",
         "common.gtceu.backports.MultiblockInfoEmiRecipeMixin",
         "common.gtceu.bedrock_fluids.BedrockFluidVeinSavedDataMixin",
         "common.gtceu.bedrock_fluids.GTBedrockFluidsMixin",
