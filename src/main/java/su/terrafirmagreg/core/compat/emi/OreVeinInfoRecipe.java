@@ -11,6 +11,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -21,6 +22,7 @@ import dev.emi.emi.api.recipe.EmiRecipeCategory;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
 import dev.emi.emi.api.widget.SlotWidget;
+import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.registry.EmiTags;
 
@@ -37,14 +39,30 @@ public class OreVeinInfoRecipe implements EmiRecipe {
     @Nullable
     private final String[] emiInfo;
     private final ResourceLocation dimension;
-    private final int rarity, minY, maxY, size, height, radius;
+    private final int rarity, minY, maxY, size, height, radius, indicatorDepth;
+    private final boolean nearLava, project, projectOffset;
     private final double density;
+    @Nullable
+    private final String biomeTag;
+    @Nullable
+    private final String[] biomeList;
     private final String[] rockTypes;
     private final WeightedBlock[] ores;
     private final WeightedItem[] oreItems;
+    @Nullable
+    Integer minRainfall;
+    @Nullable
+    Integer maxRainfall;
+    @Nullable
+    Integer minTemperature;
+    @Nullable
+    Integer maxTemperature;
 
     public OreVeinInfoRecipe(String ID, String dimension, int rarity, double density, int minY, int maxY, int size,
-            int height, int radius, String[] types, WeightedBlock[] blocks, @Nullable String[] emiInfo) {
+            int height, int radius, boolean nearLava, boolean project, boolean projectOffset, int indicatorDepth,
+            String[] types, WeightedBlock[] blocks, @Nullable String biomeTag, @Nullable String[] biomeList,
+            @Nullable Integer minRainfall, @Nullable Integer maxRainfall, @Nullable Integer minTemperature, @Nullable Integer maxTemperature,
+            @Nullable String[] emiInfo) {
         this.ID = ID;
         this.dimension = ResourceLocation.parse(dimension);
         this.rarity = rarity;
@@ -54,31 +72,40 @@ public class OreVeinInfoRecipe implements EmiRecipe {
         this.size = size;
         this.height = height;
         this.radius = radius;
+        this.nearLava = nearLava;
+        this.project = project;
+        this.projectOffset = projectOffset;
+        this.indicatorDepth = indicatorDepth;
         this.rockTypes = types;
         this.ores = blocks;
         this.emiInfo = emiInfo;
+        this.biomeTag = biomeTag;
+        this.biomeList = biomeList;
+        this.minRainfall = minRainfall;
+        this.maxRainfall = maxRainfall;
+        this.minTemperature = minTemperature;
+        this.maxTemperature = maxTemperature;
 
-        var tagRegistry = ForgeRegistries.ITEMS.tags();
-        if (tagRegistry == null) {
+        var itemTagRegistry = ForgeRegistries.ITEMS.tags();
+        if (itemTagRegistry == null) {
             oreItems = new WeightedItem[0];
-            return;
-        }
+        } else {
+            List<WeightedItem> rawOres = new ArrayList<>();
+            for (var ore : ores) {
+                List<Item> validRawOres = new ArrayList<>();
+                var normalTag = itemTagRegistry.getTag(itemTagRegistry
+                        .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "raw_materials/" + ore.ore)));
+                normalTag.forEach(v -> {
+                    if (!itemTagRegistry.getTag(itemTagRegistry.createTagKey(EmiTags.HIDDEN_FROM_RECIPE_VIEWERS)).contains(v))
+                        validRawOres.add(v);
+                });
+                if (validRawOres.isEmpty())
+                    continue;
+                rawOres.add(new WeightedItem(validRawOres.get(0), ore.weightPercent));
+            }
 
-        List<WeightedItem> rawOres = new ArrayList<>();
-        for (var ore : ores) {
-            List<Item> validRawOres = new ArrayList<>();
-            var normalTag = tagRegistry.getTag(tagRegistry
-                    .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "raw_materials/" + ore.ore)));
-            normalTag.forEach(v -> {
-                if (!tagRegistry.getTag(tagRegistry.createTagKey(EmiTags.HIDDEN_FROM_RECIPE_VIEWERS)).contains(v))
-                    validRawOres.add(v);
-            });
-            if (validRawOres.isEmpty())
-                continue;
-            rawOres.add(new WeightedItem(validRawOres.get(0), ore.weightPercent));
+            oreItems = rawOres.toArray(WeightedItem[]::new);
         }
-
-        oreItems = rawOres.toArray(WeightedItem[]::new);
     }
 
     @Override
@@ -98,7 +125,7 @@ public class OreVeinInfoRecipe implements EmiRecipe {
 
     @Override
     public int getDisplayHeight() {
-        return 180;
+        return 200;
     }
 
     @Override
@@ -109,13 +136,15 @@ public class OreVeinInfoRecipe implements EmiRecipe {
         offsetY = createOreItemWidgets(widgets, offsetY);
         createVeinInfoTooltip(widgets, offsetY);
         offsetY = createVeinInfoText(widgets, offsetY);
+        offsetY = createBiomeText(widgets, offsetY);
+        offsetY = createClimateText(widgets, offsetY);
         offsetY = createRockTypesWidget(widgets, offsetY);
         offsetY = createInfoWidget(widgets, offsetY);
         createDimensionMarker(widgets, offsetY);
     }
 
     private int createLabelWidget(WidgetHolder holder, int offsetY) {
-        var oreVeinLabelComp = Component.translatable("ore_vein.tfg." + ID).getVisualOrderText();
+        var oreVeinLabelComp = Component.translatable("tfg.ore_vein." + ID).getVisualOrderText();
         var width = Minecraft.getInstance().font.width(oreVeinLabelComp);
         var offsetX = (getDisplayWidth() - width) / 2;
         holder.addText(oreVeinLabelComp, offsetX, 0, 0, false);
@@ -124,7 +153,7 @@ public class OreVeinInfoRecipe implements EmiRecipe {
 
     private int createOreItemWidgets(WidgetHolder holder, int offsetY) {
         var offsetX = (getDisplayWidth() - (oreItems.length * 20)) / 2;
-        ;
+
         var font = Minecraft.getInstance().font;
         for (WeightedItem oreItem : oreItems) {
 
@@ -149,8 +178,14 @@ public class OreVeinInfoRecipe implements EmiRecipe {
         offsetY += lineH;
         holder.addText(Component.translatable("tfg.emi.ore_veins.density", (int) (density * 100)).append("%"), 2, offsetY, 0, false);
         offsetY += lineH;
-        holder.addText(Component.translatable("tfg.emi.ore_veins.y_ranges", minY, maxY), 2, offsetY, 0, false);
+
+        if (project) {
+            holder.addText(Component.translatable("tfg.emi.ore_veins.projected", minY, maxY), 2, offsetY, 0, false);
+        } else {
+            holder.addText(Component.translatable("tfg.emi.ore_veins.y_ranges", minY, maxY), 2, offsetY, 0, false);
+        }
         offsetY += lineH;
+
         if (size != 0) {
             holder.addText(Component.translatable("tfg.emi.ore_veins.size", size), 2, offsetY, 0, false);
             offsetY += lineH;
@@ -163,6 +198,72 @@ public class OreVeinInfoRecipe implements EmiRecipe {
             holder.addText(Component.translatable("tfg.emi.ore_veins.radius", radius), 2, offsetY, 0, false);
             offsetY += lineH;
         }
+        if (nearLava) {
+            holder.addText(Component.translatable("tfg.emi.ore_veins.near_lava"), 2, offsetY, 0xFC6900, false);
+            offsetY += lineH;
+        }
+        if (indicatorDepth > 1) {
+            holder.addText(Component.translatable("tfg.emi.ore_veins.indicator_depth").append(depthText()), 2, offsetY, 0, false);
+            offsetY += lineH;
+        }
+        return offsetY;
+    }
+
+    private int createBiomeText(WidgetHolder holder, int offsetY) {
+        var lineH = Minecraft.getInstance().font.lineHeight;
+
+        holder.addText(Component.translatable("tfg.emi.ore_veins.biomes"), 2, offsetY, 0, false);
+        offsetY += lineH;
+
+        if (biomeTag == null) {
+            holder.addText(Component.translatable("tfg.emi.ore_veins.biome_any"), 8, offsetY, 0, false);
+        } else {
+            int i = 0;
+            MutableComponent tooltip = Component.empty();
+
+            for (String biome : biomeList) {
+                tooltip.append(Component.translatable(biome)).append(++i == biomeList.length ? "" : ", ");
+            }
+
+            var overflowText = new TextWidget(Component.translatable(biomeTag.replace("tfg:", "tfg.ore_vein_tag.").replace('/', '.')).getVisualOrderText(), 8, offsetY, 0x00AA00, false) {
+                @Override
+                public List<ClientTooltipComponent> getTooltip(int mouseX, int mouseY) {
+                    return List.of(ClientTooltipComponent.create(tooltip.getVisualOrderText()));
+                }
+            };
+            holder.add(overflowText);
+        }
+        offsetY += lineH;
+        return offsetY;
+    }
+
+    private int createClimateText(WidgetHolder holder, int offsetY) {
+        var lineH = Minecraft.getInstance().font.lineHeight;
+
+        if (minRainfall != null && maxRainfall != null) {
+            holder.addText(
+                    Component.translatable("tfg.emi.ore_veins.rainfall").append(Component.translatable("tfg.emi.ore_veins.rainfall_range", minRainfall, maxRainfall).withStyle(ChatFormatting.BLUE)), 2,
+                    offsetY, 0,
+                    false);
+            offsetY += lineH;
+        }
+
+        if (minTemperature == null && maxTemperature != null) {
+            holder.addText(
+                    Component.translatable("tfg.emi.ore_veins.temperature").append(Component.translatable("tfg.emi.ore_veins.temperature_and_below", maxTemperature).withStyle(ChatFormatting.AQUA)), 2,
+                    offsetY, 0, false);
+            offsetY += lineH;
+        } else if (minTemperature != null && maxTemperature == null) {
+            holder.addText(
+                    Component.translatable("tfg.emi.ore_veins.temperature").append(Component.translatable("tfg.emi.ore_veins.temperature_and_above", minTemperature).withStyle(ChatFormatting.RED)),
+                    2, offsetY, 0, false);
+            offsetY += lineH;
+        } else if (minTemperature != null && maxTemperature != null) {
+            holder.addText(Component.translatable("tfg.emi.ore_veins.temperature")
+                    .append(Component.translatable("tfg.emi.ore_veins.temperature_range", minTemperature, maxTemperature).withStyle(ChatFormatting.DARK_GREEN)), 2, offsetY, 0, false);
+            offsetY += lineH;
+        }
+
         return offsetY;
     }
 
@@ -179,6 +280,19 @@ public class OreVeinInfoRecipe implements EmiRecipe {
             rarityKey = Component.translatable("tfg.emi.ore_veins.rarity.very_rare").withStyle(ChatFormatting.DARK_RED);
 
         return Component.empty().append(" [").append(rarityKey).append("]");
+    }
+
+    private Component depthText() {
+        if (indicatorDepth < 20)
+            return Component.literal(String.valueOf(indicatorDepth)).withStyle(ChatFormatting.DARK_RED);
+        else if (indicatorDepth < 50)
+            return Component.literal(String.valueOf(indicatorDepth)).withStyle(ChatFormatting.GOLD);
+        else if (indicatorDepth < 70)
+            return Component.literal(String.valueOf(indicatorDepth)).withStyle(ChatFormatting.YELLOW);
+        else if (indicatorDepth < 100)
+            return Component.literal(String.valueOf(indicatorDepth)).withStyle(ChatFormatting.DARK_GREEN);
+        else
+            return Component.literal(String.valueOf(indicatorDepth)).withStyle(ChatFormatting.GREEN);
     }
 
     private int createRockTypesWidget(WidgetHolder holder, int offsetY) {
