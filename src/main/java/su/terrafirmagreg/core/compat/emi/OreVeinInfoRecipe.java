@@ -95,14 +95,27 @@ public class OreVeinInfoRecipe implements EmiRecipe {
             List<WeightedItem> rawOres = new ArrayList<>();
             for (var ore : ores) {
                 List<Item> validRawOres = new ArrayList<>();
+
                 var normalTag = itemTagRegistry.getTag(itemTagRegistry
                         .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "raw_materials/" + ore.ore)));
                 normalTag.forEach(v -> {
                     if (!itemTagRegistry.getTag(itemTagRegistry.createTagKey(EmiTags.HIDDEN_FROM_RECIPE_VIEWERS)).contains(v))
                         validRawOres.add(v);
                 });
+
+                // No raw materials? Try again with gems, to handle coals
+                if (validRawOres.isEmpty()) {
+                    normalTag = itemTagRegistry.getTag(itemTagRegistry
+                            .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "gems/" + ore.ore)));
+                    normalTag.forEach(v -> {
+                        if (!itemTagRegistry.getTag(itemTagRegistry.createTagKey(EmiTags.HIDDEN_FROM_RECIPE_VIEWERS)).contains(v))
+                            validRawOres.add(v);
+                    });
+                }
+                // No raw ores or gems
                 if (validRawOres.isEmpty())
                     continue;
+
                 rawOres.add(new WeightedItem(validRawOres.get(0), ore.weightPercent));
             }
 
@@ -430,10 +443,13 @@ public class OreVeinInfoRecipe implements EmiRecipe {
                     .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "raw_materials/" + ore.ore)));
             var richTag = tagRegistry.getTag(tagRegistry
                     .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "rich_raw_materials/" + ore.ore)));
+            var gemTag = tagRegistry.getTag(tagRegistry
+                    .createTagKey(ResourceLocation.fromNamespaceAndPath("forge", "gems/" + ore.ore)));
 
             poorTag.forEach(v -> oreList.add(EmiStack.of(v)));
             normalTag.forEach(v -> oreList.add(EmiStack.of(v)));
             richTag.forEach(v -> oreList.add(EmiStack.of(v)));
+            gemTag.forEach(v -> oreList.add(EmiStack.of(v)));
         }
         return oreList;
     }
