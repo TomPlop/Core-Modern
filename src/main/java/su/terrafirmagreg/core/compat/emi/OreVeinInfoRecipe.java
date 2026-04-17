@@ -156,8 +156,8 @@ public class OreVeinInfoRecipe implements EmiRecipe {
                 EmiDrawContext context = EmiDrawContext.wrap(draw);
                 context.push();
                 float scaler = 1;
-                if (font.width(this.text) >= 166) {
-                    scaler = (float) (166 - 10) / font.width(this.text);
+                if (font.width(this.text) >= 140) {
+                    scaler = (float) (140 - 10) / font.width(this.text);
                     context.matrices().scale(scaler, scaler, scaler);
                 }
 

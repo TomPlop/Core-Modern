@@ -110,7 +110,7 @@ public class FluidVeinRecipe implements EmiRecipe {
 
     @Override
     public @Nullable ResourceLocation getId() {
-        return veinID.withSuffix("_emi");
+        return veinID.withPrefix("/").withSuffix("_emi");
     }
 
     @Override
