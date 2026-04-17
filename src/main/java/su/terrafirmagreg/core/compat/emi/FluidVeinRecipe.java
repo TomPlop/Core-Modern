@@ -298,7 +298,6 @@ public class FluidVeinRecipe implements EmiRecipe {
 
     private int addCenteredTextLine(WidgetHolder widgets, Component text, int x, int y) {
         var formText = text.getVisualOrderText();
-        var width = CLIENT.font.width(formText);
 
         var textWidget = new TextWidget(formText, x + getDisplayWidth() / 2, y, 0, false) {
 

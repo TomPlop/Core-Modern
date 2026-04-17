@@ -9,6 +9,7 @@ import com.gregtechceu.gtceu.api.registry.GTRegistries;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -25,6 +26,7 @@ import dev.emi.emi.api.widget.SlotWidget;
 import dev.emi.emi.api.widget.TextWidget;
 import dev.emi.emi.api.widget.WidgetHolder;
 import dev.emi.emi.registry.EmiTags;
+import dev.emi.emi.runtime.EmiDrawContext;
 
 import su.terrafirmagreg.core.TFGCore;
 
@@ -144,11 +146,38 @@ public class OreVeinInfoRecipe implements EmiRecipe {
     }
 
     private int createLabelWidget(WidgetHolder holder, int offsetY) {
-        var oreVeinLabelComp = Component.translatable("tfg.ore_vein." + ID).getVisualOrderText();
-        var width = Minecraft.getInstance().font.width(oreVeinLabelComp);
-        var offsetX = (getDisplayWidth() - width) / 2;
-        holder.addText(oreVeinLabelComp, offsetX, 0, 0, false);
-        return offsetY + Minecraft.getInstance().font.lineHeight + 2;
+        var formText = Component.translatable("tfg.ore_vein." + ID).getVisualOrderText();
+        var font = Minecraft.getInstance().font;
+
+        var textWidget = new TextWidget(formText, getDisplayWidth() / 2, offsetY, 0, false) {
+
+            @Override
+            public void render(GuiGraphics draw, int mouseX, int mouseY, float delta) {
+                EmiDrawContext context = EmiDrawContext.wrap(draw);
+                context.push();
+                float scaler = 1;
+                if (font.width(this.text) >= 166) {
+                    scaler = (float) (166 - 10) / font.width(this.text);
+                    context.matrices().scale(scaler, scaler, scaler);
+                }
+
+                int xOff = (int) (this.horizontalAlignment.offset(font.width(this.text)) * scaler);
+                int yOff = this.verticalAlignment.offset(font.lineHeight);
+                context.matrices().translate((float) xOff, (float) yOff, 300.0F);
+                if (this.shadow) {
+                    context.drawTextWithShadow(this.text, this.x, this.y, this.color);
+                } else {
+                    context.drawText(this.text, this.x, this.y, this.color);
+                }
+
+                context.pop();
+            }
+        };
+
+        textWidget.horizontalAlign(TextWidget.Alignment.CENTER);
+
+        holder.add(textWidget);
+        return offsetY + font.lineHeight;
     }
 
     private int createOreItemWidgets(WidgetHolder holder, int offsetY) {
