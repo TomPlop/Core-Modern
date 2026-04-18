@@ -7,7 +7,7 @@
         },
         {"type": "minecraft:in_square"},
         {
-            "heightmap": "WORLD_SURFACE",
+            "heightmap": "MOTION_BLOCKING",
             "type": "minecraft:heightmap"
         },
         {
