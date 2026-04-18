@@ -15,8 +15,8 @@ public class LooseRockFeatureMixin {
 
     @Inject(method = "canGenerateOn", at = @At("HEAD"), remap = false, cancellable = true)
     private void tfg$canGenerateOn(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		// Ice and sea ice had their #minecraft:ice tag removed (for reasons related to being able to pick them up
-		// and break them to move water sources around), so add the checks for those items back
+        // Ice and sea ice had their #minecraft:ice tag removed (for reasons related to being able to pick them up
+        // and break them to move water sources around), so add the checks for those items back
         if (state == Blocks.ICE.defaultBlockState() || state == TFCBlocks.SEA_ICE.get().defaultBlockState()) {
             cir.setReturnValue(false);
         }
