@@ -90,7 +90,9 @@ public class FluidPlugFeature extends Feature<NoneFeatureConfiguration> {
             return TFGBlocks_Earth.HALITE.getDefaultState();
         } else if (fluid.is(TFCFluids.SPRING_WATER.getSource())) {
             return Blocks.CALCITE.defaultBlockState();
-        } else if (fluid.is(Fluids.WATER) || fluid.is(TFGFluids.MUDDY_WATER.getSource())) {
+        } else if (fluid.is(TFGFluids.MUDDY_WATER.getSource())) {
+            return TFGBlocks_Earth.HARDENED_CLAY.getDefaultState();
+        } else if (fluid.is(Fluids.WATER)) {
             return rockData.getRock(pos).hardened().defaultBlockState();
         }
         // Do nothing for lava
