@@ -7,8 +7,8 @@ import com.ninni.species.server.entity.mob.update_3.Hanger;
 import com.ninni.species.server.entity.mob.update_3.LeafHanger;
 
 import net.dries007.tfc.common.entities.aquatic.AquaticMob;
-import net.dries007.tfc.common.fluids.TFCFluids;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
@@ -20,8 +20,9 @@ import net.minecraft.world.level.material.Fluid;
 public abstract class LeafHangerMixin implements AquaticMob {
 
     @Override
+    @SuppressWarnings("deprecation")
     public boolean canSpawnIn(Fluid fluid) {
-        return fluid.isSame(TFCFluids.SALT_WATER.getSource());
+        return fluid.is(FluidTags.WATER);
     }
 
     /**
@@ -30,8 +31,8 @@ public abstract class LeafHangerMixin implements AquaticMob {
      */
     @Overwrite
     public static boolean canSpawn(EntityType<? extends Hanger> type, LevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource random) {
-        return world.getFluidState(pos).is(TFCFluids.SALT_WATER.getSource())
-                && world.getFluidState(pos.above()).is(TFCFluids.SALT_WATER.getSource())
+        return world.getFluidState(pos).is(FluidTags.WATER)
+                && world.getFluidState(pos.above()).is(FluidTags.WATER)
                 && world.getDifficulty() != Difficulty.PEACEFUL;
     }
 }

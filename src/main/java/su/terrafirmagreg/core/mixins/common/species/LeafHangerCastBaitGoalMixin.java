@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.ninni.species.server.entity.mob.update_3.LeafHanger;
 
-import net.dries007.tfc.common.fluids.TFCFluids;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 
@@ -15,6 +15,6 @@ public class LeafHangerCastBaitGoalMixin {
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;is(Lnet/minecraft/world/level/material/Fluid;)Z"), remap = true)
     private boolean tfg$tick(FluidState instance, Fluid fluid) {
-        return instance.is(TFCFluids.SALT_WATER.getSource());
+        return instance.is(FluidTags.WATER);
     }
 }
