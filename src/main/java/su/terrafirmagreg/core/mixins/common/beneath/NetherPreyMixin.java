@@ -1,6 +1,5 @@
 package su.terrafirmagreg.core.mixins.common.beneath;
 
-import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 
@@ -13,6 +12,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 
 @Mixin(value = NetherPrey.class, remap = false)
 public class NetherPreyMixin {
@@ -40,13 +40,12 @@ public class NetherPreyMixin {
         return false;
     }
 
-	/**
-	 * @author Pyritie
-	 * @reason Red elk are stupid
-	 */
-	@Overwrite(remap = true)
-	protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos)
-	{
-		((NetherPrey) (Object) this).resetFallDistance();
-	}
+    /**
+     * @author Pyritie
+     * @reason Red elk are stupid
+     */
+    @Overwrite(remap = true)
+    protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
+        ((NetherPrey) (Object) this).resetFallDistance();
+    }
 }
