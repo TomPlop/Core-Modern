@@ -3,12 +3,12 @@ package su.terrafirmagreg.core.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -154,9 +154,9 @@ public class RopeLadderBlock extends Block {
                 level.removeBlock(chain.get(i), false);
             }
 
-			if (!chain.isEmpty()) {
-				level.playSound(player, player.blockPosition(), SoundEvents.LADDER_STEP, SoundSource.BLOCKS, 1.0f, 1.0f);
-			}
+            if (!chain.isEmpty()) {
+                level.playSound(null, player.blockPosition(), SoundEvents.LADDER_STEP, SoundSource.PLAYERS, 1.0f, 1.0f);
+            }
         }
         return InteractionResult.sidedSuccess(level.isClientSide());
     }
