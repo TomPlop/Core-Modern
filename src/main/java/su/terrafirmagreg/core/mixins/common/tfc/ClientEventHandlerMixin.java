@@ -1,6 +1,5 @@
 package su.terrafirmagreg.core.mixins.common.tfc;
 
-import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -20,8 +19,7 @@ public class ClientEventHandlerMixin {
 		slice = @Slice(
 			from = @At(
 				value = "FIELD",
-				target = "Lnet/dries007/tfc/common/entities/TFCEntities;WOLF:Lnet/minecraftforge/registries/RegistryObject;",
-				opcode = Opcodes.GETSTATIC)),
+				target = "Lnet/dries007/tfc/common/entities/TFCEntities;WOLF:Lnet/minecraftforge/registries/RegistryObject;")),
 		at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraftforge/client/event/EntityRenderersEvent$RegisterRenderers;registerEntityRenderer(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/client/renderer/entity/EntityRendererProvider;)V",
