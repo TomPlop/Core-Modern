@@ -264,7 +264,7 @@
         "common.wab.ToxlacanthMixin",
         "common.minecraft.SectionStorageAccessor",
         "common.minecraft.PoiSectionAccessor",
-        "common.tfc.ClientEvenHandlerMixin",
+        "common.tfc.ClientEventHandlerMixin",
         "common.tfc.TFCDogRendererMixin",
         "common.tfc.TFCDogMixin",
         "common.tfc.TFCWolfMixin"
