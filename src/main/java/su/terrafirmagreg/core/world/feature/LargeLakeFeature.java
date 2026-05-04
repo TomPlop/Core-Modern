@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -104,14 +105,14 @@ public class LargeLakeFeature extends Feature<LargeLakeConfig> {
                             if (this.canReplaceBlock(level.getBlockState(offsetPos))) {
 
                                 boolean isAboveFluidLevel = y >= depth;
-                                level.setBlock(offsetPos, isAboveFluidLevel ? AIR : fluidState, 3);
+                                level.setBlock(offsetPos, isAboveFluidLevel ? AIR : fluidState, Block.UPDATE_CLIENTS);
 
                                 if (isAboveFluidLevel) {
                                     // check if the block above needs hardening
                                     BlockPos abovePos = pos.offset(x, y + 1, z);
                                     BlockState aboveState = level.getBlockState(abovePos);
                                     if (!aboveState.isAir()) {
-                                        level.setBlock(abovePos, rockData.getRock(pos).hardened().defaultBlockState(), 3);
+                                        level.setBlock(abovePos, rockData.getRock(pos).hardened().defaultBlockState(), Block.UPDATE_CLIENTS);
                                     }
 
                                     level.scheduleTick(offsetPos, AIR.getBlock(), 0);
@@ -145,7 +146,7 @@ public class LargeLakeFeature extends Feature<LargeLakeConfig> {
 
                             if (stateAt.isSolid() && !stateAt.is(BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE)) {
                                 BlockPos offsetPos = pos.offset(x, y, z);
-                                level.setBlock(offsetPos, barrierState, 2);
+                                level.setBlock(offsetPos, barrierState, Block.UPDATE_CLIENTS);
                                 this.markAboveForPostProcessing(level, offsetPos);
                             }
                         }
