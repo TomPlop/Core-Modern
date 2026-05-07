@@ -26,6 +26,8 @@ import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 
+import lombok.Getter;
+
 import su.terrafirmagreg.core.common.tfgt.machine.trait.GasWellRecipeLogic;
 
 @ParametersAreNonnullByDefault
@@ -39,16 +41,13 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
     @Nullable
     private NotifiableItemStackHandler inputItemHandler;
 
+    @Getter
     private final GasWellRecipeLogic logic;
     private com.gregtechceu.gtceu.api.machine.TickableSubscription tickSubscription;
 
     public GasWellMachine(IMachineBlockEntity holder) {
         super(holder);
         this.logic = new GasWellRecipeLogic(this);
-    }
-
-    public GasWellRecipeLogic getLogic() {
-        return logic;
     }
 
     @Override
@@ -157,7 +156,7 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
             if (getLevel() instanceof ServerLevel serverLevel) {
                 int chunkX = SectionPos.blockToSectionCoord(getPos().getX());
                 int chunkZ = SectionPos.blockToSectionCoord(getPos().getZ());
-                var savedData = BedrockFluidVeinSavedData.getOrCreate(serverLevel);
+                var savedData = logic.getSavedData(serverLevel);
                 var entry = savedData.getFluidVeinWorldEntry(chunkX, chunkZ);
 
                 if (entry != null && entry.getDefinition() != null) {

@@ -1230,7 +1230,7 @@ public class TFGMultiMachines {
                     .where('S', controller(blocks(definition.get())))
                     .where('X', blocks(GTBlocks.STEEL_HULL.get()).setMinGlobalLimited(1)
                             .or(abilities(PartAbility.IMPORT_FLUIDS_1X).setMaxGlobalLimited(1).setPreviewCount(1))
-                            .or(abilities(PartAbility.STEAM_IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1)))
+                            .or(abilities(PartAbility.IMPORT_ITEMS).setMaxGlobalLimited(1).setPreviewCount(1)))
                     .where('A', blocks(GTBlocks.STEEL_BRICKS_HULL.get()))
                     .where('F', Predicates.frames(GTMaterials.Steel))
                     .where('B', abilities(PartAbility.EXPORT_FLUIDS_1X).setMinGlobalLimited(1).setMaxGlobalLimited(1).setPreviewCount(1))

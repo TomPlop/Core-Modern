@@ -25,6 +25,7 @@ public class GasWellRecipeLogic {
 
     private int timer = 0;
     private boolean hasConsumedExplosive = false;
+    private BedrockFluidVeinSavedData cachedSavedData = null;
 
     public GasWellRecipeLogic(GasWellMachine machine) {
         this.machine = machine;
@@ -37,6 +38,14 @@ public class GasWellRecipeLogic {
     public void reset() {
         timer = 0;
         hasConsumedExplosive = false;
+        cachedSavedData = null;
+    }
+
+    public BedrockFluidVeinSavedData getSavedData(ServerLevel level) {
+        if (cachedSavedData == null) {
+            cachedSavedData = BedrockFluidVeinSavedData.getOrCreate(level);
+        }
+        return cachedSavedData;
     }
 
     public void tick() {
@@ -48,7 +57,7 @@ public class GasWellRecipeLogic {
         int chunkX = SectionPos.blockToSectionCoord(machine.getPos().getX());
         int chunkZ = SectionPos.blockToSectionCoord(machine.getPos().getZ());
 
-        var savedData = BedrockFluidVeinSavedData.getOrCreate(serverLevel);
+        var savedData = getSavedData(serverLevel);
         var entry = savedData.getFluidVeinWorldEntry(chunkX, chunkZ);
 
         if (entry == null || entry.getDefinition() == null)
@@ -96,6 +105,24 @@ public class GasWellRecipeLogic {
         }
     }
 
+    private boolean consumeExplosive() {
+        var itemHandler = machine.getInputItemHandler();
+        if (itemHandler == null)
+            return false;
+
+        for (int i = 0; i < itemHandler.getSlots(); i++) {
+            var stack = itemHandler.getStackInSlot(i);
+            if (!stack.isEmpty() && isExplosive(stack)) {
+                var extracted = itemHandler.extractItemInternal(i, 1, false);
+                if (!extracted.isEmpty()) {
+                    hasConsumedExplosive = true;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private boolean consumeFluid() {
         var inputTank = machine.getInputFluidTank();
         if (inputTank == null)
@@ -127,22 +154,6 @@ public class GasWellRecipeLogic {
         if (outputTank == null)
             return;
         outputTank.fillInternal(fluid, IFluidHandler.FluidAction.EXECUTE);
-    }
-
-    private boolean consumeExplosive() {
-        var itemHandler = machine.getInputItemHandler();
-        if (itemHandler == null)
-            return false;
-
-        for (int i = 0; i < itemHandler.getSlots(); i++) {
-            var stack = itemHandler.getStackInSlot(i);
-            if (!stack.isEmpty() && isExplosive(stack)) {
-                itemHandler.extractItemInternal(i, 1, false);
-                hasConsumedExplosive = true;
-                return true;
-            }
-        }
-        return false;
     }
 
     private boolean isExplosive(ItemStack stack) {
