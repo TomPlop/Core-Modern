@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import org.jetbrains.annotations.Nullable;
 
 import com.gregtechceu.gtceu.api.capability.recipe.FluidRecipeCapability;
@@ -43,7 +44,7 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
 
     @Getter
     private final GasWellRecipeLogic logic;
-    private com.gregtechceu.gtceu.api.machine.TickableSubscription tickSubscription;
+    private TickableSubscription tickSubscription;
 
     public GasWellMachine(IMachineBlockEntity holder) {
         super(holder);
