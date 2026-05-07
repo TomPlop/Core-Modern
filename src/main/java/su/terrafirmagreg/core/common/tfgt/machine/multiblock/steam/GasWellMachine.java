@@ -58,6 +58,7 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
         super.onStructureFormed();
         inputFluidTank = null;
         outputFluidTank = null;
+        setActive(false);
 
         for (IMultiPart part : getParts()) {
             for (var handlerList : part.getRecipeHandlers()) {
@@ -105,6 +106,7 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
         logic.reset();
         inputFluidTank = null;
         outputFluidTank = null;
+        setActive(false);
     }
 
     @Nullable
@@ -119,6 +121,8 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
 
     public void setActive(boolean active) {
         MachineRenderState renderState = getRenderState();
+        if (renderState == null)
+            return;
         if (renderState.hasProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS)) {
             setRenderState(renderState.setValue(
                     GTMachineModelProperties.RECIPE_LOGIC_STATUS,

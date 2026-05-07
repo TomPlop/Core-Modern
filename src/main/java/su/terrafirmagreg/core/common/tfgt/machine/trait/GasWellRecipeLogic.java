@@ -38,7 +38,6 @@ public class GasWellRecipeLogic {
     public void reset() {
         timer = 0;
         hasConsumedExplosive = false;
-        machine.setActive(false);
     }
 
     public void resetFull() {
