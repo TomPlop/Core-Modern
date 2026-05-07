@@ -15,8 +15,11 @@ import com.gregtechceu.gtceu.api.machine.TickableSubscription;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IDisplayUIMachine;
 import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
+import com.gregtechceu.gtceu.api.machine.property.GTMachineModelProperties;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
+import com.gregtechceu.gtceu.api.machine.trait.RecipeLogic;
+import com.gregtechceu.gtceu.client.model.machine.MachineRenderState;
 import com.gregtechceu.gtceu.common.machine.multiblock.part.ItemBusPartMachine;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 
@@ -112,6 +115,15 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
     @Nullable
     public NotifiableFluidTank getOutputFluidTank() {
         return outputFluidTank;
+    }
+
+    public void setActive(boolean active) {
+        MachineRenderState renderState = getRenderState();
+        if (renderState.hasProperty(GTMachineModelProperties.RECIPE_LOGIC_STATUS)) {
+            setRenderState(renderState.setValue(
+                    GTMachineModelProperties.RECIPE_LOGIC_STATUS,
+                    active ? RecipeLogic.Status.WORKING : RecipeLogic.Status.IDLE));
+        }
     }
 
     @Nullable

@@ -38,6 +38,7 @@ public class GasWellRecipeLogic {
     public void reset() {
         timer = 0;
         hasConsumedExplosive = false;
+        machine.setActive(false);
     }
 
     public void resetFull() {
@@ -80,6 +81,7 @@ public class GasWellRecipeLogic {
             if (!consumeExplosive())
                 return;
             timer = 0;
+            machine.setActive(true);
         }
 
         // Consumme water or steam
@@ -95,6 +97,7 @@ public class GasWellRecipeLogic {
             timer = 0;
             if (!consumeExplosive()) {
                 hasConsumedExplosive = false;
+                machine.setActive(false);
                 return;
             }
         }
