@@ -17,6 +17,7 @@ import com.gregtechceu.gtceu.api.machine.feature.multiblock.IMultiPart;
 import com.gregtechceu.gtceu.api.machine.multiblock.MultiblockControllerMachine;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableFluidTank;
 import com.gregtechceu.gtceu.api.machine.trait.NotifiableItemStackHandler;
+import com.gregtechceu.gtceu.common.machine.multiblock.part.ItemBusPartMachine;
 import com.gregtechceu.gtceu.utils.FormattingUtil;
 
 import net.minecraft.ChatFormatting;
@@ -39,8 +40,6 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
     private NotifiableFluidTank inputFluidTank;
     @Nullable
     private NotifiableFluidTank outputFluidTank;
-    @Nullable
-    private NotifiableItemStackHandler inputItemHandler;
 
     @Getter
     private final GasWellRecipeLogic logic;
@@ -56,7 +55,6 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
         super.onStructureFormed();
         inputFluidTank = null;
         outputFluidTank = null;
-        inputItemHandler = null;
 
         for (IMultiPart part : getParts()) {
             for (var handlerList : part.getRecipeHandlers()) {
@@ -69,12 +67,6 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
                     } else if (handlerList.getHandlerIO().support(IO.OUT) && outputFluidTank == null) {
                         outputFluidTank = (NotifiableFluidTank) fluidCap.get(0);
                     }
-                }
-
-                if (!itemCap.isEmpty()
-                        && handlerList.getHandlerIO().support(IO.IN)
-                        && inputItemHandler == null) {
-                    inputItemHandler = (NotifiableItemStackHandler) itemCap.get(0);
                 }
             }
         }
@@ -97,7 +89,11 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
     @Override
     public void onUnload() {
         super.onUnload();
-        resetState();
+        logic.resetFull();
+        unsubscribe(tickSubscription);
+        tickSubscription = null;
+        inputFluidTank = null;
+        outputFluidTank = null;
     }
 
     private void resetState() {
@@ -106,7 +102,6 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
         logic.reset();
         inputFluidTank = null;
         outputFluidTank = null;
-        inputItemHandler = null;
     }
 
     @Nullable
@@ -121,7 +116,15 @@ public class GasWellMachine extends MultiblockControllerMachine implements IDisp
 
     @Nullable
     public NotifiableItemStackHandler getInputItemHandler() {
-        return inputItemHandler;
+        for (IMultiPart part : getParts()) {
+            if (!(part instanceof ItemBusPartMachine bus))
+                continue;
+            var inventory = bus.getInventory();
+            if (inventory.getHandlerIO() == IO.IN) {
+                return inventory;
+            }
+        }
+        return null;
     }
 
     @Override

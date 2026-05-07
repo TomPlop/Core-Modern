@@ -38,6 +38,10 @@ public class GasWellRecipeLogic {
     public void reset() {
         timer = 0;
         hasConsumedExplosive = false;
+    }
+
+    public void resetFull() {
+        reset();
         cachedSavedData = null;
     }
 
