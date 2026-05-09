@@ -46,13 +46,4 @@ public abstract class EnvironmentHelpersMixin {
             cir.setReturnValue(true);
         }
     }
-
-    /**
-     * Prevents icicles from forming underneath blocks with 'tfg:no_icicle_generation' block tag
-     */
-
-    @ModifyExpressionValue(method = "doIcicles", at = @At(value = "INVOKE", target = "Lnet/dries007/tfc/util/Helpers;isBlock(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/tags/TagKey;)Z"))
-    private static boolean tfg$modifyTagCheck(boolean original, @Local(name = "stateAbove") BlockState stateAbove) {
-        return original || Helpers.isBlock(stateAbove, TFGTags.Blocks.NoIcicles);
-    }
 }
