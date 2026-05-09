@@ -6,9 +6,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.sugar.Local;
-
 import net.dries007.tfc.util.EnvironmentHelpers;
 import net.dries007.tfc.util.Helpers;
 import net.minecraft.server.level.ServerLevel;
@@ -19,7 +16,6 @@ import net.minecraft.world.level.chunk.LevelChunk;
 
 import earth.terrarium.adastra.api.planets.PlanetApi;
 
-import su.terrafirmagreg.core.common.data.TFGTags;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks;
 
 @Mixin(value = EnvironmentHelpers.class, remap = false)
