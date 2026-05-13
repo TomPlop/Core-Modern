@@ -53,6 +53,7 @@ public final class TFGBlocks {
         TFGBlocks_Casings.init();
         TFGBlocks_Buds.init();
         TFGBlocks_Wood.init();
+        TFGBlocksAsphalt.init();
     }
 
     ////// Decoration blocks

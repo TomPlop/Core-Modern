@@ -14,6 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import su.terrafirmagreg.core.TFGCore;
+import su.terrafirmagreg.core.client.asphalt.AsphaltRoadColorHandlers;
 import su.terrafirmagreg.core.common.data.TFGPlant;
 import su.terrafirmagreg.core.common.data.blocks.TFGBlocks_Earth;
 import su.terrafirmagreg.core.common.perf.SupportCache;
@@ -55,6 +56,8 @@ public class ForgeClientEventListener {
                 TFGBlocks_Earth.OXISOL_CLAY_GRASS.get(),
                 TFGBlocks_Earth.PODZOL_GRASS.get(),
                 TFGBlocks_Earth.PODZOL_CLAY_GRASS.get());
+
+        AsphaltRoadColorHandlers.registerBlocks(event);
     }
 
     public static void registerColorHandlerItems(RegisterColorHandlersEvent.Item event) {
@@ -62,5 +65,7 @@ public class ForgeClientEventListener {
 
         event.register(grassColor,
                 TFGBlocks_Earth.PLANTS.get(TFGPlant.RED_OAT_GRASS).get());
+
+        AsphaltRoadColorHandlers.registerItems(event);
     }
 }

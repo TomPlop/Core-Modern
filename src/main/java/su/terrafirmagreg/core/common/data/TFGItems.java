@@ -34,6 +34,7 @@ import su.terrafirmagreg.core.utils.ModelUtils;
 @SuppressWarnings("unused")
 public class TFGItems {
     public static void init() {
+        TFGItemsAsphalt.init();
         TFGItems_Medicines.init();
     }
 
