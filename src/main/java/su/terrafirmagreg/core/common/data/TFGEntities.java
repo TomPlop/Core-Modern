@@ -61,6 +61,7 @@ public class TFGEntities {
 
     public static final EntityEntry<TFGFox> TFG_FOX = TFGCore.REGISTRATE.entity("fox", TFGFox::new, MobCategory.CREATURE)
             .properties(p -> p.sized(0.6F, 0.7F).clientTrackingRange(8))
+            .loot((prov, ctx) -> prov.add(ctx, new LootTable.Builder()))
             .attributes(TFGFox::createAttributes)
             .renderer(() -> TFGFoxRenderer::new)
             .register();
