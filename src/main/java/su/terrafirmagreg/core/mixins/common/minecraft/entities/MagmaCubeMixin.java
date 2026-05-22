@@ -3,6 +3,7 @@ package su.terrafirmagreg.core.mixins.common.minecraft.entities;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
+import com.gregtechceu.gtceu.api.GTValues;
 import com.gregtechceu.gtceu.api.data.chemical.ChemicalHelper;
 import com.gregtechceu.gtceu.common.data.GTMaterials;
 
@@ -44,8 +45,7 @@ public class MagmaCubeMixin extends Slime {
                 } else {
                     this.hurt(this.damageSources().generic(), 1.0F);
                     playSound(SoundEvents.PLAYER_BURP);
-                    ItemStack drop = ChemicalHelper.getDust(GTMaterials.RawRubber, 1);
-                    spawnAtLocation(drop);
+                    spawnAtLocation(ChemicalHelper.getDust(GTMaterials.RawRubber, GTValues.M));
                 }
             }
 
