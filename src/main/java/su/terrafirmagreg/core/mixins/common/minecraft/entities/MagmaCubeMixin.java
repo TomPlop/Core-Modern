@@ -40,7 +40,7 @@ public class MagmaCubeMixin extends Slime {
                 }
                 if (this.getHealth() - 1.0F <= 0.0F) {
                     this.kill();
-                    level().explode(this, this.getX(), this.getY(), this.getZ(), 100F, Level.ExplosionInteraction.MOB);
+                    level().explode(this, this.getX(), this.getY(), this.getZ(), 2.5F, Level.ExplosionInteraction.MOB);
                 } else {
                     this.hurt(this.damageSources().generic(), 1.0F);
                     playSound(SoundEvents.PLAYER_BURP);
