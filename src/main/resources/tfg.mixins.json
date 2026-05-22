@@ -140,6 +140,7 @@
         "common.minecraft.AccessorServerChunkCache",
         "common.minecraft.BeardifierAccessor",
         "common.minecraft.BlockEntityTypeAccessor",
+        "common.minecraft.ChunkSerializerMixin",
         "common.minecraft.EntitySnowshoesSpeedMixin",
         "common.minecraft.HeightmapMixin",
         "common.minecraft.HugeFungusFeatureInvoker",
