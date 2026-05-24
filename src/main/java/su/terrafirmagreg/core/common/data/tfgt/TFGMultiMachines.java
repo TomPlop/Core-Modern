@@ -11,6 +11,8 @@ import static su.terrafirmagreg.core.TFGCore.REGISTRATE;
 import java.util.*;
 import java.util.function.Supplier;
 
+import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.Tags;
 import org.joml.Vector3f;
 
 import com.eerussianguy.firmalife.common.FLTags;
@@ -1266,13 +1268,11 @@ public class TFGMultiMachines {
                     .where('S', controller(blocks(definition.get())))
                     .where("A", Predicates.any())
                     .where("B", Predicates.blocks(GTBlocks.STEEL_HULL.get()))
-                    .where("C", Predicates.blockTag(TagKey.create(Registries.BLOCK,
-                            ResourceLocation.fromNamespaceAndPath("forge", "stone_bricks"))))
-                    .where("D", Predicates.blockTag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("forge", "fences/wooden")))
-                            .or(Predicates.blockTag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("forge", "fence_gates")))))
+                    .where("C", Predicates.blockTag(BlockTags.STONE_BRICKS))
+                    .where("D", Predicates.blockTag(Tags.Blocks.FENCES)
+                            .or(Predicates.blockTag(Tags.Blocks.FENCE_GATES)))
                     .where("E", Predicates.blocks(GTBlocks.CASING_STEEL_SOLID.get()))
-                    .where("F", Predicates.blockTag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("tfc", "dirt")))
-                            .or(Predicates.blockTag(TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("tfc", "grass")))))
+                    .where("F", Predicates.blockTag(BlockTags.DIRT))
                     .where("G", Predicates.blocks(GTBlocks.CASING_STEEL_SOLID.get())
                             .or(Predicates.autoAbilities(definition.getRecipeTypes()))
                             .or(Predicates.autoAbilities(true, false, false))
