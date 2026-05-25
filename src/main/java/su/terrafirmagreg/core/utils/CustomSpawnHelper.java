@@ -126,7 +126,7 @@ public class CustomSpawnHelper {
 
     public static final TreeMap<String, CustomSpawnCondition> CUSTOM_SPAWN_CONDITIONS = new TreeMap<>();
 
-    public static final TreeMap<String, MutableComponent> SPAWN_DIFFICULTIES = new TreeMap<>(Map.of(
+    public static final HashMap<String, MutableComponent> SPAWN_DIFFICULTIES = new HashMap<>(Map.of(
             "easy", Component.translatable("tfg.gui.spawn_difficulty.easy"),
             "normal", Component.translatable("tfg.gui.spawn_difficulty.normal"),
             "hard", Component.translatable("tfg.gui.spawn_difficulty.hard"),
@@ -215,8 +215,8 @@ public class CustomSpawnHelper {
         initNewType(TEMPERATE_SPAWN);
         initNewType(TROPICAL_SPAWN);
         initNewType(TUNDRA_SPAWN);
+        initNewType(POLAR_SPAWN);
         initNewType(DESERT_SPAWN);
-		initNewType(POLAR_SPAWN);
         initNewType(BENEATH_SPAWN);
     }
 
