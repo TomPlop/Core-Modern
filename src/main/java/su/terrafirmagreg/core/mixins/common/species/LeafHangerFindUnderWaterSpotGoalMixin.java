@@ -21,6 +21,6 @@ public class LeafHangerFindUnderWaterSpotGoalMixin {
         return instance.is(Blocks.WATER)
                 || instance.is(TFCBlocks.SALT_WATER.get())
                 || instance.is(TFGBlocks.MUDDY_WATER.get())
-				|| instance.is(TFCBlocks.SPRING_WATER.get());
+                || instance.is(TFCBlocks.SPRING_WATER.get());
     }
 }
