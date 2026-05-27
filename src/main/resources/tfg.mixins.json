@@ -37,6 +37,8 @@
         "common.arthropocolypse.WharfRoachMixin",
         "common.beneath.BeneathForgeEventsMixin",
         "common.beneath.BurpingFlowerBlockMixin",
+        "common.beneath.HellforgeBlockEntityMixin",
+        "common.beneath.HellforgeBlockInvoker",
         "common.beneath.HellforgeBlockMixin",
         "common.beneath.NetherPreyMixin",
         "common.beneath.NetherSpikesFeatureMixin",
