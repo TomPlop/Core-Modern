@@ -31,7 +31,7 @@ public abstract class GameTabMixin {
         conditionList.add(CustomSpawnHelper.DEFAULT_SPAWN);
         conditionList.add(CustomSpawnHelper.TROPICAL_SPAWN);
         conditionList.add(CustomSpawnHelper.TEMPERATE_SPAWN);
-		conditionList.add(CustomSpawnHelper.TUNDRA_SPAWN);
+        conditionList.add(CustomSpawnHelper.TUNDRA_SPAWN);
         conditionList.add(CustomSpawnHelper.DESERT_SPAWN);
         conditionList.add(CustomSpawnHelper.POLAR_SPAWN);
         conditionList.add(CustomSpawnHelper.BENEATH_SPAWN);
