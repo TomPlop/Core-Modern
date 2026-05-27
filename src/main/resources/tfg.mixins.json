@@ -315,7 +315,7 @@
         "client.tfcgenviewer.TfcgenViewerViewWorldCloseMixin",
         "common.ad_astra.PlanetsScreenMixin",
         "common.minecraft.FogRendererMixin",
-        "common.tfc.ClientEventHandlerMixin",
+      "common.tfc.entities.ClientEventHandlerMixin",
       "common.tfc.entities.TFCDogRendererMixin",
         "common.tfchotornot.ClientEventHandlerMixin"
     ],
