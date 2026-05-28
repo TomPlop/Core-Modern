@@ -55,6 +55,7 @@
         "common.create.OpenEndedPipeMixin",
         "common.create.ProcessingRecipeMixin",
         "common.create.RecipeGridHandlerMixin",
+        "common.create.StockKeeperRequestScreenMixin",
         "common.create.SuperGlueHandlerMixin",
         "common.create.chains.ChainConveyorBlockEntityMixin",
         "common.create.chains.ChainConveyorBlockMixin",
