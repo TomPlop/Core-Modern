@@ -134,7 +134,7 @@ public final class ServerConfig {
         builder.pop().push("tfg_food_effects");
         enableTFGFoodDebuffs = builder
                 .comment("Enables TFG food debuff effects. Allows receiving harmful effects from contaminants like Toxins, or transient nutrients like Freezing.")
-                .define("disableTFGFoodDebuffs", true);
+                .define("enableTFGFoodDebuffs", true);
         enableTFGFoodBuffs = builder
                 .comment("Enables TFG food buff effects. Allows receiving helpful effects from nutrients like Fruits, or transient nutrients like Fulfilling.")
                 .define("enableTFGFoodBuffs", true);
