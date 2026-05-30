@@ -10,9 +10,12 @@ import com.gregtechceu.gtceu.common.data.GTItems;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 
+import net.dries007.tfc.TerraFirmaCraft;
 import net.dries007.tfc.common.items.TFCItems;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -54,7 +57,7 @@ public class TFGEmiPlugin implements EmiPlugin {
             EmiStack.of(GTBlocks.FIREBOX_STEEL.asItem()));
 
     public static final EmiRecipeCategory ITEM_REPAIR = new EmiRecipeCategory(TFGCore.id("item_repair"),
-            EmiStack.of(net.minecraft.world.item.Items.CRAFTING_TABLE));
+            EmiStack.of(Items.ANVIL));
 
     public static final EmiRecipeCategory FLUID_VEIN_INFO = new EmiRecipeCategory(TFGCore.id("fluid_vein_info"),
             EmiStack.of(GTItems.PROSPECTOR_HV));
@@ -132,7 +135,7 @@ public class TFGEmiPlugin implements EmiPlugin {
 
         // Item Repair
         emiRegistry.addCategory(ITEM_REPAIR);
-        emiRegistry.addWorkstation(ITEM_REPAIR, EmiStack.of(net.minecraft.world.item.Items.CRAFTING_TABLE));
+        emiRegistry.addWorkstation(ITEM_REPAIR, EmiIngredient.of(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), ResourceLocation.fromNamespaceAndPath(TerraFirmaCraft.MOD_ID, "workbenches"))));
         emiRegistry.addRecipeHandler(MenuType.CRAFTING, new ItemRepairCraftingRecipeHandler());
         for (ItemRepairRecipe recipe : emiRegistry.getRecipeManager().getAllRecipesFor(RecipeType.CRAFTING).stream()
                 .filter(r -> r instanceof ItemRepairRecipe)
