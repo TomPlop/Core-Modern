@@ -84,7 +84,7 @@ package su.terrafirmagreg.core.compat.emi;
 				null, null, null, null,
 				null),
 			new OreVeinInfoRecipe("beneath_graphite", "minecraft:the_nether", 
-				5, 0.22, 0, 80, 0, 60, 10, 
+				5, 0.22, 0, 80, 0, 60, 4, 
 				false, false, false, 1, 
 				new String[] {"minecraft:blackstone","minecraft:deepslate",},
 				new OreVeinInfoRecipe.WeightedBlock[] {new OreVeinInfoRecipe.WeightedBlock("graphite", 72), new OreVeinInfoRecipe.WeightedBlock("coal", 18), new OreVeinInfoRecipe.WeightedBlock("diamond", 9), },
