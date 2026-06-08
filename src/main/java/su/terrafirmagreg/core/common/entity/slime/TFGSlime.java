@@ -342,10 +342,10 @@ public class TFGSlime extends TamableMammal {
         return size.height * 0.5F;
     }
 
-	@Override
-	public boolean fireImmune() {
-		return getVariant() == SlimeVariant.LAVA;
-	}
+    @Override
+    public boolean fireImmune() {
+        return getVariant() == SlimeVariant.LAVA;
+    }
 
-	// endregion
+    // endregion
 }
