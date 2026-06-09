@@ -200,7 +200,9 @@ public class TFGBlocks_Wood {
                 .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
                         TFGCore.id("item/wood/stripped_log/" + wood.serializedName)))
                 .tag(TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("logs")))
-                .tag(TagKey.create(Registries.ITEM, TFGCore.id(wood.serializedName + "_logs"))).build()
+                .tag(TagKey.create(Registries.ITEM, TFGCore.id(wood.serializedName + "_logs")))
+                .tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("forge", "stripped_logs")))
+                .build()
                 .register();
     }
 
@@ -236,7 +238,9 @@ public class TFGBlocks_Wood {
                 .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), ResourceLocation.withDefaultNamespace("item/generated")).texture("layer0",
                         TFGCore.id("item/wood/stripped_wood/" + wood.serializedName)))
                 .tag(TagKey.create(Registries.ITEM, ResourceLocation.withDefaultNamespace("logs")))
-                .tag(TagKey.create(Registries.ITEM, TFGCore.id(wood.serializedName + "_logs"))).build()
+                .tag(TagKey.create(Registries.ITEM, TFGCore.id(wood.serializedName + "_logs")))
+                .tag(TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("forge", "stripped_logs")))
+                .build()
                 .register();
     }
 
