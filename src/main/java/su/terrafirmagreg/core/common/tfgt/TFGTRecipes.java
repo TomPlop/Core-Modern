@@ -82,7 +82,7 @@ public class TFGTRecipes {
                 'I', GTCraftingComponents.SENSOR,
                 'P', GTCraftingComponents.EMITTER,
                 'C', GTCraftingComponents.CIRCUIT,
-                'G', GTCraftingComponents.FIELD_GENERATOR,
+                'G', TFGCraftingComponents.FIELD_GENERATOR_TIER_DOWN,
                 'A', AEItems.FLUIX_PEARL.asItem());
 
         VanillaRecipeHelper.addShapedRecipe(provider, true, TFGCore.id("super_chest_ulv"),
