@@ -75,6 +75,14 @@ public class TFGTRecipes {
                 'G', GTCraftingComponents.GLASS,
                 'E', GTCraftingComponents.PIPE_NORMAL);
 
+        MetaTileEntityLoader.registerMachineRecipe(provider, true, TFGMachines.WIRELESS_CHARGER,
+                "CIC", "GHG", "CPC",
+                'H', GTCraftingComponents.HULL,
+                'I', GTCraftingComponents.SENSOR,
+                'P', GTCraftingComponents.EMITTER,
+                'C', GTCraftingComponents.CIRCUIT,
+                'G', GTCraftingComponents.FIELD_GENERATOR);
+
         VanillaRecipeHelper.addShapedRecipe(provider, true, TFGCore.id("super_chest_ulv"),
                 TFGMachines.ULV_SUPER_CHEST.asStack(),
                 "ABA", "BCB", "ABA",
