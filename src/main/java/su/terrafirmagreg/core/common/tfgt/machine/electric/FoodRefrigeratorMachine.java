@@ -211,6 +211,7 @@ public class FoodRefrigeratorMachine extends TieredEnergyMachine
             consumeEnergy(false);
 
         updateSubscription();
+        setActive(currentlyWorking);
     }
 
     private long getEnergyAmount() {
