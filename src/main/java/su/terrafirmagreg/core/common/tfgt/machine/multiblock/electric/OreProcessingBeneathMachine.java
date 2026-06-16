@@ -32,6 +32,9 @@ import net.minecraftforge.fluids.FluidStack;
 
 import su.terrafirmagreg.core.common.data.TFGTags;
 
+// Credit to Monicore by NegaNote
+// https://github.com/NegaNote/MoniLabs/blob/main/src/main/java/net/neganote/monilabs/common/machine/multiblock/SculkVatMachine.java
+
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class OreProcessingBeneathMachine extends WorkableElectricMultiblockMachine {
