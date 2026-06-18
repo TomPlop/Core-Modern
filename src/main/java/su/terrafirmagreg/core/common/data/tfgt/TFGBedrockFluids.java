@@ -467,7 +467,7 @@ public class TFGBedrockFluids {
             .weight(1000)
             .minimumYield(2)
             .maximumYield(5)
-            .depletionAmount(2500)
+            .depletionAmount(800)
             .depletionChance(100)
             .depletedYield(0));
 
@@ -478,7 +478,7 @@ public class TFGBedrockFluids {
             .weight(1000)
             .minimumYield(2)
             .maximumYield(5)
-            .depletionAmount(5000)
+            .depletionAmount(2000)
             .depletionChance(100)
             .depletedYield(0));
 

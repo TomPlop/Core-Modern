@@ -1288,6 +1288,10 @@ public class TFGMultiMachines {
             .recipeType(TFGTRecipeTypes.ORE_PROCESSING_GAS)
             .recipeModifiers(GTRecipeModifiers.OC_NON_PERFECT, OreProcessingBeneathMachine::recipeModifier)
             .appearanceBlock(GCYMBlocks.CASING_INDUSTRIAL_STEAM)
+            .tooltips(
+                    Component.translatable("tfg.tooltip.machine.ore_proc_beneath_1"),
+                    Component.translatable("tfg.tooltip.machine.ore_proc_beneath_2"),
+                    Component.translatable("tfg.tooltip.machine.two_energy_hatches"))
             .workableCasingModel(
                     GTCEu.id("block/casings/gcym/industrial_steam_casing"),
                     GTCEu.id("block/machines/electromagnetic_separator"))
