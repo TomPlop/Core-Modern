@@ -1,7 +1,5 @@
 package su.terrafirmagreg.core.common.data.tfgt;
 
-import static com.gregtechceu.gtceu.common.data.GTBedrockFluids.nether;
-
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -466,10 +464,21 @@ public class TFGBedrockFluids {
     public static BedrockFluidDefinition BENEATH_GLOWSTONE = create(TFGCore.id("beneath_glowstone"), vein -> vein
             .dimensions(nether)
             .fluid(GTMaterials.Glowstone::getFluid)
-            .weight(1)
-            .minimumYield(1)
+            .weight(1000)
+            .minimumYield(2)
             .maximumYield(5)
-            .depletionAmount(100)
+            .depletionAmount(2500)
+            .depletionChance(100)
+            .depletedYield(0));
+
+    // Beneath Gold
+    public static BedrockFluidDefinition BENEATH_GOLD = create(TFGCore.id("beneath_gold"), vein -> vein
+            .dimensions(nether)
+            .fluid(GTMaterials.Gold::getFluid)
+            .weight(1000)
+            .minimumYield(2)
+            .maximumYield(5)
+            .depletionAmount(5000)
             .depletionChance(100)
             .depletedYield(0));
 
@@ -477,10 +486,10 @@ public class TFGBedrockFluids {
     public static BedrockFluidDefinition BENEATH_STEAM = create(TFGCore.id("beneath_steam"), vein -> vein
             .dimensions(nether)
             .fluid(GTMaterials.Steam::getFluid)
-            .weight(1)
-            .minimumYield(250)
-            .maximumYield(450)
-            .depletionAmount(10)
+            .weight(1000)
+            .minimumYield(125)
+            .maximumYield(225)
+            .depletionAmount(1000)
             .depletionChance(100)
             .depletedYield(0));
 
